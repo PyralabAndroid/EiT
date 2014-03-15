@@ -41,7 +41,3 @@ tmp
 *.bak
 *.swp
 *.launch
-
-#Crashlytics
-.crashlytics_data/
-example/src/main/res/values/com_crashlytics_export_strings.xml

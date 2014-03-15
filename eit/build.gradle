@@ -30,7 +30,7 @@ dependencies {
     compile "com.google.code.findbugs:jsr305:2.0.1"
     compile "javax.inject:javax.inject:1"
     compile 'com.squareup.picasso:picasso:2.2.+'
-
+    compile 'org.holoeverywhere:slidingmenu:1.4.2'
+    compile 'com.github.rtyley:roboguice-sherlock:1.5'
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    // library -> SlidingMenu library
 }
