@@ -2,20 +2,39 @@ package pl.eit.androideit.eit;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-public class ScheduleActivity extends Activity implements ActionBar.TabListener{
+import pl.eit.androideit.eit.schedule_fragment.BaseScheduleFragment;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
+public class ScheduleActivity extends Activity implements ActionBar.TabListener {
 
     private static final int MONDAY = 1;
     private static final int TUESDAY = 2;
     private static final int WEDNESDAY = 3;
     private static final int THURSDAY = 4;
     private static final int FRIDAY = 5;
+    public static final String EXTRA_SCHEDULE_KEY = "extra_schedule_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+        activate(null);
+    }
+
+    private void activate(Fragment fragment) {
+        checkNotNull(fragment);
+
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.conteiner, fragment);
     }
 
     @Override
@@ -43,19 +62,15 @@ public class ScheduleActivity extends Activity implements ActionBar.TabListener{
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         final Integer id = (Integer) tab.getTag();
-        switch(id) {
-            case MONDAY:
-                break;
-            case TUESDAY:
-                break;
-            case WEDNESDAY:
-                break;
-            case THURSDAY:
-                break;
-            case FRIDAY:
-                break;
-            default:
-                throw new RuntimeException("no tab with id " + id);
+        if (id >= 1 && id <= 5) {
+            BaseScheduleFragment baseScheduleFragment = new BaseScheduleFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt(EXTRA_SCHEDULE_KEY, id);
+            baseScheduleFragment.setArguments(bundle);
+            activate(baseScheduleFragment);
+        } else {
+            throw new RuntimeException("no tab with id " + id);
+
         }
     }
 

@@ -1,11 +1,14 @@
 package pl.eit.androideit.eit.schedule_fragment;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 
-import com.github.rtyley.android.sherlock.roboguice.fragment.RoboSherlockFragment;
+import pl.eit.androideit.eit.ScheduleActivity;
 
-public class BaseScheduleFragment extends RoboSherlockFragment {
+public class BaseScheduleFragment extends Fragment {
+
+    private int mScheduleId;
 
     public BaseScheduleFragment() {
         super();
@@ -19,5 +22,6 @@ public class BaseScheduleFragment extends RoboSherlockFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mScheduleId = savedInstanceState.getInt(ScheduleActivity.EXTRA_SCHEDULE_KEY, 1);
     }
 }
