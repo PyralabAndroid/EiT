@@ -4,5 +4,10 @@
     <string name="app_name">AndroidEiT</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="monday">Poniedziałek</string>
+    <string name="tuesday">Wtorek</string>
+    <string name="wednesday">Środa</string>
+    <string name="thursday">Czwartek</string>
+    <string name="friday">Piątek</string>
 
 </resources>
