@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bck_main">#A0B8C8</color>
-    <color name="bck_menu">#F99F3E</color>
+    <color name="bck_menu">#2E3461</color>
     <color name="font">#F9F6F0</color>
     <color name="f_hot_news">#E12809</color>
-    <color name="bck_button">#5F96F0</color>
+    <color name="f_btn">#2A3032</color>
+    <color name="bck_button">#F3CF62</color>
 </resources>
