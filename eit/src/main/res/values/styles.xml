@@ -1,7 +1,14 @@
 <resources>
+
+    <!-- Base application theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    </style>
+
+    <!-- Base activity theme -->
+    <style name="BaseActivityStyle">
         <item name="android:background">@color/bck_main</item>
     </style>
+
     <style name="MenuButtonStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>

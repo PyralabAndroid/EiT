@@ -7,6 +7,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
+import java.util.Calendar;
+
+import butterknife.ButterKnife;
 import pl.eit.androideit.eit.schedule_fragment.BaseScheduleFragment;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -23,10 +26,11 @@ public class ScheduleActivity extends Activity implements ActionBar.TabListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-
-        activate(null);
+        setContentView(R.layout.activity_schedule);
+        ButterKnife.inject(this);
+        Calendar calendar = Calendar.getInstance();
+        final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) -1;
+        getActionBar().setSelectedNavigationItem(dayOfWeek);
     }
 
     private void activate(Fragment fragment) {
@@ -63,15 +67,21 @@ public class ScheduleActivity extends Activity implements ActionBar.TabListener 
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         final Integer id = (Integer) tab.getTag();
         if (id >= 1 && id <= 5) {
-            BaseScheduleFragment baseScheduleFragment = new BaseScheduleFragment();
-            Bundle bundle = new Bundle();
-            bundle.putInt(EXTRA_SCHEDULE_KEY, id);
-            baseScheduleFragment.setArguments(bundle);
-            activate(baseScheduleFragment);
+            activateFragemtnWithId(id);
         } else {
             throw new RuntimeException("no tab with id " + id);
 
         }
+    }
+
+    private void activateFragemtnWithId(Integer id) {
+        checkNotNull(id);
+
+        BaseScheduleFragment baseScheduleFragment = new BaseScheduleFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(EXTRA_SCHEDULE_KEY, id);
+        baseScheduleFragment.setArguments(bundle);
+        activate(baseScheduleFragment);
     }
 
     @Override
@@ -82,5 +92,13 @@ public class ScheduleActivity extends Activity implements ActionBar.TabListener 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ActionBar actionBar = getActionBar();
+        assert actionBar != null;
+        actionBar.removeAllTabs();
     }
 }
