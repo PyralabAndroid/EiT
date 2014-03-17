@@ -1,12 +1,11 @@
 <resources>
 
     <!-- Base application theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
     </style>
 
     <!-- Base activity theme -->
     <style name="BaseActivityStyle">
-        <item name="android:background">@color/bck_main</item>
     </style>
 
     <style name="MenuButtonStyle">
@@ -18,11 +17,28 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/f_btn</item>
     </style>
+
     <style name="MainHeadling">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@color/bck_button</item>
+        <item name="android:padding">15dp</item>
+    </style>
+
+    <style name="MainMessage">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Base">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
 </resources>
