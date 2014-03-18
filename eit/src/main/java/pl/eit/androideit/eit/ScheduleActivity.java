@@ -1,37 +1,62 @@
 package pl.eit.androideit.eit;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Calendar;
 
 import butterknife.ButterKnife;
 import pl.eit.androideit.eit.schedule_fragment.BaseScheduleFragment;
+import pl.eit.androideit.eit.service.Parser;
+import pl.eit.androideit.eit.service.model.BaseSchedule;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class ScheduleActivity extends Activity implements ActionBar.TabListener {
+public class ScheduleActivity extends FragmentActivity implements ActionBar.TabListener {
 
     private static final int MONDAY = 1;
     private static final int TUESDAY = 2;
     private static final int WEDNESDAY = 3;
     private static final int THURSDAY = 4;
     private static final int FRIDAY = 5;
-    public static final String EXTRA_SCHEDULE_KEY = "extra_schedule_key";
+
+    public static boolean EVEN_WEEK;
+
+    private Calendar mCalendar;
+    private Parser mParser;
+    private BaseSchedule mBaseSchedule;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
         ButterKnife.inject(this);
-        Calendar calendar = Calendar.getInstance();
-        final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) -1;
-        getActionBar().setSelectedNavigationItem(dayOfWeek);
+
+        mCalendar = Calendar.getInstance();
+        EVEN_WEEK = mCalendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0;
+
+        mParser = new Parser(getBaseContext());
+        mBaseSchedule = null;
+
+        try {
+            Reader reader = new InputStreamReader(getAssets().open("schedule.json"));
+            mBaseSchedule = mParser.parseSchedule(reader);
+        } catch (IOException e) {
+            throw new RuntimeException("Error when parsing schedule!");
+        }
     }
+
+    public BaseSchedule getBaseSchedule(){
+        return mBaseSchedule;
+    }
+
 
     private void activate(Fragment fragment) {
         checkNotNull(fragment);
@@ -39,12 +64,18 @@ public class ScheduleActivity extends Activity implements ActionBar.TabListener 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.conteiner, fragment);
+        ft.commit();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadTabs();
+
+        final int dayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK) - 1;
+        if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+            getActionBar().setSelectedNavigationItem(dayOfWeek);
+        }
     }
 
     private void loadTabs() {
@@ -76,12 +107,7 @@ public class ScheduleActivity extends Activity implements ActionBar.TabListener 
 
     private void activateFragemtnWithId(Integer id) {
         checkNotNull(id);
-
-        BaseScheduleFragment baseScheduleFragment = new BaseScheduleFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(EXTRA_SCHEDULE_KEY, id);
-        baseScheduleFragment.setArguments(bundle);
-        activate(baseScheduleFragment);
+        activate(BaseScheduleFragment.newInstance(id));
     }
 
     @Override
@@ -100,5 +126,10 @@ public class ScheduleActivity extends Activity implements ActionBar.TabListener 
         ActionBar actionBar = getActionBar();
         assert actionBar != null;
         actionBar.removeAllTabs();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }

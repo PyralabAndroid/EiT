@@ -1,0 +1,656 @@
+{
+	"base_schedule" : [
+	{
+		"info" : {
+			"year" : "4",
+			"group" : "T1",
+			"site" : "left"
+		},
+		"schedule" : {
+			"monday":[
+				{
+				"name" : "Matematyka",
+				"start_time" : "07:30",
+				"end_time" : "09:45",
+				"place" : "C10", 
+				"type" : "wyk",
+				"week" : "always"
+				}, 
+				{
+				"name" : "Matematyka",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "always"   
+				},
+				{
+				"name" : "Matematyka",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "above"   
+				}
+				
+			],
+			"tuesday" :[
+				{
+				"name" : "Zaawansowane Systemy Światłowodowe",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "above"   
+				},
+				{
+				"name" : "Systemy Radiokomunikacji Ruchomej",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "below" 
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "111", 
+				"type" : "cw", 
+				"week" : "above"  
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "above"   
+				},
+				{
+				"name" : "Metody numeryczne",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "below"
+				},
+				 {
+				"name" : "Metody numeryczne",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "P-109", 
+				"type" : "cw", 
+				"week" : "below"
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "15:15", 
+				"end_time" : "16:45", 
+				"place" : "P-024", 
+				"type" : "lab", 
+				"week" : "below"
+				}  
+			],
+			"wednesday" :[
+				{
+				"name" : "Zaawansowane Systemy Światłowodowe",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Satelitarne Systemy Nawigacyjne",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Multimedia Systems",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "P-119A", 
+				"type" : "lab", 
+				"week" : "below"
+				}
+			],
+			"thursday" :[
+				{
+				"name" : "Information and Coding Theory",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "324 BM", 
+				"type" : "cw", 
+				"week" : "always"
+				},
+				{
+				"name" : "Multimedia Systems",
+				"start_time" : "9:45", 
+				"end_time" : "11:15", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				}
+			],
+			"friday" : [
+				{
+				"name" : "Język Obcy",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "323BM / 116WE", 
+				"type" : "cw", 
+				"week" : "always"
+				},
+				{
+				"name" : "Information and Coding Theory",
+				"start_time" : "09:30", 
+				"end_time" : "11:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Systemy Radiokomunikacji Ruchomej",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "always"
+				}
+			]
+		}
+	},
+		{
+		"info" : {
+			"year" : "4",
+			"group" : "T1",
+			"site" : "rigth"
+		},
+		"schedule" : {
+			"monday":[
+				{
+				"name" : "Matematyka",
+				"start_time" : "07:30",
+				"end_time" : "09:45",
+				"place" : "C10", 
+				"type" : "wyk",
+				"week" : "always"
+				}, 
+				{
+				"name" : "Matematyka",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "always"   
+				},
+				{
+				"name" : "Matematyka",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "above"   
+				}
+				
+			],
+			"tuesday" :[
+				{
+				"name" : "Zaawansowane Systemy Światłowodowe",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "above"   
+				},
+				{
+				"name" : "Systemy Radiokomunikacji Ruchomej",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "below" 
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "111", 
+				"type" : "cw", 
+				"week" : "above"  
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "above"   
+				},
+				{
+				"name" : "Metody numeryczne",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "below"
+				},
+				 {
+				"name" : "Metody numeryczne",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "P-109", 
+				"type" : "cw", 
+				"week" : "below"
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "15:15", 
+				"end_time" : "16:45", 
+				"place" : "P-024", 
+				"type" : "lab", 
+				"week" : "above"
+				}  
+			],
+			"wednesday" :[
+				{
+				"name" : "Zaawansowane Systemy Światłowodowe",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Satelitarne Systemy Nawigacyjne",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Multimedia Systems",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "P-119A", 
+				"type" : "lab", 
+				"week" : "above"
+				}
+			],
+			"thursday" :[
+				{
+				"name" : "Information and Coding Theory",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "324 BM", 
+				"type" : "cw", 
+				"week" : "always"
+				},
+				{
+				"name" : "Multimedia Systems",
+				"start_time" : "9:45", 
+				"end_time" : "11:15", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				}
+			],
+			"friday" : [
+				{
+				"name" : "Język Obcy",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "323BM / 116WE", 
+				"type" : "cw", 
+				"week" : "always"
+				},
+				{
+				"name" : "Information and Coding Theory",
+				"start_time" : "09:30", 
+				"end_time" : "11:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Systemy Radiokomunikacji Ruchomej",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "always"
+				}
+			]
+			}
+		},
+		{
+		"info" : {
+			"year" : "4",
+			"group" : "T2",
+			"site" : "left"
+		},
+		"schedule" : {
+			"monday":[
+				{
+				"name" : "Matematyka",
+				"start_time" : "07:30",
+				"end_time" : "09:45",
+				"place" : "C10", 
+				"type" : "wyk",
+				"week" : "always"
+				}, 
+				{
+				"name" : "Matematyka",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "below"   
+				},{
+				"name" : "Matematyka",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "always"   
+				}
+			],
+			"tuesday" :[
+				{
+				"name" : "Systemy Radiokomunikacji Ruchomej",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "111", 
+				"type" : "cw", 
+				"week" : "above"   
+				},
+				{
+				"name" : "Zaawansowane Systemy Światłowodowe",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "below" 
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "111", 
+				"type" : "cw", 
+				"week" : "below"  
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "above"   
+				},
+				{
+				"name" : "Metody numeryczne",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "below"
+				},
+				 {
+				"name" : "Multimedia Systems",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "P-119A", 
+				"type" : "lab", 
+				"week" : "above"
+				},
+				{
+				"name" : "Metody Numeryczne",
+				"start_time" : "15:15", 
+				"end_time" : "16:45", 
+				"place" : "P-109", 
+				"type" : "cw", 
+				"week" : "below"
+				}  
+			],
+			"wednesday" :[
+				{
+				"name" : "Zaawansowane Systemy Światłowodowe",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Satelitarne Systemy Nawigacyjne",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Information and Coding Theory",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "111 WE", 
+				"type" : "cw", 
+				"week" : "always"
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "P-024", 
+				"type" : "lab", 
+				"week" : "below"
+				}
+			],
+			"thursday" :[
+				{
+				"name" : "Multimedia Systems",
+				"start_time" : "9:45", 
+				"end_time" : "11:15", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				}
+			],
+			"friday" : [
+				{
+				"name" : "Język Obcy",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "323BM / 116WE", 
+				"type" : "cw", 
+				"week" : "always"
+				},
+				{
+				"name" : "Information and Coding Theory",
+				"start_time" : "09:30", 
+				"end_time" : "11:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Systemy Radiokomunikacji Ruchomej",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "always"
+				}
+			]
+			}
+		},
+		{
+		"info" : {
+			"year" : "4",
+			"group" : "T2",
+			"site" : "rigth"
+		},
+		"schedule" : {
+			"monday":[
+				{
+				"name" : "Matematyka",
+				"start_time" : "07:30",
+				"end_time" : "09:45",
+				"place" : "C10", 
+				"type" : "wyk",
+				"week" : "always"
+				}, 
+				{
+				"name" : "Matematyka",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "below"   
+				},{
+				"name" : "Matematyka",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "always"   
+				}
+			],
+			"tuesday" :[
+				{
+				"name" : "Systemy Radiokomunikacji Ruchomej",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "111", 
+				"type" : "cw", 
+				"week" : "above"   
+				},
+				{
+				"name" : "Zaawansowane Systemy Światłowodowe",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "116", 
+				"type" : "cw", 
+				"week" : "below" 
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "111", 
+				"type" : "cw", 
+				"week" : "below"  
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "above"   
+				},
+				{
+				"name" : "Metody numeryczne",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "below"
+				},
+				 {
+				"name" : "Multimedia Systems",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "P-119A", 
+				"type" : "lab", 
+				"week" : "below"
+				},
+				{
+				"name" : "Metody Numeryczne",
+				"start_time" : "15:15", 
+				"end_time" : "16:45", 
+				"place" : "P-109", 
+				"type" : "cw", 
+				"week" : "below"
+				}  
+			],
+			"wednesday" :[
+				{
+				"name" : "Zaawansowane Systemy Światłowodowe",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Satelitarne Systemy Nawigacyjne",
+				"start_time" : "09:45", 
+				"end_time" : "11:15", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Information and Coding Theory",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "111 WE", 
+				"type" : "cw", 
+				"week" : "always"
+				},
+				{
+				"name" : "Network Managment",
+				"start_time" : "13:30", 
+				"end_time" : "15:00", 
+				"place" : "P-024", 
+				"type" : "lab", 
+				"week" : "above"
+				}
+			],
+			"thursday" :[
+				{
+				"name" : "Multimedia Systems",
+				"start_time" : "9:45", 
+				"end_time" : "11:15", 
+				"place" : "P-201", 
+				"type" : "wyk", 
+				"week" : "always"
+				}
+			],
+			"friday" : [
+				{
+				"name" : "Język Obcy",
+				"start_time" : "08:00", 
+				"end_time" : "09:30", 
+				"place" : "323BM / 116WE", 
+				"type" : "cw", 
+				"week" : "always"
+				},
+				{
+				"name" : "Information and Coding Theory",
+				"start_time" : "09:30", 
+				"end_time" : "11:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "always"
+				},
+				{
+				"name" : "Systemy Radiokomunikacji Ruchomej",
+				"start_time" : "11:45", 
+				"end_time" : "13:15", 
+				"place" : "C10", 
+				"type" : "wyk", 
+				"week" : "always"
+				}
+			]
+			}
+		}
+	]
+}
