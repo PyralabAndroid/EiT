@@ -40,10 +40,11 @@
                         android:text="@string/main_author" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
                         android:text="Paweł"
                         android:textColor="@color/font"
                         android:textSize="25sp"
@@ -53,7 +54,8 @@
                         style="@style/MainMessage"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="godz.15:30, 17.03.14" />
+                        android:text="godz.15:30, 17.03.14"
+                        android:textSize="12sp" />
                 </TableRow>
 
                 <LinearLayout
@@ -67,7 +69,7 @@
                         style="@style/Base"
                         android:text="Ta apka jest zaje..... :)"
                         android:textColor="@android:color/black"
-                        android:textSize="30sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -83,44 +85,24 @@
                 style="@style/MainHeadling"
                 android:text="@string/main_closest_lessons" />
 
-            <LinearLayout
-                style="@style/Base"
-                android:orientation="vertical"
-                android:layout_marginBottom="5dp">
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
 
-                <TableRow
-                    style="@style/Base"
-                    android:orientation="horizontal">
+            <FrameLayout
+                android:id="@+id/schedule_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                    <TextView
-                        style="@style/MainMessage"
-                        android:layout_weight="1"
-                        android:text="9.45 - 11.15"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        style="@style/MainMessage"
-                        android:text="p. 201"
-                        android:textSize="25sp" />
-                </TableRow>
-
-                <TableRow
-                    style="@style/Base"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/MainMessage"
-                        android:layout_weight="1"
-                        android:text="Matematyka"
-                        android:textSize="25sp"
-                        android:textStyle="italic" />
-
-                    <TextView
-                        style="@style/MainMessage"
-                        android:text="Cwiczenia"
-                        android:textSize="25sp" />
-                </TableRow>
-            </LinearLayout>
+                <include
+                    layout="@layout/base_schedule_list_row"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
         </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

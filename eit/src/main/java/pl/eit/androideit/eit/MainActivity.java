@@ -5,23 +5,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
 
 public class MainActivity extends Activity {
+
     SlidingMenu slidingMenu;
+    Button mScheduleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        getActionBar().hide();
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -43,6 +45,14 @@ public class MainActivity extends Activity {
         slidingMenu.setMenu(R.layout.menu);
         slidingMenu.setBehindWidth(menuWidth);
 
+        mScheduleButton = (Button) findViewById(R.id.menu_bt_plan);
+        mScheduleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
+            }
+        });
+
         LinearLayout mBaseLayout = (LinearLayout)findViewById(R.id.main_ll_base);
         mBaseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,5 +61,4 @@ public class MainActivity extends Activity {
             }
         });
     }
-
 }

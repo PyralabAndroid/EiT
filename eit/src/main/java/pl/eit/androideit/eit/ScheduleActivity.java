@@ -72,7 +72,7 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
         super.onResume();
         loadTabs();
 
-        final int dayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK) - 1;
+        final int dayOfWeek = mCalendar.get(Calendar.DAY_OF_WEEK) - 2;
         if (dayOfWeek >= 1 && dayOfWeek <= 5) {
             getActionBar().setSelectedNavigationItem(dayOfWeek);
         }
