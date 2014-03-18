@@ -85,6 +85,7 @@
                 style="@style/MainHeadling"
                 android:text="@string/main_closest_lessons" />
 
+
             <ProgressBar
                 android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
