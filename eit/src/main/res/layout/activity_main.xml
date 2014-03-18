@@ -2,141 +2,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="pl.eit.androideit.eit.MainActivity">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/main_ll_base"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:weightSum="1">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/et_log"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="25dp"/>
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.31"
-            android:weightSum="1">
+            android:background="@color/bck_ll"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 style="@style/MainHeadling"
-                android:text="HOT News!"
-                android:id="@+id/textView2"
-                android:textColor="@color/f_hot_news"
-                android:layout_gravity="center_horizontal" />
+                android:text="@string/main_hot_new_label" />
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Autor"
-                    android:id="@+id/main_tv_author" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Wiadomosc"
-                    android:id="@+id/main_tv_message" />
+                style="@style/Base"
+                android:orientation="vertical">
 
                 <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    style="@style/Base"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MainMessage"
+                        android:text="@string/main_author" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Data: "
-                        android:id="@+id/main_tv_date"/>
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Paweł"
+                        android:textColor="@color/font"
+                        android:textSize="25sp"
+                        android:textStyle="italic" />
 
                     <TextView
+                        style="@style/MainMessage"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Godzina: "
-                        android:id="@+id/main_tv_hour" />
+                        android:layout_marginLeft="5dp"
+                        android:text="godz.15:30, 17.03.14" />
                 </TableRow>
 
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.59"
-            android:weightSum="1">
-
-            <TextView
-                style="@style/MainHeadling"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Najbliższe zajęcia"
-                android:id="@+id/textView"
-                android:layout_gravity="center_horizontal" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.91"
-                android:weightSum="1">
-
                 <LinearLayout
+                    style="@style/Base"
+                    android:layout_margin="15dp"
+                    android:background="@color/bck_message"
                     android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.25"
-                    android:weightSum="1">
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.33">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="blablabla"
-                            android:id="@+id/main_tv_subject"
-                            android:layout_marginRight="15dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="Sala : "
-                            android:id="@+id/main_tv_room" />
-                    </TableRow>
+                    android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="polanka"
-                        android:id="@+id/main_tv_where" />
+                        style="@style/Base"
+                        android:text="Ta apka jest zaje..... :)"
+                        android:textColor="@android:color/black"
+                        android:textSize="30sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            style="@style/Base"
+            android:layout_marginTop="15dp"
+            android:background="@color/bck_ll"
+            android:orientation="vertical"
+            android:padding="10dp">
 
+            <TextView
+                style="@style/MainHeadling"
+                android:text="@string/main_closest_lessons" />
+
+            <LinearLayout
+                style="@style/Base"
+                android:orientation="vertical"
+                android:layout_marginBottom="5dp">
+
+                <TableRow
+                    style="@style/Base"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MainMessage"
+                        android:layout_weight="1"
+                        android:text="9.45 - 11.15"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        style="@style/MainMessage"
+                        android:text="p. 201"
+                        android:textSize="25sp" />
+                </TableRow>
+
+                <TableRow
+                    style="@style/Base"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/MainMessage"
+                        android:layout_weight="1"
+                        android:text="Matematyka"
+                        android:textSize="25sp"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        style="@style/MainMessage"
+                        android:text="Cwiczenia"
+                        android:textSize="25sp" />
+                </TableRow>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

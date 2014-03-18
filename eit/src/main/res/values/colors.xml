@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bck_main">#A0B8C8</color>
+    <color name="bck_main">#507592</color>
     <color name="bck_menu">#2E3461</color>
     <color name="font">#F9F6F0</color>
     <color name="f_hot_news">#E12809</color>
@@ -11,4 +11,6 @@
     <color name="time_text_color">#F3CF62</color>
     <color name="default_text_color">#FFF</color>
 
+    <color name="bck_ll">#44526D</color>
+    <color name="bck_message">#DAE4DC</color>
 </resources>
