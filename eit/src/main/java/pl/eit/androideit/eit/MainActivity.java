@@ -5,16 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class MainActivity extends Activity {
+
     SlidingMenu slidingMenu;
 
     @Override
@@ -50,6 +49,11 @@ public class MainActivity extends Activity {
                 slidingMenu.toggle();
             }
         });
+    }
+
+    @OnClick(R.id.menu_bt_plan)
+    public void openSchedule(){
+        startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
     }
 
 }

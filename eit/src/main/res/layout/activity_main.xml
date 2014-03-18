@@ -67,7 +67,7 @@
                         style="@style/Base"
                         android:text="Ta apka jest zaje..... :)"
                         android:textColor="@android:color/black"
-                        android:textSize="30sp" />
+                        android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -83,44 +83,12 @@
                 style="@style/MainHeadling"
                 android:text="@string/main_closest_lessons" />
 
-            <LinearLayout
-                style="@style/Base"
-                android:orientation="vertical"
-                android:layout_marginBottom="5dp">
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/base_schedule_list_row" />
 
-                <TableRow
-                    style="@style/Base"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/MainMessage"
-                        android:layout_weight="1"
-                        android:text="9.45 - 11.15"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        style="@style/MainMessage"
-                        android:text="p. 201"
-                        android:textSize="25sp" />
-                </TableRow>
-
-                <TableRow
-                    style="@style/Base"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/MainMessage"
-                        android:layout_weight="1"
-                        android:text="Matematyka"
-                        android:textSize="25sp"
-                        android:textStyle="italic" />
-
-                    <TextView
-                        style="@style/MainMessage"
-                        android:text="Cwiczenia"
-                        android:textSize="25sp" />
-                </TableRow>
-            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>
