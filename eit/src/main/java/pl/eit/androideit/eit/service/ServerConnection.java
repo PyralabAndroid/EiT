@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit.service;
 
 
 import android.util.Log;
@@ -22,11 +22,11 @@ public class ServerConnection {
 	    /** Odpowiedź z serwera */
 	    String result = null;
 
-	    static final String SERVER_UPDATE_URL = "http://eit.besaba.com/update_regid.php"; 
-	    static final String SERVER_LOG_OUT = "http://eit.besaba.com/log_out.php"; 
-	    static final String SERVER_REGISTER = "http://eit.besaba.com/register.php"; 
-	    static final String SERVER_LOGIN = "http://eit.besaba.com/login.php"; 
-	    static final String SERVER_SEND_MESSAGE = "http://eit.besaba.com/sendMessage.php";
+	    public static final String SERVER_UPDATE_URL = "http://eit.besaba.com/update_regid.php";
+	    public static final String SERVER_LOG_OUT = "http://eit.besaba.com/log_out.php";
+	    public static final String SERVER_REGISTER = "http://eit.besaba.com/register.php";
+	    public static final String SERVER_LOGIN = "http://eit.besaba.com/login.php";
+	    public static final String SERVER_SEND_MESSAGE = "http://eit.besaba.com/sendMessage.php";
 	    	    	 	     
 	    /**
 	     * Wysyła zapytanie POST do serwera.

@@ -35,18 +35,18 @@
             android:name="pl.eit.androideit.eit.ScheduleActivity"
             >
         </activity>
-        <activity android:name="pl.eit.androideit.eit.chanel.StartActivity" >
+        <activity android:name=".StartActivity" >
         </activity>
         <activity
-            android:name="pl.eit.androideit.eit.chanel.SingleChannel"
+            android:name=".SingleChannel"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name="pl.eit.androideit.eit.chanel.RegisterActivity" >
+        <activity android:name=".RegisterActivity" >
         </activity>
-        <activity android:name="pl.eit.androideit.eit.chanel.LogInOrSignUp" >
+        <activity android:name=".LogInOrSignUp" >
         </activity>
         <activity
-            android:name="pl.eit.androideit.eit.chanel.ChannelsActivity">
+            android:name=".ChannelsActivity">
         </activity>
     </application>
 

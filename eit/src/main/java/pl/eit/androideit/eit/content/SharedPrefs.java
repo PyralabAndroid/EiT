@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit.content;
 
 import android.content.Context;
 import android.content.SharedPreferences;

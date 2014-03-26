@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -18,7 +18,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.service.GCMRegister;
+import pl.eit.androideit.eit.service.ServerConnection;
+import pl.eit.androideit.eit.content.SharedPrefs;
 
 public class LogInOrSignUp extends Activity {
 	Context context;
