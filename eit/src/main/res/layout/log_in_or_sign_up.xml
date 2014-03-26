@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical"
+    android:paddingTop="30dp"
+    android:background="@drawable/purty_wood">
+    
+    
+   
+    <Button
+        android:id="@+id/li_or_su_createAcc_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create account"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
+        android:onClick="createAcc"
+        android:enabled="true"
+        android:clickable="true">
+    </Button>
+    
+
+    <Button
+        android:id="@+id/li_or_su_login_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Log in"
+        android:enabled="true"
+        android:onClick="logIn"
+        android:clickable="true">
+    </Button>
+    
+    <Button
+        android:id="@+id/li_or_su_logOut_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:onClick="logOut"
+        android:visibility="gone">
+    </Button>
+    
+    <TextView
+        android:id="@+id/li_or_su_loginfo_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:maxLines="6"
+        android:visibility="visible"
+        android:textColor="#303030"
+        android:textSize="18sp"
+        android:gravity="center"        
+        android:text="Create a new account or log in to existing one."> 
+    </TextView>
+    
+    
+
+</LinearLayout>
