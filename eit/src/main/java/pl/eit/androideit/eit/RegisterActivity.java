@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit;
 
 
 import android.app.ActionBar;
@@ -21,7 +21,9 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.service.Crypt;
+import pl.eit.androideit.eit.service.GCMRegister;
+import pl.eit.androideit.eit.content.SharedPrefs;
 
 public class RegisterActivity extends Activity implements GCMRegister.AsyncResponse {
 

@@ -17,7 +17,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends Activity {
 
     SlidingMenu slidingMenu;
-    Button mScheduleButton;
+    private Button mScheduleButton;
+    private Button mChanelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
+            }
+        });
+        mChanelButton = (Button) findViewById(R.id.menu_bt_hotNews);
+        mChanelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
             }
         });
 

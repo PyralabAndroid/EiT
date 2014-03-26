@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit.service;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+
+import pl.eit.androideit.eit.service.model.Chanel;
+import pl.eit.androideit.eit.service.model.Message;
 
 public class DB extends SQLiteOpenHelper {
 
@@ -90,7 +93,7 @@ public class DB extends SQLiteOpenHelper {
 
 	/************ MESSAGE ********************/
 	/** Wstawia wiadomosc do bazy */
-	public void insertMessage(MessageObject message) {
+	public void insertMessage(Message message) {
 		openDb();
 
 		ContentValues values = new ContentValues();
@@ -104,18 +107,18 @@ public class DB extends SQLiteOpenHelper {
 	}
 
 	/** Pobiera wiadomości dla danego kanału **/
-	public ArrayList<MessageObject> getMessagesForChannel(int channel) {
+	public ArrayList<Message> getMessagesForChannel(int channel) {
 		openDb();
 		Cursor cursor = sqlDb.query(TABLE_MESSAGES, null, MESSAGES_CHANNEL_ID
 				+ "=?", new String[] { String.valueOf(channel) }, null, null,
 				MESSAGES_MESSAGE_DATE + " ASC");
 
-		ArrayList<MessageObject> result = new ArrayList<MessageObject>();
-		MessageObject message;
+		ArrayList<Message> result = new ArrayList<Message>();
+		Message message;
 		if (cursor != null) {
 			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
 					.moveToNext()) {
-				message = new MessageObject(cursor.getString(cursor
+				message = new Message(cursor.getString(cursor
 						.getColumnIndex(MESSAGES_MESSAGE)),
 						cursor.getInt(cursor
 								.getColumnIndex(MESSAGES_CHANNEL_ID)),
@@ -136,9 +139,9 @@ public class DB extends SQLiteOpenHelper {
 
 	/************** CHANNELS ********************/
 	/** Zwraca listę subskrybowanych kanałów **/
-	public ArrayList<ChannelObject> getChannels(String[] subscriptions) {
-		ArrayList<ChannelObject> result = new ArrayList<ChannelObject>();
-		ChannelObject channel;
+	public ArrayList<Chanel> getChannels(String[] subscriptions) {
+		ArrayList<Chanel> result = new ArrayList<Chanel>();
+		Chanel channel;
 		openDb();
 
 		/*
@@ -158,7 +161,7 @@ public class DB extends SQLiteOpenHelper {
 		if (cursor.getCount() > 0) {
 			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
 					.moveToNext()) {
-				channel = new ChannelObject(cursor.getInt(cursor
+				channel = new Chanel(cursor.getInt(cursor
 						.getColumnIndex(CHANNEL_ROW_ID)),
 						cursor.getString(cursor.getColumnIndex(CHANNEL)));
 				result.add(channel);

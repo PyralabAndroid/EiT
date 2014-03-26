@@ -1,10 +1,10 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit.service.model;
 
-public class ChannelObject {
+public class Chanel {
 	public String channelName;
 	public int channelId;
 	
-	public ChannelObject(int channelId, String channelName){
+	public Chanel(int channelId, String channelName){
 		this.channelId = channelId;
 		this.channelName = channelName;
 	}
