@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit;
+package pl.eit.androideit.eit.chanel;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import pl.eit.androideit.eit.R;
 import pl.eit.androideit.eit.content.SharedPrefs;
 import pl.eit.androideit.eit.service.DB;
 import pl.eit.androideit.eit.service.ServerConnection;

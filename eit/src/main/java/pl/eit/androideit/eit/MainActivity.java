@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import butterknife.ButterKnife;
+import pl.eit.androideit.eit.chanel.ChannelsActivity;
 
 
 public class MainActivity extends Activity {

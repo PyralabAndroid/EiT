@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit;
+package pl.eit.androideit.eit.chanel;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import pl.eit.androideit.eit.chanel.ChanelListAdapter;
+import pl.eit.androideit.eit.R;
 import pl.eit.androideit.eit.service.DB;
 import pl.eit.androideit.eit.service.model.Chanel;
 

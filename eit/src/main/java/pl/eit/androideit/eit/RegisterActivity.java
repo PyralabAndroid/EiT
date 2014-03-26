@@ -21,6 +21,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pl.eit.androideit.eit.chanel.ChannelsActivity;
 import pl.eit.androideit.eit.service.Crypt;
 import pl.eit.androideit.eit.service.GCMRegister;
 import pl.eit.androideit.eit.content.SharedPrefs;
