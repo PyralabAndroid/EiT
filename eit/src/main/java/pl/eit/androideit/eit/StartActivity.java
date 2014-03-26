@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import pl.eit.androideit.eit.R;
 
 
 public class StartActivity extends Activity {

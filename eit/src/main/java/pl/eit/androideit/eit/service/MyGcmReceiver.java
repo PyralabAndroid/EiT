@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit.service;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -12,6 +12,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.SingleChannel;
 
 public class MyGcmReceiver extends BroadcastReceiver{
 	private static final String TAG = "MyGcmReceiver";

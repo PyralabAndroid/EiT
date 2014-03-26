@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit;
 
 import android.app.ActionBar;
 import android.app.ListActivity;
@@ -17,10 +17,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.service.model.Chanel;
+import pl.eit.androideit.eit.service.DB;
 
 public class ChannelsActivity extends ListActivity {
-	ArrayList<ChannelObject> listItems;
+	ArrayList<Chanel> listItems;
 	CustomListAdapter mAdapter;
 	
 	@Override
@@ -64,13 +65,13 @@ public class ChannelsActivity extends ListActivity {
 		}
 	}
 	
-	class CustomListAdapter extends ArrayAdapter<ChannelObject>{
+	class CustomListAdapter extends ArrayAdapter<Chanel>{
 			
 			Context context;
-			ArrayList<ChannelObject> channelsArray;
+			ArrayList<Chanel> channelsArray;
 			int rowLayout;
 			
-			CustomListAdapter(Context context, int rowLayout, ArrayList<ChannelObject> channelsArray){
+			CustomListAdapter(Context context, int rowLayout, ArrayList<Chanel> channelsArray){
 				super(context, rowLayout, channelsArray);
 				this.context = context;
 				this.channelsArray = channelsArray;
@@ -99,7 +100,7 @@ public class ChannelsActivity extends ListActivity {
 					holder = (ViewHolder)view.getTag();
 				}
 				
-				final ChannelObject singleChannel = listItems.get(position);
+				final Chanel singleChannel = listItems.get(position);
 				holder.channelName.setText(singleChannel.channelName);
 				
 				// Obsługa kliknięcia na kanał - ładuje wybrany kanał.
@@ -109,7 +110,7 @@ public class ChannelsActivity extends ListActivity {
 					public void onItemClick(AdapterView<?> parent, View v,
 							int position, long id) {
 						
-						ChannelObject channel = listItems.get(position);
+						Chanel channel = listItems.get(position);
 						Intent intent = new Intent(ChannelsActivity.this, SingleChannel.class);
 						intent.putExtra("channelId", channel.channelId);
 						intent.putExtra("channelName", channel.channelName);

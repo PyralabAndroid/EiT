@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit;
 
 import android.app.ListActivity;
 import android.content.Context;
@@ -22,14 +22,17 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.content.SharedPrefs;
+import pl.eit.androideit.eit.service.DB;
+import pl.eit.androideit.eit.service.ServerConnection;
+import pl.eit.androideit.eit.service.model.Message;
 
 public class SingleChannel extends ListActivity {
 	Context context;
 	static String TAG = "GCM";
 	String channelName;
 	int channelId;
-	ArrayList<MessageObject> listItems;
+	ArrayList<Message> listItems;
 	CustomListAdapter mAdapter;
 	/** Nazwa usera do wyswietlania obok tekstu wiadomosci **/
 	String userName;
@@ -106,7 +109,7 @@ public class SingleChannel extends ListActivity {
 			// Data wiadomości
 			long messageTimestamp = System.currentTimeMillis();
 			// Obiekt wiadomości
-			MessageObject msgObj = new MessageObject(message, channelId, messageTimestamp, userName);
+			Message msgObj = new Message(message, channelId, messageTimestamp, userName);
 			// Wysyłanie wiadomości na serwer
 			sendMessageToServer(msgObj);
 			//Dodawanie wiadomości do listy
@@ -139,7 +142,7 @@ public class SingleChannel extends ListActivity {
 	}
 	
 	/** Wysyła wiadomość do serwera **/
-	public void sendMessageToServer(MessageObject msgObj){
+	public void sendMessageToServer(Message msgObj){
 		JSONObject json = new JSONObject();
 		try {
 			json.put("message", msgObj.message);
@@ -162,13 +165,13 @@ public class SingleChannel extends ListActivity {
 	}
 	
 	
-	class CustomListAdapter extends ArrayAdapter<MessageObject>{
+	class CustomListAdapter extends ArrayAdapter<Message>{
 		
 		Context context;
-		ArrayList<MessageObject> items;
+		ArrayList<Message> items;
 		int rowLayout;
 		
-		CustomListAdapter(Context context, int rowLayout, ArrayList<MessageObject> items){
+		CustomListAdapter(Context context, int rowLayout, ArrayList<Message> items){
 			super(context, rowLayout, items);
 			this.context = context;
 			this.items = items;
@@ -201,7 +204,7 @@ public class SingleChannel extends ListActivity {
 				holder = (ViewHolder)view.getTag();
 			}
 			
-			MessageObject rowItem = items.get(position);
+			Message rowItem = items.get(position);
 			holder.message.setText(rowItem.message);
 			holder.userName.setText(rowItem.userName);
 			

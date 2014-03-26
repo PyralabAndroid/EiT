@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit.service;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
