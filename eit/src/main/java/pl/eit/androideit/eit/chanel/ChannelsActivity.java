@@ -3,6 +3,7 @@ package pl.eit.androideit.eit.chanel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,8 +31,10 @@ public class ChannelsActivity extends FragmentActivity implements OnItemClickLis
         setContentView(R.layout.activity_channels);
         ButterKnife.inject(this);
 
+        mListView.setOnItemClickListener(this);
+
         final DB db = new DB(this);
-        String[] subscriptions = {"0", "1", "2", "3", "4", "5"};  //TODO pobierać listę subskrybowanych kanałów z ustawień
+        String[] subscriptions = {"1", "2", "3", "4", "5"};  //TODO pobierać listę subskrybowanych kanałów z ustawień
         listItems = db.getChannels(subscriptions);
         mAdapter = new ChanelListAdapter(this, R.layout.channels_activity_row, listItems);
         mListView.setAdapter(mAdapter);
@@ -41,7 +44,7 @@ public class ChannelsActivity extends FragmentActivity implements OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Chanel channel = listItems.get(position);
         Intent intent = new Intent(ChannelsActivity.this, SingleChannel.class);
-        intent.putExtra("channelId", channel.channelId);
+        intent.putExtra("channelTimestamp", channel.channelTimestamp);
         intent.putExtra("channelName", channel.channelName);
         startActivity(intent);
     }

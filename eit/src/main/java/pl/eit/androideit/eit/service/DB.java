@@ -17,21 +17,22 @@ public class DB extends SQLiteOpenHelper {
 
 	/*************** DEFINICJA BAZY DANYCH i KOLUMN TABEL **********************/
 
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	private static final String DATABASE_NAME = "shoutboxDB.db";
 
 	// ! TABELA WIADOMOSCI.
 	private final String TABLE_MESSAGES = "Messages";
 	private final String MESSAGES_ROW_ID = "_id";
 	private final String MESSAGES_MESSAGE = "message";
-	private final String MESSAGES_CHANNEL_ID = "channel_id";
+	private final String MESSAGES_CHANNEL_TIMESTAMP = "channel_timestamp";
 	private final String MESSAGES_USER_NAME = "user_name";
-	private final String MESSAGES_MESSAGE_DATE = "message_date";
+	private final String MESSAGES_MESSAGE_TIMESTAMP = "message_timestamp";
 
 	// ! TABELA Kanałów.
 	private static final String TABLE_CHANNELS = "Channels";
 	private final String CHANNEL_ROW_ID = "_id";
-	private final String CHANNEL = "channel";
+	private final String CHANNEL_NAME = "channel_name";
+    private final String CHANNEL_TIMESTAMP = "channel_timestamp";
 
 	/**********************************************************/
 
@@ -46,14 +47,14 @@ public class DB extends SQLiteOpenHelper {
 
 		String CREATE_MESSAGES = "CREATE TABLE " + TABLE_MESSAGES + "("
 				+ MESSAGES_ROW_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ MESSAGES_MESSAGE + " TEXT NOT NULL," + MESSAGES_MESSAGE_DATE
+				+ MESSAGES_MESSAGE + " TEXT NOT NULL," + MESSAGES_MESSAGE_TIMESTAMP
 				+ " INTEGER," + MESSAGES_USER_NAME + " TEXT,"
-				+ MESSAGES_CHANNEL_ID + " INTEGER" /** REFERENCES " + CHANNEL_ROW_ID
+				+ MESSAGES_CHANNEL_TIMESTAMP + " INTEGER" /** REFERENCES " + CHANNEL_ROW_ID
 				+ " ON DELETE CASCADE" **/ + ")";
 
 		String CREATE_CHANNELS = "CREATE TABLE " + TABLE_CHANNELS + "("
 				+ CHANNEL_ROW_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-				+ CHANNEL + " TEXT NOT NULL" + ")";
+				+ CHANNEL_NAME + " TEXT NOT NULL, " + CHANNEL_TIMESTAMP + " INTEGER" + ")";
 
 		db.execSQL(CREATE_CHANNELS);
 		db.execSQL(CREATE_MESSAGES);
@@ -62,8 +63,9 @@ public class DB extends SQLiteOpenHelper {
 		// Domyślnie do bazy wstawiane są kanały dla każdego roku.
 		ContentValues values = new ContentValues();
 		String[] years = { "I", "II", "III", "IV", "V" };
-		for (String year : years) {
-			values.put(CHANNEL, "Rok " + year);
+		for (int i=1; i<= years.length; i++) {
+			values.put(CHANNEL_NAME, "Rok " + years[i-1]);
+            values.put(CHANNEL_TIMESTAMP, i);
 			db.insert(TABLE_CHANNELS, null, values);
 		}
 
@@ -98,20 +100,20 @@ public class DB extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 		values.put(MESSAGES_MESSAGE, message.message);
-		values.put(MESSAGES_MESSAGE_DATE, message.messageDate);
+		values.put(MESSAGES_MESSAGE_TIMESTAMP, message.messageTimestamp);
 		values.put(MESSAGES_USER_NAME, message.userName);
-		values.put(MESSAGES_CHANNEL_ID, message.channelId);
+		values.put(MESSAGES_CHANNEL_TIMESTAMP, message.channelTimestamp);
 
 		sqlDb.insert(TABLE_MESSAGES, null, values);
 		sqlDb.close();
 	}
 
 	/** Pobiera wiadomości dla danego kanału **/
-	public ArrayList<Message> getMessagesForChannel(int channel) {
+	public ArrayList<Message> getMessagesForChannel(long channelTimestamp) {
 		openDb();
-		Cursor cursor = sqlDb.query(TABLE_MESSAGES, null, MESSAGES_CHANNEL_ID
-				+ "=?", new String[] { String.valueOf(channel) }, null, null,
-				MESSAGES_MESSAGE_DATE + " ASC");
+		Cursor cursor = sqlDb.query(TABLE_MESSAGES, null, MESSAGES_CHANNEL_TIMESTAMP
+				+ "=?", new String[] { String.valueOf(channelTimestamp) }, null, null,
+				MESSAGES_MESSAGE_TIMESTAMP + " ASC");
 
 		ArrayList<Message> result = new ArrayList<Message>();
 		Message message;
@@ -120,10 +122,10 @@ public class DB extends SQLiteOpenHelper {
 					.moveToNext()) {
 				message = new Message(cursor.getString(cursor
 						.getColumnIndex(MESSAGES_MESSAGE)),
-						cursor.getInt(cursor
-								.getColumnIndex(MESSAGES_CHANNEL_ID)),
 						cursor.getLong(cursor
-								.getColumnIndex(MESSAGES_MESSAGE_DATE)),
+                                .getColumnIndex(MESSAGES_CHANNEL_TIMESTAMP)),
+						cursor.getLong(cursor
+								.getColumnIndex(MESSAGES_MESSAGE_TIMESTAMP)),
 						cursor.getString(cursor
 								.getColumnIndex(MESSAGES_USER_NAME)));
 
@@ -156,14 +158,14 @@ public class DB extends SQLiteOpenHelper {
 		}
 
 		Cursor cursor = sqlDb.rawQuery("SELECT * FROM " + TABLE_CHANNELS
-				+ " WHERE " + CHANNEL_ROW_ID + " IN (" + builder.toString()
+				+ " WHERE " + CHANNEL_TIMESTAMP + " IN (" + builder.toString()
 				+ ")", subscriptions);
 		if (cursor.getCount() > 0) {
 			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
 					.moveToNext()) {
-				channel = new Chanel(cursor.getInt(cursor
-						.getColumnIndex(CHANNEL_ROW_ID)),
-						cursor.getString(cursor.getColumnIndex(CHANNEL)));
+				channel = new Chanel(cursor.getLong(cursor
+                        .getColumnIndex(CHANNEL_TIMESTAMP)),
+						cursor.getString(cursor.getColumnIndex(CHANNEL_NAME)));
 				result.add(channel);
 			}
 		}

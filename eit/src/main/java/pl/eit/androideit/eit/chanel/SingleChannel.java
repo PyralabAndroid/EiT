@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -32,7 +33,7 @@ public class SingleChannel extends ListActivity {
 	Context context;
 	static String TAG = "GCM";
 	String channelName;
-	int channelId;
+	long channelTimestamp;
 	ArrayList<Message> listItems;
 	CustomListAdapter mAdapter;
 	/** Nazwa usera do wyswietlania obok tekstu wiadomosci **/
@@ -47,7 +48,7 @@ public class SingleChannel extends ListActivity {
 		
 		Intent intent = getIntent();
 		channelName = intent.getStringExtra("channelName");
-		channelId = intent.getIntExtra("channelId", -1);
+		channelTimestamp = intent.getLongExtra("channelTimestamp", -1);
 		
 		// Pobiera nazwe usera
 		SharedPrefs sp = new SharedPrefs(this);
@@ -66,8 +67,9 @@ public class SingleChannel extends ListActivity {
 	protected void onResume() {
 		super.onResume();
 		DB db = new DB(this);
-		listItems = db.getMessagesForChannel(channelId);
-		mAdapter = new CustomListAdapter(this, R.layout.channel_row, listItems);
+		listItems = db.getMessagesForChannel(channelTimestamp);
+        Log.d("timestamp", "z: " +String.valueOf(channelTimestamp));
+        mAdapter = new CustomListAdapter(this, R.layout.channel_row, listItems);
 		setListAdapter(mAdapter);
 	}
 	
@@ -107,12 +109,12 @@ public class SingleChannel extends ListActivity {
 			// Tekst wiadomości
 			String message = messageET.getText().toString();
 			messageET.setText("");
-			// Data wiadomości
+			// Timestamp wiadomości
 			long messageTimestamp = System.currentTimeMillis();
 			// Obiekt wiadomości
-			Message msgObj = new Message(message, channelId, messageTimestamp, userName);
+			Message msgObj = new Message(message, channelTimestamp, messageTimestamp, userName);
 			// Wysyłanie wiadomości na serwer
-			sendMessageToServer(msgObj);
+			//sendMessageToServer(msgObj);
 			//Dodawanie wiadomości do listy
 			listItems.add(msgObj);
 			mAdapter.notifyDataSetChanged();
@@ -147,9 +149,9 @@ public class SingleChannel extends ListActivity {
 		JSONObject json = new JSONObject();
 		try {
 			json.put("message", msgObj.message);
-			json.put("messageDate", msgObj.messageDate);
+			json.put("messageTimestamp", msgObj.messageTimestamp);
 			json.put("userName", msgObj.userName);
-			json.put("channelId", msgObj.channelId);
+			json.put("channelTimestamp", msgObj.channelTimestamp);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -209,9 +211,9 @@ public class SingleChannel extends ListActivity {
 			holder.message.setText(rowItem.message);
 			holder.userName.setText(rowItem.userName);
 			
-			long date = rowItem.messageDate;
+			long date = rowItem.messageTimestamp;
 			if(date > 0){
-				String messageDate = DateFormat.format("dd MMM HH:mm:ss", date).toString();
+				String messageDate = DateFormat.format("dd MMM hh:mm:ss", date).toString();
 				holder.date.setText(messageDate);
 			}
 			

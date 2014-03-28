@@ -2,14 +2,13 @@ package pl.eit.androideit.eit.service.model;
 
 public class Message {
 	public String message, userName;
-	public int channelId;
-	public long messageDate;
+	public long channelTimestamp, messageTimestamp;
 	
-	public Message(String message, int channelId, long messageDate, String userName){
+	public Message(String message, long channelTimestamp, long messageTimestamp, String userName){
 		this.message = message;
-		this.channelId = channelId;
+		this.channelTimestamp = channelTimestamp;
 		this.userName = userName;
-		this.messageDate = messageDate;
+		this.messageTimestamp = messageTimestamp;
 	}
 	
 }

@@ -28,17 +28,7 @@ public class StartActivity extends Activity {
 	}
 
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		int itemId = item.getItemId();
-		if (itemId == R.id.start_register_window) {
-			Intent intent = new Intent(this, LogInOrSignUp.class);
-			startActivity(intent);
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 
 
 

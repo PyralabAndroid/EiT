@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import pl.eit.androideit.eit.chanel.SingleChannel;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public class ChannelsActivity extends FragmentActivity implements OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Chanel channel = listItems.get(position);
         Intent intent = new Intent(ChannelsActivity.this, SingleChannel.class);
-        intent.putExtra("channelId", channel.channelId);
+        intent.putExtra("channelTimestamp", channel.channelTimestamp);
         intent.putExtra("channelName", channel.channelName);
         startActivity(intent);
     }
