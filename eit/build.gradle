@@ -27,5 +27,6 @@ dependencies {
     compile "com.google.code.findbugs:jsr305:2.0.1"
     compile "javax.inject:javax.inject:1"
     compile 'com.squareup.picasso:picasso:2.2.+'
+    compile 'com.nhaarman.listviewanimations:library:2.6.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

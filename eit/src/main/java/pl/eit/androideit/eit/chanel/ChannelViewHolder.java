@@ -1,0 +1,28 @@
+package pl.eit.androideit.eit.chanel;
+
+import android.view.View;
+import android.widget.TextView;
+
+import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.service.model.Chanel;
+import uk.co.ribot.easyadapter.ItemViewHolder;
+import uk.co.ribot.easyadapter.PositionInfo;
+import uk.co.ribot.easyadapter.annotations.LayoutId;
+import uk.co.ribot.easyadapter.annotations.ViewId;
+
+@LayoutId(R.layout.channels_activity_row)
+public class ChannelViewHolder extends ItemViewHolder<Chanel> {
+
+    @ViewId(R.id.channels_list_row_channel_name)
+    TextView mChannelName;
+
+    public ChannelViewHolder(View view) {
+        super(view);
+    }
+
+    @Override
+    public void onSetValues(Chanel chanel, PositionInfo positionInfo) {
+        mChannelName.setText(chanel.channelName);
+    }
+}
+

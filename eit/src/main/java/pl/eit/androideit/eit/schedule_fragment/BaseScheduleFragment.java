@@ -14,17 +14,17 @@ import butterknife.InjectView;
 import pl.eit.androideit.eit.R;
 import pl.eit.androideit.eit.ScheduleActivity;
 import pl.eit.androideit.eit.service.ScheduleFinder;
+import uk.co.ribot.easyadapter.EasyAdapter;
 
 public class BaseScheduleFragment extends Fragment {
 
-    public static final String EXTRA_SCHEDULE_KEY = "extra_schedule_key";
+    private static final String EXTRA_SCHEDULE_KEY = "extra_schedule_key";
 
     private int mScheduleId;
 
     @InjectView(R.id.base_schedule_list_view)
     ListView mListView;
 
-    private ScheduleListAdapter mScheduleListAdapter;
     private ScheduleFinder mScheduleFinder;
 
     public static BaseScheduleFragment newInstance(int id) {
@@ -45,8 +45,8 @@ public class BaseScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
         List<ScheduleItem> list = mScheduleFinder.getScheduleList();
-        mScheduleListAdapter = new ScheduleListAdapter(getActivity().getBaseContext(), list);
-        mListView.setAdapter(mScheduleListAdapter);
+        mListView.setAdapter(new EasyAdapter<ScheduleItem>(getActivity().getBaseContext(),
+                ScheduleViewHolder.class, list));
     }
 
     @Override
@@ -58,6 +58,4 @@ public class BaseScheduleFragment extends Fragment {
                 ((ScheduleActivity)getActivity()).getBaseSchedule(),
                 mScheduleId);
     }
-
-
 }
