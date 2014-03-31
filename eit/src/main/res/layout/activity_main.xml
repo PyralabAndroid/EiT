@@ -6,33 +6,32 @@
 
     <ImageView
         android:id="@+id/home"
-        android:src="@drawable/bg"
-        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg" />
 
     <LinearLayout
-        android:layout_margin="@dimen/activity_vertical_margin"
         android:id="@+id/main_ll_base"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
             style="@style/MainHeadling"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
             android:text="@string/main_hot_new_label" />
 
         <LinearLayout
             style="@style/Base"
-            android:background="@drawable/dialog_btn_normal_bg"
+            android:background="@drawable/blue_button"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TableRow
-
                 style="@style/Base"
                 android:orientation="horizontal">
 
@@ -71,15 +70,21 @@
 
 
         <TextView
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
             style="@style/MainHeadling"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
             android:text="@string/main_closest_lessons" />
 
-        <include
-            layout="@layout/base_schedule_list_row"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/blue_button">
+
+            <include
+                layout="@layout/base_schedule_list_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -13,4 +13,8 @@
 
     <color name="bck_ll">#44526D</color>
     <color name="bck_message">#DAE4DC</color>
+
+    <color name="tab_not_pressed_color">#ff2d2b94</color>
+    <color name="tab_pressed_color">#ffacbdfc</color>
+    <color name="actionbar_bg_color">#ffacbdfc</color>
 </resources>

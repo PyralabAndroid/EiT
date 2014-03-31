@@ -2,10 +2,37 @@
 
     <!-- Base application theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:actionBarTabStyle">@style/EiTActionBarTabStyle</item>
+        <item name="android:actionBarTabTextStyle">@style/EiTActionBarTitleTextStyle</item>
     </style>
 
     <!-- Base activity theme -->
-    <style name="BaseActivityStyle">
+    <style name="BaseActivityStyle"></style>
+
+    <style name="ActionBarStyle" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/EiTActionBarStyle</item>
+        <item name="android:textColor">@color/default_text_color</item>
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/EiTActionBarStyle</item>
+    </style>
+
+    <style name="EiTActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/actionbar_bg_color</item>
+        <!-- Support library compatibility -->
+        <item name="background">@color/actionbar_bg_color</item>
+    </style>
+
+    <style name="EiTActionBarTabStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:padding">4dp</item>
+        <item name="android:background">@drawable/tab_action</item>
+        <item name="android:gravity">center</item>
+        <!-- Support library compatibility -->
+        <item name="background">@drawable/tab_action</item>
+    </style>
+
+    <style name="EiTActionBarTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/default_text_color</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="MenuButtonStyle">
