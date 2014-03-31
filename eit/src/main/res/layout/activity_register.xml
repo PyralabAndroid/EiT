@@ -1,65 +1,102 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/purty_wood" >    
-      
-      
-    <EditText android:id="@+id/registerEmail"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:layout_margin="10dip"
-         android:hint="Email*"
-         android:maxLength="45"
-         android:inputType="textEmailAddress"
-         android:layout_marginBottom="20dip"/>
-      
-      
-     <EditText android:id="@+id/registerPassword"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:layout_margin="10dip"
-         android:hint="Password*"
-         android:inputType="textPassword"
-         android:maxLength="45"
-         android:layout_marginBottom="20dip"/>
-     
-      
-     <EditText android:id="@+id/registerName"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:layout_margin="10dip"
-         android:hint="Name*"
-         android:layout_marginBottom="20dip"/>
-         
-      
-     <Button android:id="@+id/btnRegister"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:text="Register"
-         android:layout_margin="10dip"
-         android:onClick="onClick"/>
-     
-     
-     <TextView 
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_margin="15dp"
-         android:textColor="#303030"
-         android:textSize="16sp"
-         android:maxLines="4"
-         android:text="* Required fileds \n
-Name identifies you within account users." />
-     
-     
-     <WebView
-         android:id="@+id/register_webview"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:visibility="gone">
-     </WebView>
-     
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:gravity="center"
+    android:orientation="vertical">
 
+
+    <LinearLayout
+        android:id="@+id/register_acc_name"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="@string/register_nick" />
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/registerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="*"
+                android:textColor="@color/f_hot_news" />
+        </TableRow>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/register_email" />
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/registerEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="*"
+            android:textColor="@color/f_hot_news" />
+    </TableRow>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/register_password" />
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/registerPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="*"
+            android:textColor="@color/f_hot_news" />
+    </TableRow>
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/blue_button"
+        android:onClick="onClick"
+        android:text="Register"
+        android:textColor="@color/default_text_color" />
 
 </LinearLayout>

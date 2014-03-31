@@ -1,25 +1,28 @@
 package pl.eit.androideit.eit;
 
 import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import pl.eit.androideit.eit.schedule_fragment.BaseScheduleFragment;
 import pl.eit.androideit.eit.service.Parser;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-public class ScheduleActivity extends FragmentActivity implements ActionBar.TabListener {
+public class ScheduleActivity extends FragmentActivity implements ActionBar.TabListener,
+        ViewPager.OnPageChangeListener {
 
     private static final int MONDAY = 1;
     private static final int TUESDAY = 2;
@@ -32,6 +35,12 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     private Calendar mCalendar;
     private Parser mParser;
     private BaseSchedule mBaseSchedule;
+
+    @InjectView(R.id.pager)
+    ViewPager mPager;
+
+    private PagerAdapter mPagerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +60,22 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
         } catch (IOException e) {
             throw new RuntimeException("Error when parsing schedule!");
         }
+
+        mPagerAdapter = new ScreenSlideAdapter(getSupportFragmentManager(), getFragments());
+        mPager.setAdapter(mPagerAdapter);
+        mPager.setOnPageChangeListener(this);
+    }
+
+    private List<Fragment> getFragments() {
+        List<Fragment> fragments = new ArrayList<Fragment>();
+        for (int i=0 ;i <5; i++) {
+            fragments.add(BaseScheduleFragment.newInstance(i+1));
+        }
+        return fragments;
     }
 
     public BaseSchedule getBaseSchedule(){
         return mBaseSchedule;
-    }
-
-
-    private void activate(Fragment fragment) {
-        checkNotNull(fragment);
-
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.conteiner, fragment);
-        ft.commit();
     }
 
     @Override
@@ -94,20 +105,18 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
                 .setTabListener(this).setTag(FRIDAY));
     }
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        final Integer id = (Integer) tab.getTag();
-        if (id >= 1 && id <= 5) {
-            activateFragemtnWithId(id);
-        } else {
-            throw new RuntimeException("no tab with id " + id);
 
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ActionBar actionBar = getActionBar();
+        assert actionBar != null;
+        actionBar.removeAllTabs();
     }
 
-    private void activateFragemtnWithId(Integer id) {
-        checkNotNull(id);
-        activate(BaseScheduleFragment.newInstance(id));
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        mPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
@@ -121,15 +130,17 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        ActionBar actionBar = getActionBar();
-        assert actionBar != null;
-        actionBar.removeAllTabs();
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onPageSelected(int position) {
+        getActionBar().setSelectedNavigationItem(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

@@ -14,5 +14,8 @@
     <string name="main_author">autor: </string>
     <string name="start_create_account">Utwórz konto</string>
     <string name="start_login">Zaloguj</string>
+    <string name="register_email">Email</string>
+    <string name="register_password">Hasło</string>
+    <string name="register_nick">Nazwa użytkownika</string>
 
 </resources>

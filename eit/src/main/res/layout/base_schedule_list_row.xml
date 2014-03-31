@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_vertical_margin"
-    android:background="@color/bck_ll"
+    android:padding="10dp"
+    android:background="@color/bck_menu"
     android:orientation="vertical">
 
     <TableRow

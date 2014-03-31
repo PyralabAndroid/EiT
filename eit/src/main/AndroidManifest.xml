@@ -39,7 +39,8 @@
 
         <activity android:name=".chanel.ChannelsActivity" />
         <activity android:name=".chanel.SingleChannel" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivity"
+            android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".LogInOrSignUp" />
     </application>
 
