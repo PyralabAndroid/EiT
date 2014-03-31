@@ -17,5 +17,8 @@
     <string name="register_email">Email</string>
     <string name="register_password">Hasło</string>
     <string name="register_nick">Nazwa użytkownika</string>
+    <string name="welcome_text">WItamy w tej zajebistej apce</string>
+    <string name="schedule_change_group">Zmien grupe</string>
+    <string name="schedule_change_week">Zmien tydzien</string>
 
 </resources>

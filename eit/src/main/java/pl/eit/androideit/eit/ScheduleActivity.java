@@ -1,12 +1,15 @@
 package pl.eit.androideit.eit;
 
 import android.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -40,6 +43,7 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     ViewPager mPager;
 
     private PagerAdapter mPagerAdapter;
+    private ActionBar mActionBar;
 
 
     @Override
@@ -47,6 +51,11 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
         ButterKnife.inject(this);
+
+        mActionBar = getActionBar();
+        mActionBar.setTitle("Plan zajęć");
+        mActionBar.setDisplayShowHomeEnabled(true);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
 
         mCalendar = Calendar.getInstance();
         EVEN_WEEK = mCalendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0;
@@ -90,43 +99,53 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     }
 
     private void loadTabs() {
-        ActionBar actionBar = getActionBar();
-        assert actionBar != null;
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.addTab(actionBar.newTab().setText(getString(R.string.monday))
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        mActionBar.addTab(mActionBar.newTab().setText(getString(R.string.monday))
                 .setTabListener(this).setTag(MONDAY));
-        actionBar.addTab(actionBar.newTab().setText(getString(R.string.tuesday))
+        mActionBar.addTab(mActionBar.newTab().setText(getString(R.string.tuesday))
                 .setTabListener(this).setTag(TUESDAY));
-        actionBar.addTab(actionBar.newTab().setText(getString(R.string.wednesday))
+        mActionBar.addTab(mActionBar.newTab().setText(getString(R.string.wednesday))
                 .setTabListener(this).setTag(WEDNESDAY));
-        actionBar.addTab(actionBar.newTab().setText(getString(R.string.thursday))
+        mActionBar.addTab(mActionBar.newTab().setText(getString(R.string.thursday))
                 .setTabListener(this).setTag(THURSDAY));
-        actionBar.addTab(actionBar.newTab().setText(getString(R.string.friday))
+        mActionBar.addTab(mActionBar.newTab().setText(getString(R.string.friday))
                 .setTabListener(this).setTag(FRIDAY));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.schedule_menu_action, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final int id = item.getItemId();
+        switch(id) {
+            case R.id.action_change_group:
+                 changeGroup();
+                return true;
+            case R.id.action_change_week:
+                changeWeek();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void changeWeek() {
+
+    }
+
+    private void changeGroup() {
+
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ActionBar actionBar = getActionBar();
-        assert actionBar != null;
-        actionBar.removeAllTabs();
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        mPager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
+        mActionBar.removeAllTabs();
     }
 
     @Override
@@ -141,6 +160,21 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
 
     @Override
     public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        mPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
     }
 }
