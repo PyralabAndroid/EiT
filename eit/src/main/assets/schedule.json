@@ -415,7 +415,7 @@
 				"end_time" : "16:45", 
 				"place" : "P-109", 
 				"type" : "cw", 
-				"week" : "below"
+				"week" : "above"
 				}  
 			],
 			"wednesday" :[
@@ -569,7 +569,7 @@
 				"end_time" : "15:00", 
 				"place" : "P-119A", 
 				"type" : "lab", 
-				"week" : "below"
+				"week" : "above"
 				},
 				{
 				"name" : "Metody Numeryczne",
