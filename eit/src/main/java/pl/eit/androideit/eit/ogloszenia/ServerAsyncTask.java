@@ -16,8 +16,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 import java.io.InputStream;
 
+import pl.eit.androideit.eit.NewsActivity;
 
-class ServerAsyncTask extends AsyncTask<String, Void, String> {
+
+public class ServerAsyncTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
@@ -51,11 +53,10 @@ class ServerAsyncTask extends AsyncTask<String, Void, String> {
         super.onPostExecute(s);
         if (s!= null)
         {
-            Gson gson = new GsonBuilder().create();
 
-            GsonArr products_tab = gson.fromJson(s, GsonArr.class);
-
-            Log.d("gson", products_tab.products[1].title);
+        Przetwarzanie obiekt = new Przetwarzanie(s);           //Znajdz lepsze rozwiązanie
+        //obiekt.przetwarzanie();
+            //Log.d("gson", products_tab.products[1].title);
         }
     }
 

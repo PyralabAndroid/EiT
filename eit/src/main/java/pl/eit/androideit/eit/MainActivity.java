@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
         mMenuNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(getBaseContext(), NewsActivity.class));
+                startActivity(new Intent(getBaseContext(), NewsActivity.class));
             }
         });
 
