@@ -109,6 +109,9 @@ public class MainActivity extends Activity {
             }
         });
 
+        GroupDialog groupDialog = new GroupDialog();
+        groupDialog.showDialog(this);
+
         mParser = new Parser(getBaseContext());
         mBaseSchedule = null;
         ScheduleItem item = null;
