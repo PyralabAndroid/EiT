@@ -6,6 +6,7 @@
     <color name="f_hot_news">#E12809</color>
     <color name="f_btn">#2A3032</color>
     <color name="bck_button">#F3CF62</color>
+    <color name="new_bck">#9FAEC4</color>
 
     <!-- ScheduleRow -->
     <color name="time_text_color">#F3CF62</color>
