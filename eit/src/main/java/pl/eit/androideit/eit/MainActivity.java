@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
     SlidingMenu slidingMenu;
     private Button mScheduleButton;
     private Button mChanelButton;
+    private Button mRegistrationBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
+            }
+        });
+        mRegistrationBtn = (Button) findViewById(R.id.menu_bt_register);
+        mRegistrationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), LogInOrSignUp.class));
             }
         });
 

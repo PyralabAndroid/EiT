@@ -22,6 +22,7 @@ public class ChannelsActivity extends FragmentActivity implements OnItemClickLis
     ArrayList<Chanel> listItems;
     ChanelListAdapter mAdapter;
 
+
     @InjectView(R.id.list_view)
     ListView mListView;
 
@@ -32,12 +33,12 @@ public class ChannelsActivity extends FragmentActivity implements OnItemClickLis
         ButterKnife.inject(this);
 
         final DB db = new DB(this);
-        String[] subscriptions = {"0", "1", "2", "3", "4", "5"};  //TODO pobierać listę subskrybowanych kanałów z ustawień
-        listItems = db.getChannels(subscriptions);
+        listItems = db.getChannels();
         mAdapter = new ChanelListAdapter(this, R.layout.channels_activity_row, listItems);
         mListView.setAdapter(mAdapter);
     }
 
+    /** Kliknięcie na dany kanał. Pokazuje zawartość wybranego kanału. **/
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         final Chanel channel = listItems.get(position);

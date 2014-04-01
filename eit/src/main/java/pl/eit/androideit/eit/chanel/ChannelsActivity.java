@@ -34,8 +34,7 @@ public class ChannelsActivity extends FragmentActivity implements OnItemClickLis
         mListView.setOnItemClickListener(this);
 
         final DB db = new DB(this);
-        String[] subscriptions = {"1", "2", "3", "4", "5"};  //TODO pobierać listę subskrybowanych kanałów z ustawień
-        listItems = db.getChannels(subscriptions);
+        listItems = db.getChannels();
         mAdapter = new ChanelListAdapter(this, R.layout.channels_activity_row, listItems);
         mListView.setAdapter(mAdapter);
     }

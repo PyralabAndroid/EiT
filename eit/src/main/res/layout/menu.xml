@@ -36,6 +36,12 @@
                 android:text="HOT News!"
                 android:id="@+id/menu_bt_hotNews"
                 android:layout_gravity="center_horizontal" />
+
+            <Button
+                style="@style/MenuButtonStyle"
+                android:text="Rejestracja"
+                android:id="@+id/menu_bt_register"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
