@@ -36,7 +36,7 @@ public class AppPreferences {
             return this;
         }
 
-        public AppPreferencesEditor setFirstRun(String site) {
+        public AppPreferencesEditor setSite(String site) {
             mEditor.putString(PREFERENCE_SITE, site);
             return this;
         }
