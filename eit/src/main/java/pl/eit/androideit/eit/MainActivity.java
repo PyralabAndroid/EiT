@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import pl.eit.androideit.eit.chanel.ChannelsActivity;
 import pl.eit.androideit.eit.schedule_fragment.ScheduleItem;
 import pl.eit.androideit.eit.service.Parser;
@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
 
     SlidingMenu slidingMenu;
 
+    private Button mMenuSchedule, mMenuNews, mMenuChat;
     private Parser mParser;
     private BaseSchedule mBaseSchedule;
     private ScheduleFinder mScheduleFinder;
@@ -84,6 +85,30 @@ public class MainActivity extends Activity {
             }
         });
 
+        mMenuChat = (Button) findViewById(R.id.menu_bt_chat);
+        mMenuChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
+            }
+        });
+
+        mMenuNews = (Button) findViewById(R.id.menu_bt_news);
+        mMenuNews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                startActivity(new Intent(getBaseContext(), NewsActivity.class));
+            }
+        });
+
+        mMenuSchedule = (Button) findViewById(R.id.menu_bt_plan);
+        mMenuSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
+            }
+        });
+
         mParser = new Parser(getBaseContext());
         mBaseSchedule = null;
         ScheduleItem item = null;
@@ -98,21 +123,6 @@ public class MainActivity extends Activity {
             mScheduleLayout.setVisibility(View.GONE);
             mTextLesson.setVisibility(View.VISIBLE);
         }
-    }
-
-    @OnClick(R.id.menu_bt_plan)
-    public void openSchedule() {
-        startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
-    }
-
-    @OnClick(R.id.menu_bt_chat)
-    public void openChat() {
-        startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
-    }
-
-    @OnClick(R.id.menu_bt_news)
-    public void openNews() {
-//        startActivity(new Intent(getBaseContext(), NewsActivity.class));
     }
 
     private void setItem(ScheduleItem item) {
