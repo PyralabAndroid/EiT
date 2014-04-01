@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:layout_margin="@dimen/activity_vertical_margin">
 
-
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
@@ -125,8 +124,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/blue_button"
                 android:onClick="onClick"
-                android:text="@string/register_btn_register"
-                android:textColor="@color/default_text_color" />
+                android:text="@string/register_btn_register"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -144,7 +144,7 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     private void changeGroup() {
         // TODO:
     }
-
+    
     @Override
     protected void onPause() {
         super.onPause();
