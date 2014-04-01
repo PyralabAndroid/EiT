@@ -33,8 +33,6 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     private static final int THURSDAY = 4;
     private static final int FRIDAY = 5;
 
-    public static boolean EVEN_WEEK;
-
     private Calendar mCalendar;
     private Parser mParser;
     private BaseSchedule mBaseSchedule;
@@ -52,13 +50,12 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
         setContentView(R.layout.activity_schedule);
         ButterKnife.inject(this);
 
+        mCalendar = Calendar.getInstance();
+
         mActionBar = getActionBar();
         mActionBar.setTitle("Plan zajęć");
         mActionBar.setDisplayShowHomeEnabled(true);
         mActionBar.setDisplayHomeAsUpEnabled(true);
-
-        mCalendar = Calendar.getInstance();
-        EVEN_WEEK = mCalendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0;
 
         mParser = new Parser(getBaseContext());
         mBaseSchedule = null;
@@ -144,7 +141,7 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     private void changeGroup() {
         // TODO:
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();

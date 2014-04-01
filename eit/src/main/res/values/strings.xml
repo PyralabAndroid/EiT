@@ -21,5 +21,6 @@
     <string name="schedule_change_group">Zmien grupe</string>
     <string name="schedule_change_week">Zmien tydzien</string>
     <string name="register_btn_register">Zarejstruj</string>
+    <string name="main_not_lesson_today">Nie masz już dzisiaj zajęć</string>
 
 </resources>

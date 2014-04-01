@@ -3,9 +3,9 @@ package pl.eit.androideit.eit.service;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import pl.eit.androideit.eit.ScheduleActivity;
 import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.schedule_fragment.ScheduleItem;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
@@ -22,12 +22,20 @@ public class ScheduleFinder {
     private AppPreferences mAppPreferences;
     private int mDayId;
 
+
+    private boolean EVEN_WEEK;
+
+    private Calendar mCalendar;
+
     private String mTimeFormat = "%1$s - %2$s";
 
     public ScheduleFinder(Context context, BaseSchedule baseSchedule, int dayId) {
         mBaseSchedule = baseSchedule;
         mAppPreferences = new AppPreferences(context);
         mDayId = dayId;
+
+        mCalendar = Calendar.getInstance();
+        EVEN_WEEK = mCalendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0;
     }
 
     public List<ScheduleItem> getScheduleList() {
@@ -52,9 +60,9 @@ public class ScheduleFinder {
     private boolean isCorrectWeek(String week) {
         if (week.equals("always")) {
             return true;
-        } else if (week.equals("above") && !ScheduleActivity.EVEN_WEEK) {
+        } else if (week.equals("above") && EVEN_WEEK) {
             return true;
-        } else if (week.equals("below") && ScheduleActivity.EVEN_WEEK) {
+        } else if (week.equals("below") && !EVEN_WEEK) {
             return true;
         } else {
             return false;
