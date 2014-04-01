@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/BaseActivityStyle"></activity>
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
         <activity android:name=".ScheduleActivity"
             uiOptions="splitActionBarWhenNarrow">
             <meta-data android:name="android.support.UI_OPTIONS"

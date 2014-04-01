@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +21,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import pl.eit.androideit.eit.chanel.ChannelsActivity;
 import pl.eit.androideit.eit.schedule_fragment.ScheduleItem;
 import pl.eit.androideit.eit.service.Parser;
@@ -32,8 +32,6 @@ import pl.eit.androideit.eit.service.model.BaseSchedule;
 public class MainActivity extends Activity {
 
     SlidingMenu slidingMenu;
-    private Button mScheduleButton;
-    private Button mChanelButton;
 
     private Parser mParser;
     private BaseSchedule mBaseSchedule;
@@ -58,8 +56,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        getActionBar().hide();
-
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int width = displaymetrics.widthPixels;
@@ -79,21 +75,6 @@ public class MainActivity extends Activity {
         slidingMenu.attachToActivity(this, SlidingMenu.TOUCHMODE_MARGIN);
         slidingMenu.setMenu(R.layout.menu);
         slidingMenu.setBehindWidth(menuWidth);
-
-        mScheduleButton = (Button) findViewById(R.id.menu_bt_plan);
-        mScheduleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
-            }
-        });
-        mChanelButton = (Button) findViewById(R.id.menu_bt_hotNews);
-        mChanelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
-            }
-        });
 
         LinearLayout mBaseLayout = (LinearLayout)findViewById(R.id.main_ll_base);
         mBaseLayout.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +98,21 @@ public class MainActivity extends Activity {
             mScheduleLayout.setVisibility(View.GONE);
             mTextLesson.setVisibility(View.VISIBLE);
         }
+    }
+
+    @OnClick(R.id.menu_bt_plan)
+    public void openSchedule() {
+        startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
+    }
+
+    @OnClick(R.id.menu_bt_chat)
+    public void openChat() {
+        startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
+    }
+
+    @OnClick(R.id.menu_bt_news)
+    public void openNews() {
+//        startActivity(new Intent(getBaseContext(), NewsActivity.class));
     }
 
     private void setItem(ScheduleItem item) {

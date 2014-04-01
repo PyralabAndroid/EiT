@@ -33,9 +33,13 @@
 
             <Button
                 style="@style/MenuButtonStyle"
-                android:text="HOT News!"
-                android:id="@+id/menu_bt_hotNews"
-                android:layout_gravity="center_horizontal" />
+                android:text="Twoje rozmowy"
+                android:id="@+id/menu_bt_chat" />
+
+            <Button
+                style="@style/MenuButtonStyle"
+                android:text="Ogłoszenia"
+                android:id="@+id/menu_bt_news" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
