@@ -6,11 +6,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
+import pl.eit.androideit.eit.schedule_fragment.BaseScheduleFragment;
+
 public class ScreenSlideAdapter extends FragmentStatePagerAdapter {
 
-    private List<Fragment> mFragments;
+    private List<BaseScheduleFragment> mFragments;
 
-    public ScreenSlideAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public ScreenSlideAdapter(FragmentManager fm, List<BaseScheduleFragment> fragments) {
         super(fm);
         mFragments = fragments;
     }

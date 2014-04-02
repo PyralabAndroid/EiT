@@ -36,6 +36,10 @@ public class ScheduleFinder {
         EVEN_WEEK = mCalendar.get(Calendar.WEEK_OF_YEAR) % 2 == 0;
     }
 
+    public void updateBaseSchedule(BaseSchedule baseSchedule) {
+        mBaseSchedule = baseSchedule;
+    }
+
     public List<ScheduleItem> getScheduleList() {
         final ScheduleDay[] scheduleDay = getScheduleForSpecifDay();
         if (scheduleDay == null) {
@@ -118,7 +122,7 @@ public class ScheduleFinder {
     private boolean isRightSchedule(Info info) {
         if (info.year.equals(mAppPreferences.getYear())) {
             if (info.group.equals(mAppPreferences.getGroup())) {
-                if (info.site.equals(mAppPreferences.getSite())) {
+                if (info.site.equals(mAppPreferences.getSide())) {
                     return true;
                 }
             }

@@ -3,7 +3,6 @@ package pl.eit.androideit.eit;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -25,7 +24,7 @@ import pl.eit.androideit.eit.service.Parser;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
 
 public class ScheduleActivity extends FragmentActivity implements ActionBar.TabListener,
-        ViewPager.OnPageChangeListener {
+        ViewPager.OnPageChangeListener, CustomDismissDialogListener {
 
     private static final int MONDAY = 1;
     private static final int TUESDAY = 2;
@@ -42,7 +41,7 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
 
     private PagerAdapter mPagerAdapter;
     private ActionBar mActionBar;
-
+    private ArrayList<BaseScheduleFragment> mFagments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +71,12 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
         mPager.setOnPageChangeListener(this);
     }
 
-    private List<Fragment> getFragments() {
-        List<Fragment> fragments = new ArrayList<Fragment>();
+    private List<BaseScheduleFragment> getFragments() {
+        mFagments = new ArrayList<BaseScheduleFragment>();
         for (int i=0 ;i <5; i++) {
-            fragments.add(BaseScheduleFragment.newInstance(i+1));
+            mFagments.add(BaseScheduleFragment.newInstance(i+1));
         }
-        return fragments;
+        return mFagments;
     }
 
     public BaseSchedule getBaseSchedule(){
@@ -139,8 +138,9 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     }
 
     private void changeGroup() {
-        GroupDialog groupDialog = new GroupDialog();
-        groupDialog.showDialog(this);
+        GroupDialog groupDialog = new GroupDialog(this);
+        groupDialog.setOnDismissDialogListener(this);
+        groupDialog.showDialog();
     }
 
     @Override
@@ -151,7 +151,6 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
@@ -177,5 +176,13 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
+    }
+
+    @Override
+    public void onDialogDismiss() {
+        for (BaseScheduleFragment fragment : mFagments) {
+            fragment.updateFragment();
+        }
+        mPagerAdapter.notifyDataSetChanged();
     }
 }

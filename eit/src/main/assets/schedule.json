@@ -4,7 +4,7 @@
 		"info" : {
 			"year" : "4",
 			"group" : "T1",
-			"site" : "left"
+			"site" : "lewa"
 		},
 		"schedule" : {
 			"monday":[
@@ -168,7 +168,7 @@
 		"info" : {
 			"year" : "4",
 			"group" : "T1",
-			"site" : "rigth"
+			"site" : "prawa"
 		},
 		"schedule" : {
 			"monday":[
@@ -332,7 +332,7 @@
 		"info" : {
 			"year" : "4",
 			"group" : "T2",
-			"site" : "left"
+			"site" : "lewa"
 		},
 		"schedule" : {
 			"monday":[
@@ -494,7 +494,7 @@
 		"info" : {
 			"year" : "4",
 			"group" : "T2",
-			"site" : "rigth"
+			"site" : "prawa"
 		},
 		"schedule" : {
 			"monday":[

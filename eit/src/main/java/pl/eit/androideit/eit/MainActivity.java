@@ -30,7 +30,7 @@ import pl.eit.androideit.eit.service.ScheduleFinder;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements CustomDismissDialogListener {
 
     SlidingMenu slidingMenu;
 
@@ -112,25 +112,13 @@ public class MainActivity extends ActionBarActivity {
 
         mPreferences = new AppPreferences(getBaseContext());
         if(mPreferences.isFirstRun()) {
-            GroupDialog groupDialog = new GroupDialog();
-            groupDialog.showDialog(getBaseContext());
+            GroupDialog groupDialog = new GroupDialog(this);
+            groupDialog.setOnDismissDialogListener(this);
+            groupDialog.showDialog();
             mPreferences.edit().setFirstRun(false).commit();
         }
 
-        mParser = new Parser(getBaseContext());
-        mBaseSchedule = null;
-        ScheduleItem item = null;
-        try {
-            item = setNextLesson();
-        } catch (ParseException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        if (item != null) {
-            setItem(item);
-        } else {
-            mScheduleLayout.setVisibility(View.GONE);
-            mTextLesson.setVisibility(View.VISIBLE);
-        }
+        setLessonPanel();
     }
 
     private void setItem(ScheduleItem item) {
@@ -148,7 +136,7 @@ public class MainActivity extends ActionBarActivity {
         } catch (IOException e) {
             throw new RuntimeException("Error when parsing schedule!");
         }
-        mScheduleFinder = new ScheduleFinder(this, mBaseSchedule, (calendar.get(Calendar.DAY_OF_WEEK) - 1));
+        mScheduleFinder = new ScheduleFinder(this, mBaseSchedule, (calendar.get(Calendar.DAY_OF_WEEK)));
         List<ScheduleItem> list = mScheduleFinder.getScheduleList();
         if (list != null) {
             for (ScheduleItem item : list) {
@@ -162,5 +150,27 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    public void onDialogDismiss() {
+        setLessonPanel();
+    }
+
+    private void setLessonPanel() {
+        mParser = new Parser(getBaseContext());
+        mBaseSchedule = null;
+        ScheduleItem item = null;
+        try {
+            item = setNextLesson();
+        } catch (ParseException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        if (item != null) {
+            setItem(item);
+        } else {
+            mScheduleLayout.setVisibility(View.GONE);
+            mTextLesson.setVisibility(View.VISIBLE);
+        }
     }
 }
