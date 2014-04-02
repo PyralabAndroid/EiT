@@ -16,7 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ServerConnection {
-	    private static final int MAX_ATTEMPTS = 4;
+	    private static final int MAX_ATTEMPTS = 3;
 	    long backoff = 1000L; // początkowy backoff w milisekundach.
 	    JSONObject response = null;
 	    /** Odpowiedź z serwera */
@@ -26,7 +26,10 @@ public class ServerConnection {
 	    public static final String SERVER_LOG_OUT = "http://eit.besaba.com/log_out.php";
 	    public static final String SERVER_REGISTER = "http://eit.besaba.com/register.php";
 	    public static final String SERVER_LOGIN = "http://eit.besaba.com/login.php";
-	    public static final String SERVER_SEND_MESSAGE = "http://eit.besaba.com/sendMessage.php";
+	    public static final String SERVER_SEND_MESSAGE = "http://eit.besaba.com/receiveMessageFromApp.php";
+        public static final String SERVER_SET_SUB = "http://eit.besaba.com/set_sub.php";
+        public static final String SERVER_GET_MESSAGES = "http://eit.besaba.com/sendMessagesToApp.php";
+
 	    	    	 	     
 	    /**
 	     * Wysyła zapytanie POST do serwera.
@@ -127,8 +130,8 @@ public class ServerConnection {
 	        return result.trim();
 	     	        
 	      }
-	    
-	    
-	    
+
+
+
 
 }

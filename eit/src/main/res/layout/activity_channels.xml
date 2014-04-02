@@ -11,6 +11,8 @@
 	<ListView
 	    android:id="@+id/list_view"
 	    android:layout_height="match_parent"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
 	    android:layout_width="match_parent">
 	</ListView>
 </RelativeLayout>

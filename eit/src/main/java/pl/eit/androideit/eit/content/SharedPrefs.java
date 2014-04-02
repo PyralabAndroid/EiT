@@ -26,6 +26,7 @@ public class SharedPrefs {
 
 		return email;
 	}
+
 	
 	public void clearAccountInfo(){
 		final SharedPreferences prefs = context.getSharedPreferences("AccountInfo", Context.MODE_PRIVATE);
@@ -44,8 +45,4 @@ public class SharedPrefs {
 		editor.putString("email", email);
 		editor.apply();
 	}
-	
-	
-	/************************************************************/
-	
 }

@@ -51,6 +51,10 @@ public class MainActivity extends Activity {
     @InjectView(R.id.schedule_frame)
     LinearLayout mScheduleLayout;
 
+    private Button mScheduleButton;
+    private Button mChanelButton;
+    private Button mRegistrationBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +96,6 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
             }
         });
-
         mMenuNews = (Button) findViewById(R.id.menu_bt_news);
         mMenuNews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +103,6 @@ public class MainActivity extends Activity {
 //                startActivity(new Intent(getBaseContext(), NewsActivity.class));
             }
         });
-
         mMenuSchedule = (Button) findViewById(R.id.menu_bt_plan);
         mMenuSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
