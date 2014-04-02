@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         } catch (IOException e) {
             throw new RuntimeException("Error when parsing schedule!");
         }
-        mScheduleFinder = new ScheduleFinder(this, mBaseSchedule, (calendar.get(Calendar.DAY_OF_WEEK)));
+        mScheduleFinder = new ScheduleFinder(this, mBaseSchedule, (calendar.get(Calendar.DAY_OF_WEEK) - 1));
         List<ScheduleItem> list = mScheduleFinder.getScheduleList();
         if (list != null) {
             for (ScheduleItem item : list) {
