@@ -4,6 +4,9 @@ package pl.eit.androideit.eit.ogloszenia;
  * Created by Robert on 2014-04-01.
  */
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
@@ -20,6 +23,19 @@ import pl.eit.androideit.eit.NewsActivity;
 
 
 public class ServerAsyncTask extends AsyncTask<String, Void, String> {
+
+
+    public NewsActivity news_obiekt;
+    public Gson gson;
+    public GsonArr products_tab;
+    private ProgressDialog dialog;
+
+
+    public ServerAsyncTask(NewsActivity obiekt)
+    {
+        this.news_obiekt = obiekt;
+        this.gson = new GsonBuilder().create();
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -45,18 +61,26 @@ public class ServerAsyncTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+
+        dialog = new ProgressDialog(news_obiekt);
+        dialog.setMessage("Loading...");
+        dialog.setIndeterminate(false);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setCancelable(true);
+        dialog.show();
     }
 
     @Override
-    protected void onPostExecute(String s) 
+    public void onPostExecute(String s)
     {
+        //super.onPostExecute(s);
         super.onPostExecute(s);
+        dialog.dismiss();
         if (s!= null)
         {
 
-        Przetwarzanie obiekt = new Przetwarzanie(s);           //Znajdz lepsze rozwiązanie
-        //obiekt.przetwarzanie();
-            //Log.d("gson", products_tab.products[1].title);
+            products_tab = gson.fromJson(s, GsonArr.class);
+            news_obiekt.przypisz(this);
         }
     }
 
