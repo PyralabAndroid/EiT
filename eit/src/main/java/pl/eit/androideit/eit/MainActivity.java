@@ -23,6 +23,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import pl.eit.androideit.eit.chanel.ChannelsActivity;
+import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.schedule_fragment.ScheduleItem;
 import pl.eit.androideit.eit.service.Parser;
 import pl.eit.androideit.eit.service.ScheduleFinder;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
     private Parser mParser;
     private BaseSchedule mBaseSchedule;
     private ScheduleFinder mScheduleFinder;
+    private AppPreferences mPreferences;
 
     @InjectView(R.id.base_schedule_row_name)
     TextView mScheduleName;
@@ -111,8 +113,11 @@ public class MainActivity extends Activity {
             }
         });
 
-        GroupDialog groupDialog = new GroupDialog();
-        groupDialog.showDialog(this);
+        if(mPreferences.isFirstRun()) {
+            GroupDialog groupDialog = new GroupDialog();
+            groupDialog.showDialog(this);
+            mPreferences.edit().setFirstRun(false).commit();
+        }
 
         mParser = new Parser(getBaseContext());
         mBaseSchedule = null;
