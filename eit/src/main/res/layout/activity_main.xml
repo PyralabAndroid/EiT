@@ -27,7 +27,7 @@
 
         <LinearLayout
             style="@style/Base"
-            android:background="@drawable/button_news"
+            android:background="@drawable/blue_button"
             android:orientation="vertical"
             android:padding="10dp">
 

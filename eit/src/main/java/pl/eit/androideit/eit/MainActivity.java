@@ -53,10 +53,6 @@ public class MainActivity extends ActionBarActivity {
     @InjectView(R.id.schedule_frame)
     LinearLayout mScheduleLayout;
 
-    private Button mScheduleButton;
-    private Button mChanelButton;
-    private Button mRegistrationBtn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
