@@ -218,21 +218,30 @@ public class SingleChannel extends ListActivity {
 
     /** Wysyłanie wiadomości **/
 	public void sendMessage(View view){
-		boolean online = isOnline();
-		if(online){
-			// Tekst wiadomości
-			String message = messageET.getText().toString();
-			messageET.setText("");
-			// Timestamp wiadomości
-			long messageTimestamp = System.currentTimeMillis();
-			// Obiekt wiadomości
-			final Message msgObj = new Message(message, channelTimestamp, messageTimestamp, userName);
-			// Wysyłanie wiadomości na serwer
-			sendMessageToServer(msgObj);
-		}
-		else{
-			Toast.makeText(context, "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
-		}
+        // Tylko zalogowany user może wysyłać wiadomości
+        if(userName != null && userName.length() > 0){
+            boolean online = isOnline();
+            // Czy jest połączenie z Internetem ?
+            if(online){
+                // Tekst wiadomości
+                String message = messageET.getText().toString();
+                messageET.setText("");
+                // Timestamp wiadomości
+                long messageTimestamp = System.currentTimeMillis();
+                // Obiekt wiadomości
+                final Message msgObj = new Message(message, channelTimestamp, messageTimestamp, userName);
+                // Wysyłanie wiadomości na serwer
+                sendMessageToServer(msgObj);
+            }
+            else{
+                Toast.makeText(context, "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            Toast.makeText(context, "Musisz być zalogowany w celu wysłania wiadomości",
+                    Toast.LENGTH_LONG).show();
+        }
+
 			
 	}
 	
