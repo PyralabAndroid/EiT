@@ -113,6 +113,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        mPreferences = new AppPreferences(this);
         if(mPreferences.isFirstRun()) {
             GroupDialog groupDialog = new GroupDialog();
             groupDialog.showDialog(this);
@@ -152,13 +153,15 @@ public class MainActivity extends Activity {
         }
         mScheduleFinder = new ScheduleFinder(this, mBaseSchedule, (calendar.get(Calendar.DAY_OF_WEEK) - 1));
         List<ScheduleItem> list = mScheduleFinder.getScheduleList();
-        for (ScheduleItem item : list) {
-            Date data = new SimpleDateFormat("HH:mm").parse(item.mTime);
-            Calendar calendar1 = Calendar.getInstance();
-            calendar1.set(Calendar.HOUR_OF_DAY, data.getHours());
-            calendar1.set(Calendar.MINUTE, data.getMinutes());
-            if (calendar1.after(calendar)) {
-                return item;
+        if (list != null) {
+            for (ScheduleItem item : list) {
+                Date data = new SimpleDateFormat("HH:mm").parse(item.mTime);
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.set(Calendar.HOUR_OF_DAY, data.getHours());
+                calendar1.set(Calendar.MINUTE, data.getMinutes());
+                if (calendar1.after(calendar)) {
+                    return item;
+                }
             }
         }
         return null;

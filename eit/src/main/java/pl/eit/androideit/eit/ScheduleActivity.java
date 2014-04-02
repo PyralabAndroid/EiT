@@ -139,7 +139,8 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
     }
 
     private void changeGroup() {
-        // TODO:
+        GroupDialog groupDialog = new GroupDialog();
+        groupDialog.showDialog(this);
     }
 
     @Override
