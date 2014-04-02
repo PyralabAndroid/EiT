@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.eit.androideit.eit" >
+    package="pl.eit.androideit.eit">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,42 +16,37 @@
 
     <uses-permission android:name="com.example.eit.permission.C2D_MESSAGE" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
-            android:name="pl.eit.androideit.eit.StartActivity"
+            android:name=".StartActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="pl.eit.androideit.eit.MainActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-        <activity
-            android:name="pl.eit.androideit.eit.ScheduleActivity"
-            uiOptions="splitActionBarWhenNarrow" >
-            <meta-data
-                android:name="android.support.UI_OPTIONS"
+            android:name=".MainActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"></activity>
+        <activity android:name=".ScheduleActivity"
+            uiOptions="splitActionBarWhenNarrow">
+            <meta-data android:name="android.support.UI_OPTIONS"
                 android:value="splitActionBarWhenNarrow" />
-        </activity>
-        <activity android:name="pl.eit.androideit.eit.chanel.ChannelsActivity" />
-        <activity android:name="pl.eit.androideit.eit.chanel.SingleChannel" />
+            </activity>
+
+        <activity android:name=".chanel.ChannelsActivity" />
+        <activity android:name=".chanel.SingleChannel" />
         <activity
-            android:name="pl.eit.androideit.eit.RegisterActivity"
+            android:name=".RegisterActivity"
             android:noHistory="true" />
-        <activity android:name="pl.eit.androideit.eit.LogInOrSignUp" />
-        <activity
-            android:name="pl.eit.androideit.eit.NewsActivity"
-            android:label="@string/title_activity_news" >
-        </activity>
+        <activity android:name=".LogInOrSignUp" />
     </application>
 
 </manifest>

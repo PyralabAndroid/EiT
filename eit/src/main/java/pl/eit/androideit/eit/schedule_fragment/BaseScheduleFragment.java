@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -14,6 +15,7 @@ import butterknife.InjectView;
 import pl.eit.androideit.eit.R;
 import pl.eit.androideit.eit.ScheduleActivity;
 import pl.eit.androideit.eit.service.ScheduleFinder;
+import pl.eit.androideit.eit.service.model.BaseSchedule;
 import uk.co.ribot.easyadapter.EasyAdapter;
 
 public class BaseScheduleFragment extends Fragment {
@@ -25,7 +27,10 @@ public class BaseScheduleFragment extends Fragment {
     @InjectView(R.id.base_schedule_list_view)
     ListView mListView;
 
+    List<ScheduleItem> mList;
+
     private ScheduleFinder mScheduleFinder;
+    private EasyAdapter<ScheduleItem> mAdapter;
 
     public static BaseScheduleFragment newInstance(int id) {
         BaseScheduleFragment baseScheduleFragment = new BaseScheduleFragment();
@@ -44,9 +49,13 @@ public class BaseScheduleFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
-        List<ScheduleItem> list = mScheduleFinder.getScheduleList();
-        mListView.setAdapter(new EasyAdapter<ScheduleItem>(getActivity().getBaseContext(),
-                ScheduleViewHolder.class, list));
+        mList = mScheduleFinder.getScheduleList();
+        if (mList == null) {
+            mList = new ArrayList<ScheduleItem>();
+        }
+        mAdapter = new EasyAdapter<ScheduleItem>(getActivity().getBaseContext(),
+                ScheduleViewHolder.class, mList);
+        mListView.setAdapter(mAdapter);
     }
 
     @Override
@@ -57,5 +66,16 @@ public class BaseScheduleFragment extends Fragment {
         mScheduleFinder = new ScheduleFinder(getActivity().getBaseContext(),
                 ((ScheduleActivity)getActivity()).getBaseSchedule(),
                 mScheduleId);
+    }
+
+    public void updateFragment(){
+        if (mScheduleFinder != null) {
+            BaseSchedule baseSchedule = ((ScheduleActivity) getActivity()).getBaseSchedule();
+            if (baseSchedule != null) {
+                mScheduleFinder.updateBaseSchedule(baseSchedule);
+                mList = mScheduleFinder.getScheduleList();
+                mAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

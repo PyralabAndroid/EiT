@@ -1,8 +1,8 @@
 package pl.eit.androideit.eit;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -23,13 +23,14 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import pl.eit.androideit.eit.chanel.ChannelsActivity;
+import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.schedule_fragment.ScheduleItem;
 import pl.eit.androideit.eit.service.Parser;
 import pl.eit.androideit.eit.service.ScheduleFinder;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity implements CustomDismissDialogListener {
 
     SlidingMenu slidingMenu;
 
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
     private Parser mParser;
     private BaseSchedule mBaseSchedule;
     private ScheduleFinder mScheduleFinder;
+    private AppPreferences mPreferences;
 
     @InjectView(R.id.base_schedule_row_name)
     TextView mScheduleName;
@@ -57,6 +59,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        getSupportActionBar().hide();
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int width = displaymetrics.widthPixels;
@@ -68,7 +71,7 @@ public class MainActivity extends Activity {
         if (width * 0.65 > 300)
             menuWidth = (int) (width * 0.65);
 
-        slidingMenu = new SlidingMenu(this);
+        slidingMenu = new SlidingMenu(getBaseContext());
         slidingMenu.setMode(SlidingMenu.LEFT);
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         slidingMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
@@ -92,7 +95,6 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
             }
         });
-
         mMenuNews = (Button) findViewById(R.id.menu_bt_news);
         mMenuNews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +102,6 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(getBaseContext(), NewsActivity.class));
             }
         });
-
         mMenuSchedule = (Button) findViewById(R.id.menu_bt_plan);
         mMenuSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,20 +110,15 @@ public class MainActivity extends Activity {
             }
         });
 
-        mParser = new Parser(getBaseContext());
-        mBaseSchedule = null;
-        ScheduleItem item = null;
-        try {
-            item = setNextLesson();
-        } catch (ParseException e) {
-            throw new RuntimeException(e.getMessage());
+        mPreferences = new AppPreferences(getBaseContext());
+        if(mPreferences.isFirstRun()) {
+            GroupDialog groupDialog = new GroupDialog(this);
+            groupDialog.setOnDismissDialogListener(this);
+            groupDialog.showDialog();
+            mPreferences.edit().setFirstRun(false).commit();
         }
-        if (item != null) {
-            setItem(item);
-        } else {
-            mScheduleLayout.setVisibility(View.GONE);
-            mTextLesson.setVisibility(View.VISIBLE);
-        }
+
+        setLessonPanel();
     }
 
     private void setItem(ScheduleItem item) {
@@ -142,15 +138,39 @@ public class MainActivity extends Activity {
         }
         mScheduleFinder = new ScheduleFinder(this, mBaseSchedule, (calendar.get(Calendar.DAY_OF_WEEK) - 1));
         List<ScheduleItem> list = mScheduleFinder.getScheduleList();
-        for (ScheduleItem item : list) {
-            Date data = new SimpleDateFormat("HH:mm").parse(item.mTime);
-            Calendar calendar1 = Calendar.getInstance();
-            calendar1.set(Calendar.HOUR_OF_DAY, data.getHours());
-            calendar1.set(Calendar.MINUTE, data.getMinutes());
-            if (calendar1.after(calendar)) {
-                return item;
+        if (list != null) {
+            for (ScheduleItem item : list) {
+                Date data = new SimpleDateFormat("HH:mm").parse(item.mTime);
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.set(Calendar.HOUR_OF_DAY, data.getHours());
+                calendar1.set(Calendar.MINUTE, data.getMinutes());
+                if (calendar1.after(calendar)) {
+                    return item;
+                }
             }
         }
         return null;
+    }
+
+    @Override
+    public void onDialogDismiss() {
+        setLessonPanel();
+    }
+
+    private void setLessonPanel() {
+        mParser = new Parser(getBaseContext());
+        mBaseSchedule = null;
+        ScheduleItem item = null;
+        try {
+            item = setNextLesson();
+        } catch (ParseException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        if (item != null) {
+            setItem(item);
+        } else {
+            mScheduleLayout.setVisibility(View.GONE);
+            mTextLesson.setVisibility(View.VISIBLE);
+        }
     }
 }

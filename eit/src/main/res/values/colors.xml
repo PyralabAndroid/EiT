@@ -4,9 +4,11 @@
     <color name="bck_menu">#2E3461</color>
     <color name="font">#F9F6F0</color>
     <color name="f_hot_news">#E12809</color>
-    <color name="f_btn">#2A3032</color>
+    <color name="f_btn">#253B57</color>
+    <color name="bck_btn_menu">#FFDED0</color>
     <color name="bck_button">#F3CF62</color>
     <color name="new_bck">#9FAEC4</color>
+    <color name="btn_news_bck">#ff2c74e5</color>
 
     <!-- ScheduleRow -->
     <color name="time_text_color">#F3CF62</color>
@@ -15,7 +17,7 @@
     <color name="bck_ll">#44526D</color>
     <color name="bck_message">#DAE4DC</color>
 
-    <color name="tab_not_pressed_color">#ff2d2b94</color>
-    <color name="tab_pressed_color">#ffacbdfc</color>
+    <color name="tab_not_pressed_color">#46A5E5</color>
+    <color name="tab_pressed_color">#44526D</color>
     <color name="actionbar_bg_color">#ffacbdfc</color>
 </resources>

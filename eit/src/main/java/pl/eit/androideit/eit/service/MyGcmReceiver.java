@@ -27,6 +27,7 @@ public class MyGcmReceiver extends BroadcastReceiver{
 	
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("GCM", "ODEBRANO POWIADOMIENIE");
     	gcm = GoogleCloudMessaging.getInstance(context);
         String action = intent.getAction();
         if (action.equals("com.google.android.c2dm.intent.RECEIVE")) {

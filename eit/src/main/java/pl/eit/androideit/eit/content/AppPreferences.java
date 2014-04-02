@@ -36,8 +36,8 @@ public class AppPreferences {
             return this;
         }
 
-        public AppPreferencesEditor setFirstRun(String site) {
-            mEditor.putString(PREFERENCE_SITE, site);
+        public AppPreferencesEditor setSide(String side) {
+            mEditor.putString(PREFERENCE_SIDE, side);
             return this;
         }
     }
@@ -46,7 +46,7 @@ public class AppPreferences {
     private static final String IS_FIRST_RUN = "is_first_run";
     private static final String PREFERENCE_YEAR = "year";
     private static final String PREFERENCE_GROUP = "group";
-    private static final String PREFERENCE_SITE = "site";
+    private static final String PREFERENCE_SIDE = "side";
 
 
     private SharedPreferences mPreferences;
@@ -66,5 +66,5 @@ public class AppPreferences {
     // TODO: change value
     public String getYear() { return mPreferences.getString(PREFERENCE_YEAR, "4");}
     public String getGroup() { return mPreferences.getString(PREFERENCE_GROUP, "T2");}
-    public String getSite() { return mPreferences.getString(PREFERENCE_SITE, "left");}
+    public String getSide() { return mPreferences.getString(PREFERENCE_SIDE, "left");}
 }

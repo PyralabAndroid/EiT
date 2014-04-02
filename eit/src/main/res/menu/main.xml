@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pl.eit.androideit.eit.MainActivity" >
     
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+    <item android:id="@+id/single_channel_refresh"
+        android:icon="@drawable/ic_popup_sync_1"
+        android:title="Odśwież"
+        app:showAsAction="always" />
 </menu>
