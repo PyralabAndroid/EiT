@@ -1,8 +1,8 @@
 package pl.eit.androideit.eit;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 import com.google.common.base.Strings;
 
@@ -11,7 +11,7 @@ import butterknife.OnClick;
 import pl.eit.androideit.eit.content.SharedPrefs;
 import pl.eit.androideit.eit.service.GCMRegister;
 
-public class StartActivity extends Activity {
+public class StartActivity extends ActionBarActivity {
 
     GCMRegister gcmReg;
 
@@ -21,6 +21,7 @@ public class StartActivity extends Activity {
         setContentView(R.layout.activity_start);
         ButterKnife.inject(this);
 
+        getSupportActionBar().hide();
         checkIsUserLogIn();
     }
 

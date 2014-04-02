@@ -1,8 +1,8 @@
 package pl.eit.androideit.eit;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +30,7 @@ import pl.eit.androideit.eit.service.ScheduleFinder;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
     SlidingMenu slidingMenu;
 
@@ -63,6 +63,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        getSupportActionBar().hide();
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int width = displaymetrics.widthPixels;
@@ -74,7 +75,7 @@ public class MainActivity extends Activity {
         if (width * 0.65 > 300)
             menuWidth = (int) (width * 0.65);
 
-        slidingMenu = new SlidingMenu(this);
+        slidingMenu = new SlidingMenu(getBaseContext());
         slidingMenu.setMode(SlidingMenu.LEFT);
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         slidingMenu.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
@@ -113,9 +114,10 @@ public class MainActivity extends Activity {
             }
         });
 
+        mPreferences = new AppPreferences(getBaseContext());
         if(mPreferences.isFirstRun()) {
             GroupDialog groupDialog = new GroupDialog();
-            groupDialog.showDialog(this);
+            groupDialog.showDialog(getBaseContext());
             mPreferences.edit().setFirstRun(false).commit();
         }
 
@@ -152,13 +154,15 @@ public class MainActivity extends Activity {
         }
         mScheduleFinder = new ScheduleFinder(this, mBaseSchedule, (calendar.get(Calendar.DAY_OF_WEEK) - 1));
         List<ScheduleItem> list = mScheduleFinder.getScheduleList();
-        for (ScheduleItem item : list) {
-            Date data = new SimpleDateFormat("HH:mm").parse(item.mTime);
-            Calendar calendar1 = Calendar.getInstance();
-            calendar1.set(Calendar.HOUR_OF_DAY, data.getHours());
-            calendar1.set(Calendar.MINUTE, data.getMinutes());
-            if (calendar1.after(calendar)) {
-                return item;
+        if (list != null) {
+            for (ScheduleItem item : list) {
+                Date data = new SimpleDateFormat("HH:mm").parse(item.mTime);
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.set(Calendar.HOUR_OF_DAY, data.getHours());
+                calendar1.set(Calendar.MINUTE, data.getMinutes());
+                if (calendar1.after(calendar)) {
+                    return item;
+                }
             }
         }
         return null;

@@ -14,8 +14,6 @@ import pl.eit.androideit.eit.service.model.Schedule;
 import pl.eit.androideit.eit.service.model.ScheduleComponent;
 import pl.eit.androideit.eit.service.model.ScheduleDay;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public class ScheduleFinder {
 
     private BaseSchedule mBaseSchedule;
@@ -40,8 +38,9 @@ public class ScheduleFinder {
 
     public List<ScheduleItem> getScheduleList() {
         final ScheduleDay[] scheduleDay = getScheduleForSpecifDay();
-        checkNotNull(scheduleDay);
-
+        if (scheduleDay == null) {
+            return null;
+        }
         return makeScheduleList(scheduleDay);
     }
 
@@ -87,8 +86,9 @@ public class ScheduleFinder {
 
     private ScheduleDay[] getScheduleForSpecifDay() {
         final Schedule schedule = findRightSchedule(mBaseSchedule.baseScheduleComponents);
-        checkNotNull(schedule);
-
+        if (schedule == null) {
+            return null;
+        }
         switch (mDayId) {
             case 1:
                 return schedule.monday;
@@ -113,7 +113,6 @@ public class ScheduleFinder {
         }
         return null;
     }
-
 
     // TODO: add check from dialog change
     private boolean isRightSchedule(Info info) {

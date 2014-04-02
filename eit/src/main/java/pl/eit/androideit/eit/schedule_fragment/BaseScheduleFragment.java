@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -45,6 +46,9 @@ public class BaseScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
         List<ScheduleItem> list = mScheduleFinder.getScheduleList();
+        if (list == null) {
+            list = new ArrayList<ScheduleItem>();
+        }
         mListView.setAdapter(new EasyAdapter<ScheduleItem>(getActivity().getBaseContext(),
                 ScheduleViewHolder.class, list));
     }
