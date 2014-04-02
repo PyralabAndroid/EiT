@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -31,6 +32,7 @@ import pl.eit.androideit.eit.AlertDialogManager;
 import pl.eit.androideit.eit.R;
 import pl.eit.androideit.eit.content.SharedPrefs;
 import pl.eit.androideit.eit.service.DB;
+import pl.eit.androideit.eit.service.GCMRegister;
 import pl.eit.androideit.eit.service.ServerConnection;
 import pl.eit.androideit.eit.service.model.Message;
 
@@ -47,13 +49,14 @@ public class SingleChannel extends ListActivity {
     /** Czas ostatniego pobierania wiadomości dla kanału **/
     long lastSync;
 	EditText messageET;
+    public static final String PROPERTY_APP_VERSION = "appVersion";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_channel);
 		context = SingleChannel.this;
-		
+
 		Intent intent = getIntent();
 		channelName = intent.getStringExtra("channelName");
 		channelTimestamp = intent.getLongExtra("channelTimestamp", -1);
@@ -65,43 +68,32 @@ public class SingleChannel extends ListActivity {
 		// focusuje edittext
 		messageET = (EditText)findViewById(R.id.channel_edittext);
 		messageET.requestFocus();
+
+        if(isOnline()){
+            getMessagesForChannel();
+        }
+        else{
+            fetchMessagesFromLocalDb();
+        }
 				
-		/*checkGCMRegId();*/
+
 	}
+
 	
-	
-	@Override
-	// Pobieram wiadomości dla wybranego kanału i łąduję je do listy
-	protected void onResume() {
-		super.onResume();
-		DB db = new DB(this);
-		listItems = db.getMessagesForChannel(channelTimestamp);
-        Log.d("timestamp", "z: " +String.valueOf(channelTimestamp));
+
+
+    /** Pobiera wiadomości z lokalnej bazy danych i ustawia adapter **/
+    public void fetchMessagesFromLocalDb(){
+        DB db = new DB(this);
+        if(listItems != null) {
+            listItems.clear();
+        }
+        listItems = db.getMessagesForChannel(channelTimestamp);
         mAdapter = new CustomListAdapter(this, R.layout.channel_row, listItems);
-		setListAdapter(mAdapter);
-	}
+        setListAdapter(mAdapter);
+    }
 	
-	//TODO przenieść do głównego activity
-/*	private void checkGCMRegId(){
-		GCMRegister gcmReg = new GCMRegister();
-		// Pobieram registration id z SharedPreferences
-        String regid = gcmReg.getSavedGCMRegId(context);
-        Log.d("reg id z preferencji", " " + regid);
-		
-                
-		// Jeśli istnieje regId sprawdzam czy jest nadal ważne.
-		if(regid != null && regid.length() > 0){
-			SharedPreferences prefs = gcmReg.getGCMPreferences(this);
-			// Sprawdzam czy wersja aplikacji nie zmieniłą się. Jeśli tak to konieczna jest aktualizacja regId.
-			int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-			int currentVersion = gcmReg.getAppVersion(context);
-			if (registeredVersion != currentVersion || gcmReg.isRegistrationExpired(this)) {
-				Log.v(TAG, "Wersja aplikacji zmieniła się lub wygasła rejestracja.");
-				// Rejestracja w GCM nowym regId + aktualizacja regId na serwerze.
-				new GCMRegister(context, regid, true).execute(null, null, null);
-			}
-		}
-	}*/
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,7 +111,7 @@ public class SingleChannel extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /** Pobieranie wiadomości dla kanału **/
+    /** Pobieranie wiadomości z serwera dla kanału **/
     public void getMessagesForChannel(){
         final ProgressDialog pDialog = new ProgressDialog(context);
         pDialog.setMessage("Odświeżanie listy wiadomości...");
@@ -136,84 +128,77 @@ public class SingleChannel extends ListActivity {
             e.printStackTrace();
         }
 
-        boolean online = isOnline();
-        if(online){
-            new AsyncTask<Void, Void, String>(){
 
-                @Override
-                protected String doInBackground(Void... voids) {
-                    ServerConnection server = new ServerConnection();
-                    String response = null;
-                    try {
-                        response = server.post(
-                                ServerConnection.SERVER_GET_MESSAGES,
-                                json.toString());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        new AsyncTask<Void, Void, String>(){
 
-                    return response;
+            @Override
+            protected String doInBackground(Void... voids) {
+                ServerConnection server = new ServerConnection();
+                String response = null;
+                try {
+                    response = server.post(
+                            ServerConnection.SERVER_GET_MESSAGES,
+                            json.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-                @Override
-                protected void onPostExecute(String response) {
-                    super.onPostExecute(response);
+                return response;
+            }
 
-                    if(pDialog != null){
-                        pDialog.dismiss();
+            @Override
+            protected void onPostExecute(String response) {
+                super.onPostExecute(response);
+
+                if(pDialog != null){
+                    pDialog.dismiss();
+                }
+
+                AlertDialogManager alert = new AlertDialogManager();
+                if(response != null){
+                    if(response.equals("serverProblem")){
+                        alert.showAlertDialog(SingleChannel.this, "Błąd",
+                                "Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
                     }
+                    else{
+                        //alert.showAlertDialog(SingleChannel.this, "błąd", "z: " + response, false, null);
+                        int success = 0;
+                        String error = "";
 
-                    AlertDialogManager alert = new AlertDialogManager();
-                    if(response != null){
-                        if(response.equals("serverProblem")){
-                            alert.showAlertDialog(SingleChannel.this, "Błąd",
-                                    "Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
-                        }
-                        else{
-                            //alert.showAlertDialog(SingleChannel.this, "błąd", "z: " + response, false, null);
-                            int success = 0;
-                            String error = "";
+                        JSONObject jsonResponse;
+                        try {
+                            jsonResponse = new JSONObject(response);
+                            success = jsonResponse.getInt("success");
+                            error = jsonResponse.getString("error");
 
-                            JSONObject jsonResponse;
-                            try {
-                                jsonResponse = new JSONObject(response);
-                                success = jsonResponse.getInt("success");
-                                error = jsonResponse.getString("error");
-
-                                if(success == 1){
-                                    JSONArray data = jsonResponse.getJSONArray("data");
-                                    if(data.length() > 0) {
-                                        DB db = new DB(context);
-                                        ArrayList<Message> newMessages = db.saveMessagesFromServer(data);
-                                        //listItems.addAll(0, newMessages);
-                                        //mAdapter.notifyDataSetChanged();
-
-                                        listItems.clear();
-                                        ArrayList<Message> list2 = db.getMessagesForChannel(channelTimestamp);
-                                        listItems.addAll(list2);
-                                        mAdapter.notifyDataSetChanged();
-
-                                    }
-                                    else{
-                                        Toast.makeText(context, "Lista wiadomości jest aktualna",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
+                            // Jeśli udało się pobrać wiadomości z serwera
+                            // zapisz je w bazie danych i wyświetl wszystkie
+                            // wiadomości w liście.
+                            if(success == 1){
+                                JSONArray data = jsonResponse.getJSONArray("data");
+                                if(data.length() > 0) {
+                                    DB db = new DB(context);
+                                    ArrayList<Message> newMessages = db.saveMessagesFromServer(data);
+                                    //listItems.addAll(0, newMessages);
+                                    //mAdapter.notifyDataSetChanged();
+                                    fetchMessagesFromLocalDb();
                                 }
-                                else{
-                                    alert.showAlertDialog(SingleChannel.this, "Błąd",
-                                            "Nie można wysłać wiadomości. Błąd: " + error, false, null);
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+/*                                else{
+                                    Toast.makeText(context, "Lista wiadomości jest aktualna",
+                                            Toast.LENGTH_SHORT).show();
+                                }*/
                             }
+                            else{
+                                alert.showAlertDialog(SingleChannel.this, "Błąd",
+                                        "Nie można wysłać wiadomości. Błąd: " + error, false, null);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
-            }.execute();
-        }
-        else{
-            Toast.makeText(context, "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
-        }
+            }
+        }.execute();
     }
 
     /** Wysyłanie wiadomości **/

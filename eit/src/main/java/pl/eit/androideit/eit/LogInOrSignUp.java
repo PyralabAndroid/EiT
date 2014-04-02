@@ -138,8 +138,8 @@ public class LogInOrSignUp extends Activity {
 					if(success == 1){
 						prefs.clearAccountInfo();
 						dialog.showAlertDialog(LogInOrSignUp.this, "",
-								"Wylogowanie powiodło się", true, getIntent()
-										.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+								"Wylogowanie powiodło się", true, null);
+                        startActivity(new Intent(LogInOrSignUp.this, MainActivity.class));
 					}
 					else if(error.length() > 0){
 						dialog.showAlertDialog(LogInOrSignUp.this, "Error",

@@ -211,7 +211,7 @@ public class RegisterActivity extends Activity implements GCMRegister.AsyncRespo
 				}
 				// Jeśli nie ma błędów oraz informacji zwrotnych a success=1 to wszystko jest OK
 				else if(success == 1){
-					Intent intent = new Intent(RegisterActivity.this, ChannelsActivity.class);
+					Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					
 					String message;

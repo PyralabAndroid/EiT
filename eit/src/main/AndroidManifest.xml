@@ -14,7 +14,8 @@
         android:name="com.example.eit.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.eit.permission.C2D_MESSAGE" />
+    <uses-permission
+        android:name="com.google.android.c2dm.permission.RECEIVE" />
 
 
     <application
@@ -48,6 +49,16 @@
         <activity
             android:name=".chanel.ChannelsActivity">
         </activity>
+
+        <receiver
+            android:name=".service.MyGcmReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="pl.eit.androideit.eit" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
