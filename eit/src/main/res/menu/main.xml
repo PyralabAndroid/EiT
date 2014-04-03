@@ -4,7 +4,6 @@
     tools:context="pl.eit.androideit.eit.MainActivity" >
     
     <item android:id="@+id/single_channel_refresh"
-        android:icon="@drawable/ic_popup_sync_1"
-        android:title="Odśwież"
+        android:icon="@drawable/refresh"
         app:showAsAction="always" />
 </menu>

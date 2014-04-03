@@ -1,6 +1,9 @@
 package pl.eit.androideit.eit.service;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -30,6 +33,22 @@ public class ServerConnection {
         public static final String SERVER_SET_SUB = "http://eit.besaba.com/set_sub.php";
         public static final String SERVER_GET_MESSAGES = "http://eit.besaba.com/sendMessagesToApp.php";
 
+
+    /** Sprawdza czy istnieje polaczenie z Internetem **/
+    public static boolean isOnline(Context context){
+        ConnectivityManager cManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(cManager != null){
+            NetworkInfo[] info = cManager.getAllNetworkInfo();
+            if(info != null){
+                for(NetworkInfo element : info){
+                    if(element.getState() == NetworkInfo.State.CONNECTED){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 	    	    	 	     
 	    /**
 	     * Wysyła zapytanie POST do serwera.

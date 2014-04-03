@@ -1,9 +1,11 @@
 package pl.eit.androideit.eit;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -25,10 +27,12 @@ import butterknife.InjectView;
 import pl.eit.androideit.eit.chanel.ChannelsActivity;
 import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.schedule_fragment.ScheduleItem;
+import pl.eit.androideit.eit.service.GCMRegister;
 import pl.eit.androideit.eit.service.Parser;
 import pl.eit.androideit.eit.service.ScheduleFinder;
+import pl.eit.androideit.eit.service.ServerConnection;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
-
+import static pl.eit.androideit.eit.service.GCMRegister.PROPERTY_APP_VERSION;
 
 public class MainActivity extends ActionBarActivity implements CustomDismissDialogListener {
 
@@ -58,6 +62,11 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        /** Jeśli jest net sprawdź aktualność reg_id GCM-a **/
+        if(ServerConnection.isOnline(getBaseContext())){
+            checkGCMRegId();
+        }
 
         getSupportActionBar().hide();
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -119,6 +128,27 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         }
 
         setLessonPanel();
+    }
+
+    /** Sprawdza czy Reg_id z GCM-a jest aktualne **/
+    private void checkGCMRegId() {
+        GCMRegister gcmReg = new GCMRegister();
+        // Pobieram registration id z SharedPreferences
+        String regid = gcmReg.getSavedGCMRegId(getBaseContext());
+        Log.d("reg id z preferencji", " " + regid);
+
+        // Jeśli istnieje regId sprawdzam czy jest nadal ważne.
+        if (regid != null && regid.length() > 0) {
+            SharedPreferences prefs = gcmReg.getGCMPreferences(this);
+            // Sprawdzam czy wersja aplikacji nie zmieniłą się. Jeśli tak to konieczna jest aktualizacja regId.
+            int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+            int currentVersion = gcmReg.getAppVersion(getBaseContext());
+            if (registeredVersion != currentVersion || gcmReg.isRegistrationExpired(this)) {
+                Log.d("GCM", "Wersja aplikacji zmieniła się lub wygasła rejestracja.");
+                // Rejestracja w GCM nowym regId + aktualizacja regId na serwerze.
+                new GCMRegister(getBaseContext(), regid, true).execute(null, null, null);
+            }
+        }
     }
 
     private void setItem(ScheduleItem item) {

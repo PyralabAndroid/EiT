@@ -8,15 +8,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +38,7 @@ import pl.eit.androideit.eit.service.DB;
 import pl.eit.androideit.eit.service.ServerConnection;
 import pl.eit.androideit.eit.service.model.Message;
 
-public class SingleChannel extends ListActivity {
+public class SingleChannel extends ActionBarActivity {
 	Context context;
 	static String TAG = "GCM";
 	String channelName;
@@ -57,51 +61,33 @@ public class SingleChannel extends ListActivity {
 		Intent intent = getIntent();
 		channelName = intent.getStringExtra("channelName");
 		channelTimestamp = intent.getLongExtra("channelTimestamp", -1);
+
+        // Nazwa kanału na ActionBarze
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(channelName);
+        ab.setDisplayShowHomeEnabled(false);
+
 		
 		// Pobiera nazwe usera
 		SharedPrefs sp = new SharedPrefs(this);
 		userName = sp.getUserName();
-		
-		// focusuje edittext
-		messageET = (EditText)findViewById(R.id.channel_edittext);
-		messageET.requestFocus();
-				
-		/*checkGCMRegId();*/
+
+        fetchMessagesFromLocalDb();
+
 	}
 	
-	
-	@Override
+
 	// Pobieram wiadomości dla wybranego kanału i łąduję je do listy
-	protected void onResume() {
-		super.onResume();
+	private void fetchMessagesFromLocalDb(){
 		DB db = new DB(this);
 		listItems = db.getMessagesForChannel(channelTimestamp);
         Log.d("timestamp", "z: " +String.valueOf(channelTimestamp));
         mAdapter = new CustomListAdapter(this, R.layout.channel_row, listItems);
-		setListAdapter(mAdapter);
+        ListView lV = (ListView)findViewById(android.R.id.list);
+        lV.setAdapter(mAdapter);
 	}
-	
-	//TODO przenieść do głównego activity
-/*	private void checkGCMRegId(){
-		GCMRegister gcmReg = new GCMRegister();
-		// Pobieram registration id z SharedPreferences
-        String regid = gcmReg.getSavedGCMRegId(context);
-        Log.d("reg id z preferencji", " " + regid);
-		
-                
-		// Jeśli istnieje regId sprawdzam czy jest nadal ważne.
-		if(regid != null && regid.length() > 0){
-			SharedPreferences prefs = gcmReg.getGCMPreferences(this);
-			// Sprawdzam czy wersja aplikacji nie zmieniłą się. Jeśli tak to konieczna jest aktualizacja regId.
-			int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-			int currentVersion = gcmReg.getAppVersion(context);
-			if (registeredVersion != currentVersion || gcmReg.isRegistrationExpired(this)) {
-				Log.v(TAG, "Wersja aplikacji zmieniła się lub wygasła rejestracja.");
-				// Rejestracja w GCM nowym regId + aktualizacja regId na serwerze.
-				new GCMRegister(context, regid, true).execute(null, null, null);
-			}
-		}
-	}*/
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,23 +107,26 @@ public class SingleChannel extends ListActivity {
 
     /** Pobieranie wiadomości dla kanału **/
     public void getMessagesForChannel(){
-        final ProgressDialog pDialog = new ProgressDialog(context);
-        pDialog.setMessage("Odświeżanie listy wiadomości...");
-        pDialog.setCancelable(true);
-        pDialog.show();
-        DB db = new DB(context);
-        lastSync = db.getLastChannelSync(channelTimestamp);
-
-        final JSONObject json = new JSONObject();
-        try {
-            json.put("channelTimestamp", channelTimestamp);
-            json.put("lastSync", lastSync);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        boolean online = isOnline();
+        boolean online = ServerConnection.isOnline(context);
         if(online){
+
+            final ProgressDialog pDialog = new ProgressDialog(context);
+            pDialog.setMessage("Odświeżanie listy wiadomości...");
+            pDialog.setCancelable(true);
+            pDialog.show();
+            // Pobiera czas ostatniej synchronizacji wiadomości
+            DB db = new DB(context);
+            lastSync = db.getLastChannelSync(channelTimestamp);
+            // JSON żądania POST
+            final JSONObject json = new JSONObject();
+            try {
+                json.put("channelTimestamp", channelTimestamp);
+                json.put("lastSync", lastSync);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            // Pobieranie wiadomości z serwera
             new AsyncTask<Void, Void, String>(){
 
                 @Override
@@ -220,7 +209,7 @@ public class SingleChannel extends ListActivity {
 	public void sendMessage(View view){
         // Tylko zalogowany user może wysyłać wiadomości
         if(userName != null && userName.length() > 0){
-            boolean online = isOnline();
+            boolean online = ServerConnection.isOnline(context);
             // Czy jest połączenie z Internetem ?
             if(online){
                 // Tekst wiadomości
@@ -244,22 +233,7 @@ public class SingleChannel extends ListActivity {
 
 			
 	}
-	
-	/** Sprawdza czy istnieje polaczenie z Internetem **/
-	private boolean isOnline(){
-		ConnectivityManager cManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		if(cManager != null){
-			NetworkInfo[] info = cManager.getAllNetworkInfo();
-			if(info != null){
-				for(NetworkInfo element : info){
-					if(element.getState() == NetworkInfo.State.CONNECTED){
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
+
 	
 	/** Wysyła wiadomość do serwera, a po poprawnej odp. zapisuje ją w lokalnej bazie danych**/
 	public void sendMessageToServer(final Message msgObj){
