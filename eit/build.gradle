@@ -24,13 +24,9 @@ dependencies {
     compile 'com.squareup.dagger:dagger:1.1.0'
     compile 'com.google.guava:guava:14.0.1'
     compile 'com.squareup.picasso:picasso:2.2.+'
-    compile 'com.nhaarman.listviewanimations:library:2.6.0'
     compile 'com.google.code.gson:gson:2.2.4'
-    compile "com.google.code.gson:gson:2.2.4"
     compile "com.google.code.findbugs:jsr305:2.0.1"
     compile "javax.inject:javax.inject:1"
-    
-    
-    
+    compile 'com.nhaarman.listviewanimations:library:2.6.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
