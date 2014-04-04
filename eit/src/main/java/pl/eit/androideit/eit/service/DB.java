@@ -12,9 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import pl.eit.androideit.eit.service.model.Chanel;
+import pl.eit.androideit.eit.service.model.Channel;
 import pl.eit.androideit.eit.service.model.Message;
 
 public class DB extends SQLiteOpenHelper {
@@ -205,17 +204,17 @@ public class DB extends SQLiteOpenHelper {
 	/************** CHANNELS ********************/
 
 	/** Zwraca listę wszystkich kanałów **/
-    public ArrayList<Chanel> getChannels(){
+    public ArrayList<Channel> getChannels(){
         openDb();
 
-        Chanel channel;
-        ArrayList<Chanel> result = new ArrayList<Chanel>();
+        Channel channel;
+        ArrayList<Channel> result = new ArrayList<Channel>();
 
         Cursor cursor = sqlDb.query(TABLE_CHANNELS, null, null, null, null, null, CHANNEL_TIMESTAMP + " ASC");
         if (cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
                     .moveToNext()) {
-                channel = new Chanel(cursor.getLong(cursor
+                channel = new Channel(cursor.getLong(cursor
                         .getColumnIndex(CHANNEL_TIMESTAMP)),
                         cursor.getString(cursor.getColumnIndex(CHANNEL_NAME)),
                         cursor.getInt(cursor.getColumnIndex(CHANNEL_IS_SUB)));

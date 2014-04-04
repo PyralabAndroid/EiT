@@ -39,7 +39,7 @@
             </activity>
 
         <activity android:name=".chanel.ChannelsActivity" />
-        <activity android:name=".chanel.SingleChannel" />
+        <activity android:name=".chanel.SingleChannelActivity" />
         <activity android:name=".NewsActivity" />
         <activity
             android:name=".RegisterActivity"

@@ -1,31 +1,26 @@
 package pl.eit.androideit.eit.chanel;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
 import pl.eit.androideit.eit.R;
-import pl.eit.androideit.eit.service.DB;
-import pl.eit.androideit.eit.service.model.Chanel;
-
+import pl.eit.androideit.eit.helpers.ChannelsHelper;
+import pl.eit.androideit.eit.service.model.Channel;
 
 public class ChannelsActivity extends ActionBarActivity {
 
-    ArrayList<Chanel> mListItems;
+    List<Channel> mListItems;
 
     @InjectView(R.id.list_view)
     ListView mListView;
@@ -36,22 +31,33 @@ public class ChannelsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_channels);
         ButterKnife.inject(this);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle("Twoje rozmowy");
-        ab.setDisplayShowHomeEnabled(false);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.channels_title));
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        final DB db = new DB(this);
-        mListItems = db.getChannels();
-        mListView.setAdapter(new ChanelListAdapter(this, R.layout.channels_activity_row, mListItems));
+        mListItems = ChannelsHelper.getChannels(this);
+        mListView.setAdapter(new ChanelListAdapter(this, mListItems));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @OnItemClick(R.id.list_view)
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final Chanel channel = mListItems.get(position);
-        Intent intent = new Intent(this, SingleChannel.class);
+        final Channel channel = mListItems.get(position);
+        Intent intent = new Intent(this, SingleChannelActivity.class);
         intent.putExtra("channelTimestamp", channel.channelTimestamp);
         intent.putExtra("channelName", channel.channelName);
         startActivity(intent);
     }
-
 }

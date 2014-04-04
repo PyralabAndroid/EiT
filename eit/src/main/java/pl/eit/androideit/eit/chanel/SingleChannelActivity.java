@@ -34,7 +34,7 @@ import pl.eit.androideit.eit.service.DB;
 import pl.eit.androideit.eit.service.ServerConnection;
 import pl.eit.androideit.eit.service.model.Message;
 
-public class SingleChannel extends ActionBarActivity {
+public class SingleChannelActivity extends ActionBarActivity {
 
 	String channelName;
 	long channelTimestamp;
@@ -148,7 +148,7 @@ public class SingleChannel extends ActionBarActivity {
                     AlertDialogManager alert = new AlertDialogManager();
                     if(response != null){
                         if(response.equals("serverProblem")){
-                            alert.showAlertDialog(SingleChannel.this, "Błąd",
+                            alert.showAlertDialog(SingleChannelActivity.this, "Błąd",
                                     "Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
                         }
                         else{
@@ -182,7 +182,7 @@ public class SingleChannel extends ActionBarActivity {
                                     }
                                 }
                                 else{
-                                    alert.showAlertDialog(SingleChannel.this, "Błąd",
+                                    alert.showAlertDialog(SingleChannelActivity.this, "Błąd",
                                             "Nie można wysłać wiadomości. Błąd: " + error, false, null);
                                 }
                             } catch (JSONException e) {
@@ -275,7 +275,7 @@ public class SingleChannel extends ActionBarActivity {
                  AlertDialogManager alert = new AlertDialogManager();
                  if(response != null){
                      if(response.equals("serverProblem")){
-                         alert.showAlertDialog(SingleChannel.this, "Błąd",
+                         alert.showAlertDialog(SingleChannelActivity.this, "Błąd",
                                  "Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
                      }
                      else{
@@ -300,7 +300,7 @@ public class SingleChannel extends ActionBarActivity {
                              db.insertMessage(msgObj);
                          }
                          else{
-                             alert.showAlertDialog(SingleChannel.this, "Błąd",
+                             alert.showAlertDialog(SingleChannelActivity.this, "Błąd",
                                      "Nie można wysłać wiadomości. Błąd: " + error, false, null);
                          }
                      }
