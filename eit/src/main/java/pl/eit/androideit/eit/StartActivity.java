@@ -8,12 +8,14 @@ import com.google.common.base.Strings;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import pl.eit.androideit.eit.content.SharedPrefs;
+import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.service.GCMRegister;
 
 public class StartActivity extends ActionBarActivity {
 
     GCMRegister gcmReg;
+
+    private AppPreferences mAppPrefrences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +23,14 @@ public class StartActivity extends ActionBarActivity {
         setContentView(R.layout.activity_start);
         ButterKnife.inject(this);
 
+        mAppPrefrences = new AppPreferences(this);
         getSupportActionBar().hide();
         checkIsUserLogIn();
     }
 
     private void checkIsUserLogIn() {
-        SharedPrefs sharedPrefs = new SharedPrefs(this);
-        // TODO: check this
-        if (!Strings.isNullOrEmpty(sharedPrefs.getUserName()) &&
-                !Strings.isNullOrEmpty(sharedPrefs.getAccountEmail())) {
+        if (!Strings.isNullOrEmpty(mAppPrefrences.getUserName()) &&
+                !Strings.isNullOrEmpty(mAppPrefrences.getUserEmail())) {
             startApp();
         }
     }

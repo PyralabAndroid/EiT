@@ -1,11 +1,11 @@
 package pl.eit.androideit.eit;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,11 +20,11 @@ import org.json.JSONObject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import pl.eit.androideit.eit.content.SharedPrefs;
+import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.service.Crypt;
 import pl.eit.androideit.eit.service.GCMRegister;
 
-public class RegisterActivity extends Activity implements GCMRegister.AsyncResponse {
+public class RegisterActivity extends ActionBarActivity implements GCMRegister.AsyncResponse {
 
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
@@ -46,6 +46,7 @@ public class RegisterActivity extends Activity implements GCMRegister.AsyncRespo
     GoogleCloudMessaging gcm;
     GCMRegister gcmReg;
     Intent intent;
+    private AppPreferences mAppPrefrences;
 
     @InjectView(R.id.register_acc_name)
     LinearLayout mAccLayout;
@@ -56,6 +57,7 @@ public class RegisterActivity extends Activity implements GCMRegister.AsyncRespo
         setContentView(R.layout.activity_register);
         ButterKnife.inject(this);
 
+        mAppPrefrences = new AppPreferences(this);
         getActionBar().hide();
         intent = getIntent();
         createOrLogin = intent.getStringExtra("createOrLogin");
@@ -195,8 +197,7 @@ public class RegisterActivity extends Activity implements GCMRegister.AsyncRespo
                 }
                 // Jeśli nie ma błędów oraz informacji zwrotnych a success=1 to wszystko jest OK
                 else if (success == 1) {
-                    SharedPrefs prefs = new SharedPrefs(this);
-                    prefs.saveAccInfo(userName, email);
+                    mAppPrefrences.edit().setUserEmail(email).setUserName(userName).commit();
                     startActivity(new Intent(this, MainActivity.class));
                 }
                 // Blędy z bazy danych

@@ -1,24 +1,15 @@
 package pl.eit.androideit.eit;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
 import pl.eit.androideit.eit.ogloszenia.AdapterListView;
-import pl.eit.androideit.eit.ogloszenia.GsonArr;
 import pl.eit.androideit.eit.ogloszenia.JsonFields;
 import pl.eit.androideit.eit.ogloszenia.ServerAsyncTask;
 

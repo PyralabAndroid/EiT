@@ -1,11 +1,8 @@
 package pl.eit.androideit.eit.chanel;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -14,7 +11,6 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +29,13 @@ import java.util.ArrayList;
 
 import pl.eit.androideit.eit.AlertDialogManager;
 import pl.eit.androideit.eit.R;
-import pl.eit.androideit.eit.content.SharedPrefs;
+import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.service.DB;
 import pl.eit.androideit.eit.service.ServerConnection;
 import pl.eit.androideit.eit.service.model.Message;
 
 public class SingleChannel extends ActionBarActivity {
-	Context context;
-	static String TAG = "GCM";
+
 	String channelName;
 	long channelTimestamp;
     /** Elementy listy **/
@@ -52,28 +47,26 @@ public class SingleChannel extends ActionBarActivity {
     long lastSync;
 	EditText messageET;
 
+    private AppPreferences mAppPrefrences;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_channel);
-		context = SingleChannel.this;
-		
+
+		mAppPrefrences = new AppPreferences(this);
+
 		Intent intent = getIntent();
 		channelName = intent.getStringExtra("channelName");
 		channelTimestamp = intent.getLongExtra("channelTimestamp", -1);
 
-        // Nazwa kanału na ActionBarze
         ActionBar ab = getSupportActionBar();
         ab.setTitle(channelName);
         ab.setDisplayShowHomeEnabled(false);
 
-		
-		// Pobiera nazwe usera
-		SharedPrefs sp = new SharedPrefs(this);
-		userName = sp.getUserName();
+		userName = mAppPrefrences.getUserName();
 
         fetchMessagesFromLocalDb();
-
 	}
 	
 
@@ -107,15 +100,15 @@ public class SingleChannel extends ActionBarActivity {
 
     /** Pobieranie wiadomości dla kanału **/
     public void getMessagesForChannel(){
-        boolean online = ServerConnection.isOnline(context);
+        boolean online = ServerConnection.isOnline(this);
         if(online){
 
-            final ProgressDialog pDialog = new ProgressDialog(context);
+            final ProgressDialog pDialog = new ProgressDialog(this);
             pDialog.setMessage("Odświeżanie listy wiadomości...");
             pDialog.setCancelable(true);
             pDialog.show();
             // Pobiera czas ostatniej synchronizacji wiadomości
-            DB db = new DB(context);
+            DB db = new DB(this);
             lastSync = db.getLastChannelSync(channelTimestamp);
             // JSON żądania POST
             final JSONObject json = new JSONObject();
@@ -172,7 +165,7 @@ public class SingleChannel extends ActionBarActivity {
                                 if(success == 1){
                                     JSONArray data = jsonResponse.getJSONArray("data");
                                     if(data.length() > 0) {
-                                        DB db = new DB(context);
+                                        DB db = new DB(getBaseContext());
                                         ArrayList<Message> newMessages = db.saveMessagesFromServer(data);
                                         //listItems.addAll(0, newMessages);
                                         //mAdapter.notifyDataSetChanged();
@@ -184,7 +177,7 @@ public class SingleChannel extends ActionBarActivity {
 
                                     }
                                     else{
-                                        Toast.makeText(context, "Lista wiadomości jest aktualna",
+                                        Toast.makeText(getBaseContext(), "Lista wiadomości jest aktualna",
                                                 Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -201,7 +194,7 @@ public class SingleChannel extends ActionBarActivity {
             }.execute();
         }
         else{
-            Toast.makeText(context, "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -209,7 +202,7 @@ public class SingleChannel extends ActionBarActivity {
 	public void sendMessage(View view){
         // Tylko zalogowany user może wysyłać wiadomości
         if(userName != null && userName.length() > 0){
-            boolean online = ServerConnection.isOnline(context);
+            boolean online = ServerConnection.isOnline(this);
             // Czy jest połączenie z Internetem ?
             if(online){
                 // Tekst wiadomości
@@ -223,11 +216,11 @@ public class SingleChannel extends ActionBarActivity {
                 sendMessageToServer(msgObj);
             }
             else{
-                Toast.makeText(context, "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Brak połączenia z Internetem", Toast.LENGTH_SHORT).show();
             }
         }
         else{
-            Toast.makeText(context, "Musisz być zalogowany w celu wysłania wiadomości",
+            Toast.makeText(this, "Musisz być zalogowany w celu wysłania wiadomości",
                     Toast.LENGTH_LONG).show();
         }
 
@@ -237,7 +230,7 @@ public class SingleChannel extends ActionBarActivity {
 	
 	/** Wysyła wiadomość do serwera, a po poprawnej odp. zapisuje ją w lokalnej bazie danych**/
 	public void sendMessageToServer(final Message msgObj){
-        final ProgressDialog pDialog = new ProgressDialog(context);
+        final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Wysyłanie wiadomości...");
         pDialog.setCancelable(true);
         pDialog.show();
@@ -303,7 +296,7 @@ public class SingleChannel extends ActionBarActivity {
                              listItems.add(msgObj);
                              mAdapter.notifyDataSetChanged();
                              // Wstawianie wiadomości do lokalnej bazy danych
-                             DB db = new DB(context);
+                             DB db = new DB(getBaseContext());
                              db.insertMessage(msgObj);
                          }
                          else{
