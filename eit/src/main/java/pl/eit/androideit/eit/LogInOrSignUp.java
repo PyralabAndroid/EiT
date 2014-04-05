@@ -1,26 +1,11 @@
 package pl.eit.androideit.eit;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import pl.eit.androideit.eit.service.GCMRegister;
-import pl.eit.androideit.eit.service.ServerConnection;
-import pl.eit.androideit.eit.content.SharedPrefs;
 
 public class LogInOrSignUp extends Activity {
 	Context context;
@@ -32,7 +17,6 @@ public class LogInOrSignUp extends Activity {
 	/** true jeśli użytkownik jest już zalogowany. */
 	boolean logged = false;
 	ProgressDialog pDialog;
-	SharedPrefs prefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

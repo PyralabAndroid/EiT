@@ -12,7 +12,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import pl.eit.androideit.eit.R;
-import pl.eit.androideit.eit.chanel.SingleChannel;
+import pl.eit.androideit.eit.chanel.SingleChannelActivity;
 
 public class MyGcmReceiver extends BroadcastReceiver{
 	private static final String TAG = "MyGcmReceiver";
@@ -61,7 +61,7 @@ public class MyGcmReceiver extends BroadcastReceiver{
 
         // Intencja z odebraną wiadomością, która po kliknięciu notyfikacji
         // zostanie wyświetlona w MainActivity.
-        Intent intent = new Intent(ctx, SingleChannel.class);
+        Intent intent = new Intent(ctx, SingleChannelActivity.class);
         intent.putExtra("gcmNotification", msg);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

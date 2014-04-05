@@ -22,31 +22,43 @@ public class AppPreferences {
         }
 
         public AppPreferencesEditor setFirstRun(boolean isFirstRun) {
-            mEditor.putBoolean(IS_FIRST_RUN, isFirstRun);
+            mEditor.putBoolean(PREFERENCES_IS_FIRST_RUN, isFirstRun);
             return this;
         }
 
         public AppPreferencesEditor setYear(String year) {
-            mEditor.putString(PREFERENCE_YEAR, year);
+            mEditor.putString(PREFERENCES_YEAR, year);
             return this;
         }
 
         public AppPreferencesEditor setGroup(String group) {
-            mEditor.putString(PREFERENCE_GROUP, group);
+            mEditor.putString(PREFERENCES_GROUP, group);
             return this;
         }
 
         public AppPreferencesEditor setSide(String side) {
-            mEditor.putString(PREFERENCE_SIDE, side);
+            mEditor.putString(PREFERENCES_SIDE, side);
+            return this;
+        }
+
+        public AppPreferencesEditor setUserName(String name) {
+            mEditor.putString(PREFERENCES_USER_NAME, name);
+            return this;
+        }
+
+        public AppPreferencesEditor setUserEmail(String email) {
+            mEditor.putString(PREFERENCES_EMAIL, email);
             return this;
         }
     }
 
     private static final String PREFERENCES_NAME = "app";
-    private static final String IS_FIRST_RUN = "is_first_run";
-    private static final String PREFERENCE_YEAR = "year";
-    private static final String PREFERENCE_GROUP = "group";
-    private static final String PREFERENCE_SIDE = "side";
+    private static final String PREFERENCES_IS_FIRST_RUN = "is_first_run";
+    private static final String PREFERENCES_YEAR = "year";
+    private static final String PREFERENCES_GROUP = "group";
+    private static final String PREFERENCES_SIDE = "side";
+    private static final String PREFERENCES_USER_NAME = "user";
+    private static final String PREFERENCES_EMAIL = "email";
 
 
     private SharedPreferences mPreferences;
@@ -60,11 +72,17 @@ public class AppPreferences {
     }
 
     public boolean isFirstRun() {
-        return mPreferences.getBoolean(IS_FIRST_RUN, true);
+        return mPreferences.getBoolean(PREFERENCES_IS_FIRST_RUN, true);
     }
 
     // TODO: change value
-    public String getYear() { return mPreferences.getString(PREFERENCE_YEAR, "4");}
-    public String getGroup() { return mPreferences.getString(PREFERENCE_GROUP, "T2");}
-    public String getSide() { return mPreferences.getString(PREFERENCE_SIDE, "left");}
+    public String getYear() { return mPreferences.getString(PREFERENCES_YEAR, "4");}
+    public String getGroup() { return mPreferences.getString(PREFERENCES_GROUP, "T2");}
+    public String getSide() { return mPreferences.getString(PREFERENCES_SIDE, "left");}
+    public String getUserName() {
+        return mPreferences.getString(PREFERENCES_USER_NAME, null);
+    }
+    public String getUserEmail() {
+        return mPreferences.getString(PREFERENCES_EMAIL, null);
+    }
 }

@@ -23,5 +23,8 @@
     <string name="register_btn_register">Zarejstruj</string>
     <string name="main_not_lesson_today">Nie masz już dzisiaj zajęć</string>
     <string name="title_activity_news">NewsActivity</string>
+    <string name="channels_title">Twoje rozmowy</string>
+    <string name="channel_server_error">Błąd połączenia /n Nie można połączyć się z serwerem</string>
+    <string name="channel_subscribing_error">Nie można subskrybuować kanału. Spróbuj ponownie.</string>
 
 </resources>
