@@ -19,6 +19,8 @@ public class AdapterListView extends ArrayAdapter<JsonFields>{
     private final ArrayList<JsonFields> items_array;
     private final Context context;
 
+    String ciag_linkow;
+
     public AdapterListView(Context context, ArrayList<JsonFields> items) {
 
         super(context, R.layout.ogloszenia_layout, items);
@@ -37,12 +39,52 @@ public class AdapterListView extends ArrayAdapter<JsonFields>{
 
         View rowView = (View) inflater.inflate(R.layout.ogloszenia_layout, parent, false);
 
-        TextView title = (TextView) rowView.findViewById(R.id.label);
-        TextView text = (TextView) rowView.findViewById(R.id.value);
+
+
+        TextView title = (TextView) rowView.findViewById(R.id.title);
+        TextView text = (TextView) rowView.findViewById(R.id.text);
+        TextView linki = (TextView) rowView.findViewById(R.id.links);
+
 
         title.setText(items_array.get(position).title);
         text.setText(items_array.get(position).text);
+        if(items_array.get(position).appendix != null) {
+            ciag_linkow = pobierzLinki(items_array, position);
+            linki.setText(ciag_linkow);
+        }
 
         return  rowView;
+    }
+
+    public String pobierzLinki(ArrayList<JsonFields> json_link_array, int position)
+    {
+
+        String cos_tam = "";
+
+        ArrayList<String> lista_linkow = new ArrayList<String>();
+
+        if(json_link_array.get(position).appendix.link1 != null)
+            lista_linkow.add(json_link_array.get(position).appendix.link1);
+
+        if(json_link_array.get(position).appendix.link2 != null)
+            lista_linkow.add(json_link_array.get(position).appendix.link2);
+
+        if(json_link_array.get(position).appendix.link3 != null)
+            lista_linkow.add(json_link_array.get(position).appendix.link3);
+
+        if(json_link_array.get(position).appendix.link4 != null)
+            lista_linkow.add(json_link_array.get(position).appendix.link4);
+
+
+        for(String linki : lista_linkow)
+        {
+            if(lista_linkow == null) {
+                lista_linkow.remove(lista_linkow);
+                return cos_tam;
+            }
+
+            cos_tam = cos_tam + linki +"\n";
+        }
+        return  cos_tam;
     }
 }

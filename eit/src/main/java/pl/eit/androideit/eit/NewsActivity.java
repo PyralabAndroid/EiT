@@ -35,7 +35,7 @@ public class NewsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         //ButterKnife.inject(this);
-        url = "http://iamorganized.cba.pl/android/data.json";
+        url = "http://iamorganized.cba.pl/android/data_parse.json";
         //new ServerAsyncTask().execute(url);
         accessWebService();
 
@@ -73,13 +73,15 @@ public class NewsActivity extends ActionBarActivity {
 
         ArrayList<JsonFields> items = new ArrayList<JsonFields>();
 
+
+
         int i=0;
         for(JsonFields x : ob.products_tab.products)
         {
+
             items.add(x);
         }
         AdapterListView adapter = new AdapterListView(this, items);
-
 
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(adapter);

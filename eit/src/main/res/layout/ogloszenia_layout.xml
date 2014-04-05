@@ -5,7 +5,7 @@
     >
 
     <TextView
-        android:id="@+id/label"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -13,10 +13,18 @@
     </TextView>
 
     <TextView
-        android:id="@+id/value"
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/label"
+        android:layout_below="@+id/title"
+        android:textSize="12sp"
+        android:paddingLeft="5dp">
+    </TextView>
+    <TextView
+        android:id="@+id/links"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
         android:textSize="12sp"
         android:paddingLeft="5dp">
     </TextView>
