@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit.channel;
 
 import android.content.Intent;
 import android.os.Bundle;

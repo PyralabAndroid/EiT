@@ -38,8 +38,7 @@
                 android:value="splitActionBarWhenNarrow" />
             </activity>
 
-        <activity android:name=".chanel.ChannelsActivity" />
-        <activity android:name=".chanel.SingleChannelActivity" />
+        <activity android:name=".channel.ChannelActivity" />
         <activity android:name=".NewsActivity" />
         <activity
             android:name=".RegisterActivity"

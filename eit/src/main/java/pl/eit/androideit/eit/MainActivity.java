@@ -24,7 +24,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import pl.eit.androideit.eit.chanel.ChannelsActivity;
+import pl.eit.androideit.eit.channel.ChannelActivity;
 import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.schedule_fragment.ScheduleItem;
 import pl.eit.androideit.eit.service.GCMRegister;
@@ -32,6 +32,7 @@ import pl.eit.androideit.eit.service.Parser;
 import pl.eit.androideit.eit.service.ScheduleFinder;
 import pl.eit.androideit.eit.service.ServerConnection;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
+
 import static pl.eit.androideit.eit.service.GCMRegister.PROPERTY_APP_VERSION;
 
 public class MainActivity extends ActionBarActivity implements CustomDismissDialogListener {
@@ -101,7 +102,7 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         mMenuChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getBaseContext(), ChannelsActivity.class));
+                startActivity(new Intent(getBaseContext(), ChannelActivity.class));
             }
         });
         mMenuNews = (Button) findViewById(R.id.menu_bt_news);
