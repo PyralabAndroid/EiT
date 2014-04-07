@@ -26,5 +26,6 @@
     <string name="channels_title">Twoje rozmowy</string>
     <string name="channel_server_error">Błąd połączenia /n Nie można połączyć się z serwerem</string>
     <string name="channel_subscribing_error">Nie można subskrybuować kanału. Spróbuj ponownie.</string>
+    <string name="message_input_hint">Co się dzieje?</string>
 
 </resources>

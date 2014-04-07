@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -72,6 +74,12 @@ public class ChannelFragment extends Fragment {
 
         DB db = new DB(getActivity());
         mList = db.getMessagesForChannel(mChannel.channelTimestamp);
+        Collections.sort(mList, new Comparator<Message>() {
+            @Override
+            public int compare(Message lhs, Message rhs) {
+                return lhs.messageTimestamp < rhs.messageTimestamp ? 1 : -1;
+            }
+        });
 
         mAdapter = new EasyAdapter<Message>(getActivity().getBaseContext(),
                 MessageViewHolder.class, mList);
