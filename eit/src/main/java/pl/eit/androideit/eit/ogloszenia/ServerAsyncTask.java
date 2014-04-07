@@ -73,12 +73,9 @@ public class ServerAsyncTask extends AsyncTask<String, Void, String> {
     @Override
     public void onPostExecute(String s)
     {
-        //super.onPostExecute(s);
         super.onPostExecute(s);
         dialog.dismiss();
-        if (s!= null)
-        {
-
+        if (s!= null){
             products_tab = gson.fromJson(s, GsonArr.class);
             news_obiekt.przypisz(this);
         }

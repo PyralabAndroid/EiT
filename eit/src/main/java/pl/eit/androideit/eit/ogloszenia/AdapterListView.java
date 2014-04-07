@@ -14,9 +14,14 @@ import pl.eit.androideit.eit.R;
 /**
  * Created by Robert on 2014-04-02.
  */
-public class AdapterListView extends ArrayAdapter<JsonFields>{
 
-    private final ArrayList<JsonFields> items_array;
+
+public class AdapterListView extends ArrayAdapter<JsonFields>{
+    public AdapterListView(Context context, int resource) {
+        super(context, resource);
+    }
+
+    /*private final ArrayList<JsonFields> items_array;
     private final Context context;
 
     String ciag_linkow;
@@ -86,5 +91,5 @@ public class AdapterListView extends ArrayAdapter<JsonFields>{
             cos_tam = cos_tam + linki +"\n";
         }
         return  cos_tam;
-    }
+    }*/
 }
