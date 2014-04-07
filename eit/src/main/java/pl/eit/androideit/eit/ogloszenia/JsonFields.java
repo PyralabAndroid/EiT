@@ -1,5 +1,6 @@
 package pl.eit.androideit.eit.ogloszenia;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -10,14 +11,13 @@ public class JsonFields
 
         public String text;
         public String title;
-        public Appendix appendix;
+        public String images_url;
+        public ArrayList<Appendix> appendix;
 
     public static class Appendix
     {
-       public String link1;
-       public String link2;
-       public String link3;
-       public String link4;
+       public String link;
+       public String href;
 
     }
 
