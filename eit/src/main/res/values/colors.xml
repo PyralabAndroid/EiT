@@ -20,4 +20,10 @@
     <color name="tab_not_pressed_color">#46A5E5</color>
     <color name="tab_pressed_color">#44526D</color>
     <color name="actionbar_bg_color">#ffacbdfc</color>
+
+    <!-- MessageRow -->
+    <color name="message_layout_background">#fff</color>
+    <color name="message_background">#ffc8e1fb</color>
+    <color name="message_line">#ff717f8e</color>
+    <color name="message_panel_color">#ffb4cef2</color>
 </resources>

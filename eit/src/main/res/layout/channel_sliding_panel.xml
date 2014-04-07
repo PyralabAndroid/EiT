@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.SlidingPaneLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_pane"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:background="@color/abc_search_url_text_selected"
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:id="@+id/channel_list"
+        android:choiceMode="singleChoice"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/channel_container"/>
+
+</android.support.v4.widget.SlidingPaneLayout>

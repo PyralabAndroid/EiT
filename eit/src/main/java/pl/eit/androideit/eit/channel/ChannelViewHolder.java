@@ -1,4 +1,4 @@
-package pl.eit.androideit.eit.chanel;
+package pl.eit.androideit.eit.channel;
 
 import android.view.View;
 import android.widget.TextView;
