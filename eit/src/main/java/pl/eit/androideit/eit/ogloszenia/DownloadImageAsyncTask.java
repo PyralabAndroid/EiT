@@ -10,8 +10,6 @@ import android.widget.ImageView;
 
 import java.io.InputStream;
 
-import pl.eit.androideit.eit.NewsActivity;
-
 /**
  * Created by Robert on 2014-04-07.
  */

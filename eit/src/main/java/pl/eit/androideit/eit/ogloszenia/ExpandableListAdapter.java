@@ -27,14 +27,12 @@ public class ExpandableListAdapter extends ExpandableListItemAdapter<JsonFields>
 
     List<JsonFields> json_field_list;
     Context context;
-    ArrayList<String> array_links_appendix;
 
     public ExpandableListAdapter(Context context, final List<JsonFields> items) {
        super(context, items);
        this.json_field_list = items;
        this.context = context;
     }
-
 
     @Override
     public View getTitleView(int position, View convertView, ViewGroup parent) {
@@ -67,7 +65,7 @@ public class ExpandableListAdapter extends ExpandableListItemAdapter<JsonFields>
             String text = "";
 
             for(JsonFields.Appendix app_link_href : json_field_list.get(position).appendix){
-                text = text + "<a href=" + app_link_href.href + ">" + app_link_href.link + "</a>";
+                text = text + "<a href=" + app_link_href.href + ">" + app_link_href.link + "</a><br>" ;
             }
             exp_links.setText(Html.fromHtml(text));
         }
