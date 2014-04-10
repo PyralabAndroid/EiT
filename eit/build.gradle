@@ -28,5 +28,8 @@ dependencies {
     compile "com.google.code.findbugs:jsr305:2.0.1"
     compile "javax.inject:javax.inject:1"
     compile 'com.nhaarman.listviewanimations:library:2.6.0'
+    compile 'com.google.http-client:google-http-client-xml:1.17.0-rc'
+    compile 'com.google.http-client:google-http-client:1.17.0-rc'
+    compile 'org.jsoup:jsoup:1.7.3'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
