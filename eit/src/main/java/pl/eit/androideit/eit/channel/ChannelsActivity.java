@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -60,4 +61,6 @@ public class ChannelsActivity extends ActionBarActivity {
         intent.putExtra("channelName", channel.channelName);
         startActivity(intent);
     }
+
+
 }

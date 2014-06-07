@@ -35,6 +35,7 @@ public class GCMRegister extends AsyncTask<Void, Void, String> {
 	GoogleCloudMessaging gcm;
 	public AsyncResponse delegate = null;
 
+
 	/** Konstruktor dla tworzenia konta **/
 	public GCMRegister(Context context, Boolean newAcc, String email,
 			String password, String userName, boolean isUpdate,
