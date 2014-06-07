@@ -3,28 +3,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/btn_news_bck">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1">
+    android:background="@color/bck_menu">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:layout_gravity="center"
-            android:background="@drawable/et_menu"
+            android:src="@drawable/et_menu"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="15dp"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.97">
+            android:layout_height="wrap_content">
 
             <Button
                 style="@style/MenuButtonStyle"
@@ -41,5 +34,4 @@
                 android:text="Ogłoszenia"
                 android:id="@+id/menu_bt_news" />
         </LinearLayout>
-    </LinearLayout>
 </LinearLayout>

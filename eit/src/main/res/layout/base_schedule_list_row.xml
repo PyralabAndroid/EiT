@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_vertical_margin"
     android:padding="10dp"
-    android:background="@drawable/blue_button"
+    android:background="@drawable/button_news"
     android:orientation="vertical">
 
     <RelativeLayout

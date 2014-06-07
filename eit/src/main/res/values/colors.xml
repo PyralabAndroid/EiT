@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bck_main">#507592</color>
-    <color name="bck_menu">#2E3461</color>
+    <color name="bck_menu">#99CC00</color>
     <color name="font">#F9F6F0</color>
     <color name="f_hot_news">#E12809</color>
     <color name="f_btn">#253B57</color>
     <color name="bck_btn_menu">#FFDED0</color>
     <color name="bck_button">#F3CF62</color>
     <color name="new_bck">#9FAEC4</color>
-    <color name="btn_news_bck">#ff2c74e5</color>
+    <color name="btn_news_bck">#99CC00</color>
 
     <!-- ScheduleRow -->
     <color name="time_text_color">#F3CF62</color>
@@ -17,13 +17,14 @@
     <color name="bck_ll">#44526D</color>
     <color name="bck_message">#DAE4DC</color>
 
-    <color name="tab_not_pressed_color">#46A5E5</color>
-    <color name="tab_pressed_color">#44526D</color>
-    <color name="actionbar_bg_color">#ffacbdfc</color>
+    <color name="tab_not_pressed_color">#FFBB33</color>
+    <color name="tab_pressed_color">#FF8800</color>
+    <color name="actionbar_bg_color">#99CC00</color>
 
     <!-- MessageRow -->
     <color name="message_layout_background">#fff</color>
     <color name="message_background">#ffc8e1fb</color>
     <color name="message_line">#ff717f8e</color>
     <color name="message_panel_color">#ffb4cef2</color>
+    <color name="schedule_background_color">#5ef2b130</color>
 </resources>
