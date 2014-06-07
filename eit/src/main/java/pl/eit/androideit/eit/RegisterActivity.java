@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.api.client.repackaged.com.google.common.base.Strings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +24,7 @@ import butterknife.InjectView;
 import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.service.Crypt;
 import pl.eit.androideit.eit.service.GCMRegister;
+import pl.eit.androideit.eit.service.ServerConnection;
 
 public class RegisterActivity extends ActionBarActivity implements GCMRegister.AsyncResponse {
 
@@ -84,61 +86,66 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                password = txtPassword.getText().toString().trim();
-                userName = txtName.getText().toString().trim();
-                email = txtEmail.getText().toString().trim();
+                if (ServerConnection.isOnline(getBaseContext())) {
+                    password = txtPassword.getText().toString().trim();
+                    userName = txtName.getText().toString().trim();
+                    email = txtEmail.getText().toString().trim();
 
-                pDialog = new ProgressDialog(RegisterActivity.this);
-                pDialog.setCancelable(true);
-                pDialog.setIndeterminate(true);
-                pDialog.setMessage("Trwa rejestracja. Proszę czekać :-)");
+                    pDialog = new ProgressDialog(RegisterActivity.this);
+                    pDialog.setCancelable(true);
+                    pDialog.setIndeterminate(true);
+                    pDialog.setMessage("Trwa rejestracja. Proszę czekać :-)");
 
-                // Sprawdzam czy użytkownik wypełnił formularz.
-                if (email.length() > 0) {
-                    if (createOrLogin.equals("create")) {
-                        if (userName.length() <= 0) {
-                            // Użytkownik nie podał nazwy usera
-                            alert.showAlertDialog(RegisterActivity.this,
-                                    "", "Proszę podać nazwę użytkownika", false, null);
+                    // Sprawdzam czy użytkownik wypełnił formularz.
+                    if (email.length() > 0) {
+                        if (createOrLogin.equals("create")) {
+                            if (userName.length() <= 0) {
+                                // Użytkownik nie podał nazwy usera
+                                alert.showAlertDialog(RegisterActivity.this,
+                                        "", "Proszę podać nazwę użytkownika", false, null);
+                                return;
+                            }
+                        }
+                        // Jeśli hasło jest za krótkie. Pokaż ostrzeżenie i zfokusuj
+                        // edittext hasła.
+                        if (password.length() < 6) {
+                            Toast.makeText(getBaseContext(),
+                                    "Hasło musi mieć conajmniej 6 znaków.",
+                                    Toast.LENGTH_LONG).show();
+                            txtPassword.requestFocus();
                             return;
                         }
-                    }
-                    // Jeśli hasło jest za krótkie. Pokaż ostrzeżenie i zfokusuj
-                    // edittext hasła.
-                    if (password.length() < 6) {
-                        Toast.makeText(getBaseContext(),
-                                "Hasło musi mieć conajmniej 6 znaków.",
-                                Toast.LENGTH_LONG).show();
-                        txtPassword.requestFocus();
-                        return;
-                    }
 
-                    // Szyfrowanie hasła.
-                    try {
-                        Crypt crypt = new Crypt();
-                        encryptedPass = Crypt.bytesToHex(crypt.encrypt(password));
-                        //Log.d("zakodowane hasło", encryptedPass.toString());
+                        // Szyfrowanie hasła.
+                        try {
+                            Crypt crypt = new Crypt();
+                            encryptedPass = Crypt.bytesToHex(crypt.encrypt(password));
+                            //Log.d("zakodowane hasło", encryptedPass.toString());
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                    // Jeśli wprowadzone dane są prawidłowe, pokaż ProgressDialog
-                    // i zarejestruj użytkownika w GCM oraz na serwerze
-                    pDialog.show();
-                    if (createOrLogin.equals("create")) {
-                        new GCMRegister(getBaseContext(), true, email, encryptedPass, userName, false, RegisterActivity.this)
-                                .execute(null, null, null);
+                        // Jeśli wprowadzone dane są prawidłowe, pokaż ProgressDialog
+                        // i zarejestruj użytkownika w GCM oraz na serwerze
+                        pDialog.show();
+                        if (createOrLogin.equals("create")) {
+                            new GCMRegister(getBaseContext(), true, email, encryptedPass, userName, false, RegisterActivity.this)
+                                    .execute(null, null, null);
+                        } else {
+                            new GCMRegister(getBaseContext(), false, email, encryptedPass, false, RegisterActivity.this)
+                                    .execute(null, null, null);
+                        }
+
+
                     } else {
-                        new GCMRegister(getBaseContext(), false, email, encryptedPass, false, RegisterActivity.this)
-                                .execute(null, null, null);
+                        // Użytkownik nie wypełnij wszystkich danych.
+                        alert.showAlertDialog(RegisterActivity.this,
+                                "Registration Error!", "Please enter your details", false, null);
                     }
-
-
                 } else {
-                    // Użytkownik nie wypełnij wszystkich danych.
                     alert.showAlertDialog(RegisterActivity.this,
-                            "Registration Error!", "Please enter your details", false, null);
+                            "", "Brak dostępu do Internetu", false, null);
                 }
             }
         });
@@ -165,6 +172,7 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
                 String info = "";
                 Integer success = 0;
                 String error = "";
+                String loggedUserName = "";
                 /** Zwracana nazwa użytkownika podczas logowania
                  * Użytkownik przy logowaniu podaje adres email i haslo, więc
                  * nazwa użytkownika musi zostać zwrócona z serwera**/
@@ -173,6 +181,7 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
                     success = response.getInt("success");
                     error = response.getString("error");
                     info = response.getString("info");
+                    loggedUserName = response.getString("userName");
                 } catch (JSONException e1) {
                     throw new RuntimeException(e1.getMessage() + ". Server message: " + serverResponse);
                 }
@@ -197,12 +206,19 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
                 }
                 // Jeśli nie ma błędów oraz informacji zwrotnych a success=1 to wszystko jest OK
                 else if (success == 1) {
-                    mAppPrefrences.edit().setUserEmail(email).setUserName(userName).commit();
-                    startActivity(new Intent(this, MainActivity.class));
+                    if(Strings.isNullOrEmpty(loggedUserName)){
+                        mAppPrefrences.edit().setUserEmail(email).setUserName(userName).commit();
+                    }
+                    else{
+                        mAppPrefrences.edit().setUserEmail(email).setUserName(loggedUserName).commit();
+                    }
+
+                    Intent intent = new Intent(this, MainActivity.class);
+                    alert.showAlertDialog(RegisterActivity.this, "", "Rejestracja zakończona powodzeniem", false, intent);
                 }
                 // Blędy z bazy danych
                 if (error.length() > 0) {
-                    alert.showAlertDialog(getBaseContext(),
+                    alert.showAlertDialog(RegisterActivity.this,
                             "Registration Error", "Error: " + error, false, null);
                 }
             }

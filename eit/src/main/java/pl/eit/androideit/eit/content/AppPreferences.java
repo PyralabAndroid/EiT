@@ -2,6 +2,10 @@ package pl.eit.androideit.eit.content;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.google.api.client.repackaged.com.google.common.base.Strings;
+import com.google.api.client.repackaged.org.apache.commons.codec.binary.StringUtils;
 
 public class AppPreferences {
 
@@ -50,6 +54,13 @@ public class AppPreferences {
             mEditor.putString(PREFERENCES_EMAIL, email);
             return this;
         }
+
+        public AppPreferencesEditor clearUserData(){
+            setUserName("").commit();
+            setUserEmail("").commit();
+            setFirstRun(true).commit();
+            return this;
+        }
     }
 
     private static final String PREFERENCES_NAME = "app";
@@ -74,6 +85,8 @@ public class AppPreferences {
     public boolean isFirstRun() {
         return mPreferences.getBoolean(PREFERENCES_IS_FIRST_RUN, true);
     }
+
+    public boolean isLoggedIn() {return !(Strings.isNullOrEmpty(getUserEmail()) || Strings.isNullOrEmpty(getUserName()));}
 
     // TODO: change value
     public String getYear() { return mPreferences.getString(PREFERENCES_YEAR, "4");}

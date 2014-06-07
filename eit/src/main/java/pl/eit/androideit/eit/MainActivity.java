@@ -1,7 +1,9 @@
 package pl.eit.androideit.eit;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
@@ -9,9 +11,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,11 +45,12 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
 
     SlidingMenu slidingMenu;
 
-    private Button mMenuSchedule, mMenuNews, mMenuChat;
+    private Button mMenuSchedule, mMenuNews, mMenuChat, mMenuLogoutBt;
     private Parser mParser;
     private BaseSchedule mBaseSchedule;
     private ScheduleFinder mScheduleFinder;
     private AppPreferences mPreferences;
+    private ProgressDialog pDialog;
 
     @InjectView(R.id.base_schedule_row_name)
     TextView mScheduleName;
@@ -58,11 +65,16 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
     @InjectView(R.id.schedule_frame)
     LinearLayout mScheduleLayout;
 
+    RelativeLayout mLogoutLayout;
+    TextView mLogoutUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        pDialog = new ProgressDialog(MainActivity.this);
 
         /** Jeśli jest net sprawdź aktualność reg_id GCM-a **/
         if(ServerConnection.isOnline(getBaseContext())){
@@ -89,6 +101,7 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         slidingMenu.attachToActivity(this, SlidingMenu.TOUCHMODE_MARGIN);
         slidingMenu.setMenu(R.layout.menu);
         slidingMenu.setBehindWidth(menuWidth);
+
 
         LinearLayout mBaseLayout = (LinearLayout)findViewById(R.id.main_ll_base);
         mBaseLayout.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +132,15 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
                 startActivity(new Intent(getBaseContext(), ScheduleActivity.class));
             }
         });
+        mMenuLogoutBt = (Button)findViewById(R.id.menu_logout_bt);
+        mMenuLogoutBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOut();
+                startActivity(new Intent(getBaseContext(), StartActivity.class));
+            }
+        });
+
 
         mPreferences = new AppPreferences(getBaseContext());
         if(mPreferences.isFirstRun()) {
@@ -129,6 +151,17 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         }
 
         setLessonPanel();
+
+        mLogoutUser = (TextView)findViewById(R.id.menu_logout_user_tv);
+        mLogoutLayout = (RelativeLayout)findViewById(R.id.menu_logout_layout);
+        if(mPreferences.isLoggedIn()){
+            mLogoutLayout.setVisibility(View.VISIBLE);
+            mLogoutUser.setText(mPreferences.getUserName());
+        }
+        else{
+            mLogoutLayout.setVisibility(View.INVISIBLE);
+            mMenuLogoutBt.setVisibility(View.INVISIBLE);
+        }
     }
 
     /** Sprawdza czy Reg_id z GCM-a jest aktualne **/
@@ -151,6 +184,83 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
             }
         }
     }
+
+	public void logOut() {
+		// Pokazuje dialog o wylogowywaniu.
+		pDialog.setCancelable(true);
+		pDialog.setIndeterminate(true);
+		pDialog.setMessage("Wylogowywanie");
+		pDialog.show();
+
+		// wyrejestrowanie regId z serwera.
+		new AsyncTask<Void, Void, String>() {
+			@Override
+			protected String doInBackground(Void... params) {
+				String result = deleteAcc();
+				return result;
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				if (pDialog != null && !isFinishing()) {
+					pDialog.dismiss();
+				}
+				AlertDialogManager dialog = new AlertDialogManager();
+				/** Odpowiedz z serwera **/
+				JSONObject response;
+				Integer success = 0;
+				String error = "";
+				try {
+					response = new JSONObject(result);
+					success = response.getInt("success");
+					error = response.getString("error");
+				} catch (JSONException e1) {
+                    throw new RuntimeException(e1.getMessage() + ". Server message: " + result);
+				}
+				if (result.equals("serverProblem")) {
+					dialog.showAlertDialog(MainActivity.this, "Błąd",
+							"Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
+				}
+				else{
+					if(success == 1) {
+                        mPreferences.edit().clearUserData();
+                        dialog.showAlertDialog(MainActivity.this, "",
+                                "Wylogowanie powiodło się", true, new Intent(MainActivity.this, StartActivity.class));
+                    }
+					else if(error.length() > 0){
+						dialog.showAlertDialog(MainActivity.this, "Error",
+								"error: " + result, false, null);
+					}
+				}
+			}
+		}.execute();
+	}
+    /**
+     //	 * Wylogowuje regId z serwera.
+     //	 *
+     //	 * @return odpowiedz z serwera czy wylogowanie powiodło się
+     //	 */
+	public String deleteAcc() {
+        GCMRegister gcmReg = new GCMRegister();
+		String regId = gcmReg.getSavedGCMRegId(getBaseContext());
+
+		String result = "";
+		JSONObject json = new JSONObject();
+		try {
+			json.put("regId", regId);
+			json.put("email", mPreferences.getUserEmail());
+			ServerConnection server = new ServerConnection();
+			result = server.post(ServerConnection.SERVER_LOG_OUT,
+					json.toString());
+
+		} catch (JSONException e2) {
+			e2.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 
     private void setItem(ScheduleItem item) {
         mScheduleName.setText(item.mName);

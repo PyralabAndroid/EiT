@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
-import com.google.common.base.Strings;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.eit.androideit.eit.content.AppPreferences;
@@ -29,8 +27,7 @@ public class StartActivity extends ActionBarActivity {
     }
 
     private void checkIsUserLogIn() {
-        if (!Strings.isNullOrEmpty(mAppPrefrences.getUserName()) &&
-                !Strings.isNullOrEmpty(mAppPrefrences.getUserEmail())) {
+        if (mAppPrefrences.isLoggedIn()) {
             startApp();
         }
     }
