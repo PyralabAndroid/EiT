@@ -57,8 +57,7 @@ public class ServerConnection {
 	     * @param json dane do wysłania.
 	     * @throws java.io.IOException propagated from POST.
 	     */
-	    public String post(String endpoint, String json) throws IOException { 
-	    	Log.d("sending data", "json: " + json);
+	    public String post(String endpoint, String json) throws IOException {
 	    	// Docelowy adres skryptu serwera.
 	        URL url;
 	        HttpURLConnection conn = null;
@@ -90,6 +89,7 @@ public class ServerConnection {
 		            out.write(bytes);
 		            out.flush();
 		            out.close();
+                    Log.d("sending data", "json: " + json);
 		            
 		            // Sprawdzam jaka jest odpowiedź od serwera.
 		            int status = conn.getResponseCode();

@@ -77,7 +77,7 @@ public class ServerAsyncTask extends AsyncTask<String, Void, String> {
         dialog.dismiss();
         if (s!= null){
             products_tab = gson.fromJson(s, GsonArr.class);
-            news_obiekt.przypisz(this);
+            //news_obiekt.przypisz(this);
         }
     }
 

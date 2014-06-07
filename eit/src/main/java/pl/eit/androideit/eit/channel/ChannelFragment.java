@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -58,6 +61,24 @@ public class ChannelFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.channel_fragment_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menu_refresh_messages :
+                refresh();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.single_channel_fragment, container, false);
     }
@@ -66,6 +87,8 @@ public class ChannelFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
+
+        setHasOptionsMenu(true);
 
         mAppPrefrences = new AppPreferences(getActivity());
         mUserName = mAppPrefrences.getUserName();
@@ -95,7 +118,7 @@ public class ChannelFragment extends Fragment {
             return;
         } else {
             sendMessageToServer(new Message(message, mChannel.channelTimestamp,
-                    System.currentTimeMillis(), "pRabel"));
+                    System.currentTimeMillis(), mUserName));
             mMessageEditText.setText("");
         }
     }
@@ -233,7 +256,6 @@ public class ChannelFragment extends Fragment {
                 try {
                     response = server.post(ServerConnection.SERVER_SEND_MESSAGE, json.toString());
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -244,7 +266,7 @@ public class ChannelFragment extends Fragment {
             protected void onPostExecute(String response) {
                 super.onPostExecute(response);
 
-                if (pDialog != null) {
+                if (pDialog != null && !getActivity().isFinishing()) {
                     pDialog.dismiss();
                 }
 
@@ -252,9 +274,10 @@ public class ChannelFragment extends Fragment {
                 AlertDialogManager alert = new AlertDialogManager();
                 if (response != null) {
                     if (response.equals("serverProblem")) {
-//                        alert.showAlertDialog(SingleChannelActivity.this, "Błąd",
-//                                "Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
-                    } else {
+                        alert.showAlertDialog(getActivity(), "Błąd",
+                                "Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
+                    }
+                    else {
 
                         //alert.showAlertDialog(SingleChannel.this, "błąd", "z: " + response, false, null);
                         int success = 0;
@@ -264,7 +287,9 @@ public class ChannelFragment extends Fragment {
                             success = jsonResponse.getInt("success");
                             error = jsonResponse.getString("error");
                         } catch (JSONException e) {
-                            throw new RuntimeException(e.getMessage());
+                            alert.showAlertDialog(getActivity(), "Błąd",
+                                    "Nieznay błąd podczas prasowania: " + response, false, null);
+                            return;
                         }
 
                         if (success == 1) {
@@ -274,10 +299,11 @@ public class ChannelFragment extends Fragment {
                             // Wstawianie wiadomości do lokalnej bazy danych
                             DB db = new DB(getActivity());
                             db.insertMessage(msgObj);
-                            refresh();
-                        } else {
-//                            alert.showAlertDialog(SingleChannelActivity.this, "Błąd",
-//                                    "Nie można wysłać wiadomości. Błąd: " + error, false, null);
+                           // refresh();
+                        }
+                        else {
+                            alert.showAlertDialog(getActivity(), "Błąd",
+                                    "Nie można wysłać wiadomości. Błąd: " + error, false, null);
                         }
                     }
                 }

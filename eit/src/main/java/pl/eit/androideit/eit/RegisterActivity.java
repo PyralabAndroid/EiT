@@ -149,7 +149,7 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
     public void processFinish(String serverResponse) {
         Log.d("reg result", "result:" + serverResponse);
         // Wyłączam progress dialog.
-        if (pDialog != null) {
+        if (pDialog != null && !isFinishing()) {
             pDialog.dismiss();
         }
 
@@ -174,7 +174,7 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
                     error = response.getString("error");
                     info = response.getString("info");
                 } catch (JSONException e1) {
-                    throw new RuntimeException(e1.getMessage());
+                    throw new RuntimeException(e1.getMessage() + ". Server message: " + serverResponse);
                 }
                 // Były jakieś błędy, np. zajęte nazwa usera
                 if (info.length() > 0) {
