@@ -7,10 +7,12 @@
         <item name="android:actionDropDownStyle">@style/DropDownNav.Example</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Example</item>
         <item name="android:actionModeBackground">@drawable/cab_background_top_example</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_example
-        </item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_example</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Example</item>
+
+
     </style>
+
     <style name="ActionBar.Solid.Example" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
         <item name="android:background">@drawable/ab_solid_example</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_example</item>
@@ -27,13 +29,11 @@
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_example</item>
     </style>
 
-    <style name="DropDownListView.Example"
-           parent="@android:style/Widget.Holo.Light.ListView.DropDown">
+    <style name="DropDownListView.Example" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_example</item>
     </style>
 
-    <style name="ActionBarTabStyle.Example"
-           parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
+    <style name="ActionBarTabStyle.Example" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_example</item>
     </style>
 
@@ -43,13 +43,11 @@
         <item name="android:dropDownSelector">@drawable/selectable_background_example</item>
     </style>
 
-    <style name="ProgressBar.Example"
-           parent="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">
+    <style name="ProgressBar.Example" parent="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_example</item>
     </style>
 
-    <style name="ActionButton.CloseMode.Example"
-           parent="@android:style/Widget.Holo.Light.ActionButton.CloseMode">
+    <style name="ActionButton.CloseMode.Example" parent="@android:style/Widget.Holo.Light.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_example</item>
     </style>
 
@@ -58,7 +56,6 @@
         <item name="android:popupMenuStyle">@style/PopupMenu.Example</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Example</item>
     </style>
-
     <style name="MenuButtonStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -66,8 +63,8 @@
         <item name="android:textSize">20sp</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">2dp</item>
-        <item name="android:background">@color/btn_news_bck</item>
-        <item name="android:textColor">@color/default_text_color</item>
+        <item name="android:background">@color/default_text_color</item>
+        <item name="android:textColor">@color/bck_ll</item>
     </style>
 
     <style name="MainHeadling">

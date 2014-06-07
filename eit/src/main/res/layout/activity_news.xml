@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="pl.eit.androideit.eit.NewsActivity"
-    android:background="@color/bck_menu"
+    android:background="@drawable/sandpaper"
     android:padding="6dp">
 
     <ListView

@@ -3,14 +3,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bck_menu">
+    android:background="@color/btn_news_bck">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:layout_gravity="center"
-            android:src="@drawable/et_logo"
+            android:src="@drawable/et_menu"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="15dp"/>
 

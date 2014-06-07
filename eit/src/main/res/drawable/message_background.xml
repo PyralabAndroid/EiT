@@ -5,7 +5,7 @@
             <item android:top="4dp">
                 <shape>
                     <solid android:color="@color/btn_news_bck" />
-                    <corners android:radius="20dip"/>
+                    <corners android:radius="10dip"/>
                 </shape>
             </item>
         </layer-list>
@@ -15,7 +15,7 @@
             <item android:bottom="4dp" >
                 <shape>
                     <solid android:color="@color/btn_news_bck" />
-                    <corners android:radius="30dip"/>
+                    <corners android:radius="10dip"/>
                 </shape>
             </item>
         </layer-list>
