@@ -141,6 +141,8 @@ public class GCMRegister extends AsyncTask<Void, Void, String> {
 		return serverResponse;
 	}
 
+
+    @Override
 	protected void onPostExecute(String serverResponse) {
 		// Jeśli wykonywana była rejestracja konta, zwróć odpowiedź serwera
 		// poprzez interface.

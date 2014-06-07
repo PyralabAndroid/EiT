@@ -13,6 +13,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         android:background="@color/message_layout_background"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp" />
@@ -36,7 +38,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
             android:inputType="textCapSentences"
             android:hint="@string/message_input_hint"
             />

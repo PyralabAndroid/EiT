@@ -7,7 +7,7 @@ import pl.eit.androideit.eit.content.AppConst;
 
 public class TimeCalculateHelper {
 
-    private static final long MINUTE = 1000;
+    private static final long MINUTE = 60000;
     private static final long HOUR = 60 * MINUTE;
     private static final long DAY = 24 * HOUR;
 
