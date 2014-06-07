@@ -5,6 +5,8 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -17,7 +19,7 @@ import pl.eit.androideit.eit.helpers.ChannelsHelper;
 import pl.eit.androideit.eit.service.model.Channel;
 import uk.co.ribot.easyadapter.EasyAdapter;
 
-public class ChannelActivity extends ActionBarActivity {
+public class ChannelActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
 
     private static final int PARALLAX_SIZE = 30;
 
@@ -52,17 +54,15 @@ public class ChannelActivity extends ActionBarActivity {
         mAdapter = new EasyAdapter<Channel>(this, ChannelViewHolder.class, mListItems);
 
         mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(this);
+        selectItem(0);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (mPanes.isOpen()) {
-                    closePane();
-                } else {
-                    openPane();
-                }
+                finish();
                 return true;
         }
 
@@ -83,7 +83,6 @@ public class ChannelActivity extends ActionBarActivity {
         return mCurrentChannel;
     }
 
-    @OnItemClick(R.id.channel_list)
     public void selectItem(int position) {
         mCurrentChannel = mListItems.get(position);
         mCurrentTitle = mCurrentChannel.channelName;
@@ -96,4 +95,8 @@ public class ChannelActivity extends ActionBarActivity {
                 .commit();
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        selectItem(position);
+    }
 }

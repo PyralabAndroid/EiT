@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/message_panel_color"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/message_background"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bck_menu"
-        android:padding="4dp">
+        android:padding="6dp"
+        android:layout_margin="2dp">
 
         <TextView
             android:id="@+id/message_row_user_group"
@@ -23,7 +23,7 @@
             android:text="T2 - IV rok"
             android:textColor="@color/default_text_color"
             android:textSize="10sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/message_row_user_name"
@@ -34,19 +34,18 @@
             android:text="pRabel"
             android:textColor="@color/default_text_color"
             android:textSize="18sp"
-            android:textStyle="bold" />
-
-
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/message_row_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_alignParentTop="true"
             android:text="2 min. temu"
             android:textColor="@color/default_text_color"
-            android:textSize="10sp" />
+            android:textSize="10sp"/>
 
     </RelativeLayout>
 
@@ -55,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/message_row_message"
-        android:background="@color/message_line" />
+        android:background="@color/default_text_color"/>
 
     <TextView
         android:id="@+id/message_row_message"
@@ -67,7 +66,7 @@
         android:minHeight="40dp"
         android:padding="8dp"
         android:text="Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac, laoreet enim. Phasellus fermentum in, dolor. "
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
 
 </LinearLayout>

@@ -10,7 +10,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:layout_gravity="center"
-            android:src="@drawable/et_menu"
+            android:src="@drawable/et_logo"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="15dp"/>
 
@@ -32,6 +32,16 @@
             <Button
                 style="@style/MenuButtonStyle"
                 android:text="Ogłoszenia"
+                android:id="@+id/menu_bt_news" />
+
+            <Button
+                style="@style/MenuButtonStyle"
+                android:text="Ustawienia"
+                android:id="@+id/menu_bt_news" />
+
+            <Button
+                style="@style/MenuButtonStyle"
+                android:text="O aplikacji"
                 android:id="@+id/menu_bt_news" />
         </LinearLayout>
 </LinearLayout>

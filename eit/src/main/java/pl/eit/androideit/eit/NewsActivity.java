@@ -1,5 +1,6 @@
 package pl.eit.androideit.eit;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -34,12 +35,19 @@ public class NewsActivity extends ActionBarActivity implements OnAsynTaskSucessL
     ListView mListView;
 
     private ArrayList<Item> mItemArrayList;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         ButterKnife.inject(this);
+
+
+        mActionBar = getActionBar();
+        mActionBar.setTitle("Ogłoszenia");
+        mActionBar.setDisplayShowHomeEnabled(true);
+        mActionBar.setDisplayHomeAsUpEnabled(true);
 
         isOnline();
 
@@ -64,11 +72,13 @@ public class NewsActivity extends ActionBarActivity implements OnAsynTaskSucessL
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        final int id = item.getItemId();
+        switch(id) {
+            case android.R.id.home:
+                finish();
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
