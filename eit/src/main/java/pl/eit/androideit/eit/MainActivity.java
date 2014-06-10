@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
@@ -186,54 +187,62 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
     }
 
 	public void logOut() {
-		// Pokazuje dialog o wylogowywaniu.
-		pDialog.setCancelable(true);
-		pDialog.setIndeterminate(true);
-		pDialog.setMessage("Wylogowywanie");
-		pDialog.show();
+        if(ServerConnection.isOnline(this)){
+            // Pokazuje dialog o wylogowywaniu.
+            pDialog.setCancelable(true);
+            pDialog.setIndeterminate(true);
+            pDialog.setMessage("Wylogowywanie");
+            pDialog.show();
 
-		// wyrejestrowanie regId z serwera.
-		new AsyncTask<Void, Void, String>() {
-			@Override
-			protected String doInBackground(Void... params) {
-				String result = deleteAcc();
-				return result;
-			}
+            // wyrejestrowanie regId z serwera.
+            new AsyncTask<Void, Void, String>() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    String result = deleteAcc();
+                    return result;
+                }
 
-			@Override
-			protected void onPostExecute(String result) {
-				if (pDialog != null && !isFinishing()) {
-					pDialog.dismiss();
-				}
-				AlertDialogManager dialog = new AlertDialogManager();
-				/** Odpowiedz z serwera **/
-				JSONObject response;
-				Integer success = 0;
-				String error = "";
-				try {
-					response = new JSONObject(result);
-					success = response.getInt("success");
-					error = response.getString("error");
-				} catch (JSONException e1) {
-                    throw new RuntimeException(e1.getMessage() + ". Server message: " + result);
-				}
-				if (result.equals("serverProblem")) {
-					dialog.showAlertDialog(MainActivity.this, "Błąd",
-							"Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
-				}
-				else{
-					if(success == 1) {
-                        mPreferences.edit().clearUserData();
-                        dialog.showAlertDialog(MainActivity.this, "",
-                                "Wylogowanie powiodło się", true, new Intent(MainActivity.this, StartActivity.class));
+                @Override
+                protected void onPostExecute(String result) {
+                    if (pDialog != null && !isFinishing()) {
+                        pDialog.dismiss();
                     }
-					else if(error.length() > 0){
-						dialog.showAlertDialog(MainActivity.this, "Error",
-								"error: " + result, false, null);
-					}
-				}
-			}
-		}.execute();
+                    AlertDialogManager dialog = new AlertDialogManager();
+                    /** Odpowiedz z serwera **/
+                    JSONObject response;
+                    Integer success = 0;
+                    String error = "";
+                    try {
+                        response = new JSONObject(result);
+                        success = response.getInt("success");
+                        error = response.getString("error");
+                    } catch (JSONException e1) {
+                        throw new RuntimeException(e1.getMessage() + ". Server message: " + result);
+                    }
+                    if (result.equals("serverProblem")) {
+                        dialog.showAlertDialog(MainActivity.this, "Błąd",
+                                "Nie można połączyć się z serwerem. Spróbuj ponownie później.", false, null);
+                    }
+                    else{
+                        if(success == 1) {
+                            mPreferences.edit().clearUserData();
+                            Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            dialog.showAlertDialog(MainActivity.this, "",
+                                    "Wylogowanie powiodło się", true, intent);
+                        }
+                        else if(error.length() > 0){
+                            dialog.showAlertDialog(MainActivity.this, "Error",
+                                    "error: " + result, false, null);
+                        }
+                    }
+                }
+            }.execute();
+        }
+        else{
+            Toast.makeText(this, "Brak połączenia z Internetem", Toast.LENGTH_LONG).show();
+        }
+
 	}
     /**
      //	 * Wylogowuje regId z serwera.

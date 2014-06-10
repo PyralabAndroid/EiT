@@ -80,6 +80,7 @@ public class ChannelFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.single_channel_fragment, container, false);
     }
 
@@ -87,8 +88,6 @@ public class ChannelFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
-
-        setHasOptionsMenu(true);
 
         mAppPrefrences = new AppPreferences(getActivity());
         mUserName = mAppPrefrences.getUserName();
@@ -113,14 +112,22 @@ public class ChannelFragment extends Fragment {
 
     @OnClick(R.id.message_send_button)
     public void sendMessage() {
-        final String message = mMessageEditText.getText().toString();
-        if (Strings.isNullOrEmpty(message)) {
-            return;
-        } else {
-            sendMessageToServer(new Message(message, mChannel.channelTimestamp,
-                    System.currentTimeMillis(), mUserName));
-            mMessageEditText.setText("");
+        if(ServerConnection.isOnline(getActivity().getBaseContext())){
+            final String message = mMessageEditText.getText().toString();
+            if (Strings.isNullOrEmpty(message)) {
+                return;
+            } else {
+                sendMessageToServer(new Message(message, mChannel.channelTimestamp,
+                        System.currentTimeMillis(), mUserName));
+                mMessageEditText.setText("");
+            }
         }
+        else{
+            Toast.makeText(getActivity().getBaseContext(),
+                    "Brak połączenia z Internetem",
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void refresh() {

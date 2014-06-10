@@ -1,9 +1,12 @@
 package pl.eit.androideit.eit.channel;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +22,7 @@ import pl.eit.androideit.eit.helpers.ChannelsHelper;
 import pl.eit.androideit.eit.service.model.Channel;
 import uk.co.ribot.easyadapter.EasyAdapter;
 
-public class ChannelActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
+public class ChannelActivity extends ActionBarActivity implements SlidingPaneLayout.PanelSlideListener{
 
     private static final int PARALLAX_SIZE = 30;
 
@@ -45,6 +48,7 @@ public class ChannelActivity extends ActionBarActivity implements AdapterView.On
 
         mPanes.setParallaxDistance(PARALLAX_SIZE);
         mPanes.setShadowResource(R.drawable.sliding_pane_shadow);
+        mPanes.setPanelSlideListener(this);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.channels_title));
         actionBar.setDisplayShowHomeEnabled(true);
@@ -54,8 +58,13 @@ public class ChannelActivity extends ActionBarActivity implements AdapterView.On
         mAdapter = new EasyAdapter<Channel>(this, ChannelViewHolder.class, mListItems);
 
         mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(this);
-        selectItem(0);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+             @Override
+             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("click2", "click2");
+             }
+         });
+                selectItem(0);
     }
 
     @Override
@@ -67,6 +76,11 @@ public class ChannelActivity extends ActionBarActivity implements AdapterView.On
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void openPane() {
@@ -96,7 +110,29 @@ public class ChannelActivity extends ActionBarActivity implements AdapterView.On
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        selectItem(position);
+    public void onPanelSlide(View panel, float slideOffset) {
+
     }
+
+    @Override
+    public void onPanelOpened(View panel) {
+        getSupportFragmentManager()
+                .findFragmentById(R.id.channel_container)
+                .setHasOptionsMenu(false);
+    }
+
+    @Override
+    public void onPanelClosed(View panel) {
+        getSupportFragmentManager()
+                .findFragmentById(R.id.channel_container)
+                .setHasOptionsMenu(true);
+
+    }
+
+
+/*    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("klik", "klik");
+        selectItem(position);
+    }*/
 }
