@@ -4,15 +4,19 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.base.Strings;
@@ -47,6 +51,8 @@ public class ChannelFragment extends Fragment {
     EditText mMessageEditText;
     @InjectView(R.id.message_send_button)
     ImageButton mMessageSendButton;
+    @InjectView(R.id.not_selected_channel_tv)
+    TextView notSelectedChannelTV;
 
     private AppPreferences mAppPrefrences;
     private EasyAdapter<Message> mAdapter;
@@ -80,7 +86,6 @@ public class ChannelFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.single_channel_fragment, container, false);
     }
 
@@ -92,22 +97,32 @@ public class ChannelFragment extends Fragment {
         mAppPrefrences = new AppPreferences(getActivity());
         mUserName = mAppPrefrences.getUserName();
 
-        mChannel = ((ChannelActivity) getActivity()).getCurrentChannel();
+        mChannel = ((ChannelActivity)getActivity()).getCurrentChannel();
+        if(mChannel != null){
+            notSelectedChannelTV.setVisibility(View.GONE);
 
-        DB db = new DB(getActivity());
-        mList = db.getMessagesForChannel(mChannel.channelTimestamp);
-        Collections.sort(mList, new Comparator<Message>() {
-            @Override
-            public int compare(Message lhs, Message rhs) {
-                return lhs.messageTimestamp < rhs.messageTimestamp ? 1 : -1;
+            DB db = new DB(getActivity());
+            mList = db.getMessagesForChannel(mChannel.channelTimestamp);
+            Collections.sort(mList, new Comparator<Message>() {
+                @Override
+                public int compare(Message lhs, Message rhs) {
+                    return lhs.messageTimestamp < rhs.messageTimestamp ? 1 : -1;
+                }
+            });
+
+
+            mAdapter = new EasyAdapter<Message>(getActivity().getBaseContext(),
+                    MessageViewHolder.class, mList);
+            mChannelListView.setAdapter(mAdapter);
+
+            if(ServerConnection.isOnline(getActivity())){
+                refresh();
             }
-        });
 
-        mAdapter = new EasyAdapter<Message>(getActivity().getBaseContext(),
-                MessageViewHolder.class, mList);
-        mChannelListView.setAdapter(mAdapter);
-
-        refresh();
+        }
+        else{
+            notSelectedChannelTV.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick(R.id.message_send_button)

@@ -35,7 +35,6 @@ public class MessageViewHolder extends ItemViewHolder<Message>{
 
     @Override
     public void onSetValues(Message message, PositionInfo positionInfo) {
-//        mMessageRowUserName.setText(message.userName);
         mMessageRowMessage.setText(message.message);
         mMessageRowUserName.setText(message.userName);
         mMessageRowTime.setText(TimeCalculateHelper.getTimeDifferenceString(message.messageTimestamp));

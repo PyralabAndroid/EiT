@@ -3,6 +3,7 @@ package pl.eit.androideit.eit.channel;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class ChanelListAdapter extends ArrayAdapter<Channel> {
 
             holder = new ViewHolder();
             holder.channelName = (TextView) view.findViewById(R.id.channels_list_row_channel_name);
-            holder.subBtn = (Button) view.findViewById(R.id.channels_list_row_subBtn);
+          //  holder.subBtn = (Button) view.findViewById(R.id.channels_list_row_subBtn);
 
             view.setTag(holder);
         } else {
@@ -59,7 +60,7 @@ public class ChanelListAdapter extends ArrayAdapter<Channel> {
         holder.channelName.setText(singleChannel.channelName);
 
         // Jeśli jest subowany ustaw tło zielone
-        if (singleChannel.isSub == 1) {
+       /* if (singleChannel.isSub == 1) {
             holder.subBtn.setBackgroundColor(Color.parseColor("#2aea4a"));
             holder.subBtn.refreshDrawableState();
         }
@@ -81,11 +82,12 @@ public class ChanelListAdapter extends ArrayAdapter<Channel> {
                 //pDialog.setTitle("Trwa subskrybowanie...");
                 // pDialog.show();
                 new ToogleSubscriptonAsyncTask(mContext, channel).execute();
+                Log.d("lol", "klik btn");
 
             }
 
 
-        });
+        });*/
         return view;
     }
 }

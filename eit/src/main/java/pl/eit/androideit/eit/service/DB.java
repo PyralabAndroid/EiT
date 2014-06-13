@@ -225,6 +225,7 @@ public class DB extends SQLiteOpenHelper {
         return result;
     }
 
+
     /** Zwraca czas ostatniego pobrania wiadomości dla kanału **/
     public long getLastChannelSync(long channelTimestamp){
         openDb();

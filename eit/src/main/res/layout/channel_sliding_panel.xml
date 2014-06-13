@@ -3,21 +3,19 @@
 <android.support.v4.widget.SlidingPaneLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sliding_pane"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <ListView
-        android:background="@drawable/sandpaper"
-        android:layout_width="250dp"
-        android:layout_height="match_parent"
-        android:id="@+id/channel_list"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:choiceMode="singleChoice"/>
+    <fragment
+        android:id="@+id/channel_menu_fragment_container"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:name="pl.eit.androideit.eit.channel.ChannelsListFragment" />
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:id="@+id/channel_container"
         android:layout_height="match_parent"
-        android:id="@+id/channel_container"/>
+        android:layout_width="match_parent" />
+
 
 </android.support.v4.widget.SlidingPaneLayout>

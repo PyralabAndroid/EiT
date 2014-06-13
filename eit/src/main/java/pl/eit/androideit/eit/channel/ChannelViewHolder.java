@@ -1,7 +1,10 @@
 package pl.eit.androideit.eit.channel;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import pl.eit.androideit.eit.R;
 import pl.eit.androideit.eit.service.model.Channel;
@@ -19,6 +22,7 @@ public class ChannelViewHolder extends ItemViewHolder<Channel> {
     public ChannelViewHolder(View view) {
         super(view);
     }
+
 
     @Override
     public void onSetValues(Channel chanel, PositionInfo positionInfo) {

@@ -22,7 +22,7 @@ import pl.eit.androideit.eit.helpers.ChannelsHelper;
 import pl.eit.androideit.eit.service.model.Channel;
 import uk.co.ribot.easyadapter.EasyAdapter;
 
-public class ChannelActivity extends ActionBarActivity implements SlidingPaneLayout.PanelSlideListener{
+public class ChannelActivity extends ActionBarActivity implements SlidingPaneLayout.PanelSlideListener, ChannelsListFragment.OnChannelSetListener{
 
     private static final int PARALLAX_SIZE = 30;
 
@@ -30,8 +30,6 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
     private CharSequence mTitle;
     private CharSequence mCurrentTitle;
 
-    @InjectView(R.id.channel_list)
-    ListView mListView;
     @InjectView(R.id.sliding_pane)
     SlidingPaneLayout mPanes;
 
@@ -43,29 +41,24 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
         super.onCreate(savedInstanceState);
         setContentView(R.layout.channel_sliding_panel);
         ButterKnife.inject(this);
-
         mTitle = mCurrentTitle = getTitle();
 
         mPanes.setParallaxDistance(PARALLAX_SIZE);
         mPanes.setShadowResource(R.drawable.sliding_pane_shadow);
         mPanes.setPanelSlideListener(this);
+        mPanes.openPane();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.channels_title));
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        mListItems = ChannelsHelper.getChannels(this);
-        mAdapter = new EasyAdapter<Channel>(this, ChannelViewHolder.class, mListItems);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.channel_container, ChannelFragment.newInstance())
+                .commit();
 
-        mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-             @Override
-             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("click2", "click2");
-             }
-         });
-                selectItem(0);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -97,17 +90,6 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
         return mCurrentChannel;
     }
 
-    public void selectItem(int position) {
-        mCurrentChannel = mListItems.get(position);
-        mCurrentTitle = mCurrentChannel.channelName;
-
-        closePane();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.channel_container, ChannelFragment.newInstance())
-                .commit();
-    }
 
     @Override
     public void onPanelSlide(View panel, float slideOffset) {
@@ -123,16 +105,24 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
 
     @Override
     public void onPanelClosed(View panel) {
-        getSupportFragmentManager()
-                .findFragmentById(R.id.channel_container)
-                .setHasOptionsMenu(true);
-
+        if(mCurrentChannel != null){
+            getSupportFragmentManager()
+                    .findFragmentById(R.id.channel_container)
+                    .setHasOptionsMenu(true);
+        }
     }
 
+    @Override
+    public void onChannelSet(Channel channel) {
+        closePane();
 
-/*    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("klik", "klik");
-        selectItem(position);
-    }*/
+        mCurrentChannel = channel;
+        mCurrentTitle = mCurrentChannel.channelName;
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.channel_container, ChannelFragment.newInstance())
+                .commit();
+    }
+
 }

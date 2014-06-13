@@ -37,12 +37,12 @@
             <Button
                 style="@style/MenuButtonStyle"
                 android:text="Ustawienia"
-                android:id="@+id/menu_bt_news" />
+                android:id="@+id/menu_bt_settings" />
 
             <Button
                 style="@style/MenuButtonStyle"
                 android:text="O aplikacji"
-                android:id="@+id/menu_bt_news" />
+                android:id="@+id/menu_bt_about_app" />
         </LinearLayout>
 
         <RelativeLayout

@@ -6,6 +6,16 @@
     android:orientation="vertical"
     android:background="@drawable/sandpaper">
 
+    <TextView
+        android:id="@+id/not_selected_channel_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Wybierz kanał z menu"
+        android:textSize="26sp"
+        android:visibility="gone"
+        android:textColor="@android:color/secondary_text_light"
+        android:gravity="center"/>
+
 
     <ListView
         android:id="@+id/channel_list_view"
@@ -19,12 +29,14 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp" />
 
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/message_line" />
 
     <LinearLayout
+        android:id="@+id/single_channel_message_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
