@@ -1,10 +1,12 @@
 package pl.eit.androideit.eit;
 
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -138,7 +140,6 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
             @Override
             public void onClick(View view) {
                 logOut();
-                startActivity(new Intent(getBaseContext(), StartActivity.class));
             }
         });
 
@@ -226,8 +227,8 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
                     else{
                         if(success == 1) {
                             mPreferences.edit().clearUserData();
-                            Intent intent = new Intent(MainActivity.this, StartActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Intent intent = IntentCompat
+                                    .makeRestartActivityTask(new ComponentName(MainActivity.this, StartActivity.class));
                             dialog.showAlertDialog(MainActivity.this, "",
                                     "Wylogowanie powiodło się", true, intent);
                         }
@@ -244,11 +245,7 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         }
 
 	}
-    /**
-     //	 * Wylogowuje regId z serwera.
-     //	 *
-     //	 * @return odpowiedz z serwera czy wylogowanie powiodło się
-     //	 */
+
 	public String deleteAcc() {
         GCMRegister gcmReg = new GCMRegister();
 		String regId = gcmReg.getSavedGCMRegId(getBaseContext());

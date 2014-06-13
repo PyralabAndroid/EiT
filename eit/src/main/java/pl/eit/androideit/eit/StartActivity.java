@@ -2,7 +2,9 @@ package pl.eit.androideit.eit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -10,8 +12,7 @@ import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.service.GCMRegister;
 
 public class StartActivity extends ActionBarActivity {
-
-    GCMRegister gcmReg;
+    boolean mFirstBackClick;
 
     private AppPreferences mAppPrefrences;
 
@@ -32,7 +33,6 @@ public class StartActivity extends ActionBarActivity {
         }
     }
 
-    @OnClick(R.id.home)
     public void startApp() {
         startActivity(new Intent(this, MainActivity.class));
     }
@@ -49,6 +49,22 @@ public class StartActivity extends ActionBarActivity {
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.putExtra("createOrLogin", "create");
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mFirstBackClick){
+            super.onBackPressed();
+            ;
+        }
+        mFirstBackClick = true;
+        Toast.makeText(this, "Kliknij ponownie, aby wyjść", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mFirstBackClick = false;
+            }
+        }, 2000);
     }
 
 }

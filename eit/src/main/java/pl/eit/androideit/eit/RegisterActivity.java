@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -53,6 +54,9 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
     @InjectView(R.id.register_acc_name)
     LinearLayout mAccLayout;
 
+    @InjectView(R.id.welcome_text)
+    TextView registerWelcomeTV;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +81,7 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
         // Jeśli jest logowanie zmień nazwę przycisku na Zaloguj oraz ukryj pole nazwy usera.
         if (createOrLogin.equals("login")) {
             btnRegister.setText("Zaloguj");
+            registerWelcomeTV.setText("Logowanie");
             mAccLayout.setVisibility(View.GONE);
         }
 
@@ -94,7 +99,7 @@ public class RegisterActivity extends ActionBarActivity implements GCMRegister.A
                     pDialog = new ProgressDialog(RegisterActivity.this);
                     pDialog.setCancelable(true);
                     pDialog.setIndeterminate(true);
-                    pDialog.setMessage("Trwa rejestracja. Proszę czekać :-)");
+                    pDialog.setMessage("Trwa rejestracja. Proszę czekać.");
 
                     // Sprawdzam czy użytkownik wypełnił formularz.
                     if (email.length() > 0) {
