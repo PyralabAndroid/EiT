@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,7 +37,6 @@ public class ChanelListAdapter extends ArrayAdapter<Channel> {
 
     private class ViewHolder {
         TextView channelName;
-        Button subBtn;
     }
 
     @Override
@@ -50,7 +50,6 @@ public class ChanelListAdapter extends ArrayAdapter<Channel> {
 
             holder = new ViewHolder();
             holder.channelName = (TextView) view.findViewById(R.id.channels_list_row_channel_name);
-          //  holder.subBtn = (Button) view.findViewById(R.id.channels_list_row_subBtn);
 
             view.setTag(holder);
         } else {
@@ -59,35 +58,7 @@ public class ChanelListAdapter extends ArrayAdapter<Channel> {
         final Channel singleChannel = mChanelArray.get(position);
         holder.channelName.setText(singleChannel.channelName);
 
-        // Jeśli jest subowany ustaw tło zielone
-       /* if (singleChannel.isSub == 1) {
-            holder.subBtn.setBackgroundColor(Color.parseColor("#2aea4a"));
-            holder.subBtn.refreshDrawableState();
-        }
-        // Jeśli nie jest subowany ustaw odpowiednie tło
-        else if (singleChannel.isSub == 0) {
-            holder.subBtn.setBackgroundResource(android.R.drawable.btn_default);
-            holder.subBtn.refreshDrawableState();
-        }
 
-        holder.subBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ListView list = (ListView) parent;
-                // Pobiera pozycję na liście dla wybranego elementu
-                final int position = list.getPositionForView((LinearLayout) view.getParent());
-
-                Channel channel = mChanelArray.get(position);
-                ProgressDialog pDialog = new ProgressDialog(mContext);
-                //pDialog.setTitle("Trwa subskrybowanie...");
-                // pDialog.show();
-                new ToogleSubscriptonAsyncTask(mContext, channel).execute();
-                Log.d("lol", "klik btn");
-
-            }
-
-
-        });*/
         return view;
     }
 }

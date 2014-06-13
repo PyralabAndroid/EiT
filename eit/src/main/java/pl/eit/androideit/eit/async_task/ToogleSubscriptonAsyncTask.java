@@ -23,8 +23,14 @@ public class ToogleSubscriptonAsyncTask extends AsyncTask<Void, Void, String> {
     private Context mContext;
     private Channel mChannel;
     private AppPreferences mAppPreferences;
+    private onSubscriptionFinishedListener mDelegate;
 
-    public ToogleSubscriptonAsyncTask(Context context, Channel channel) {
+    public interface onSubscriptionFinishedListener{
+        void onSubscriptionFinished(int subscription);
+    }
+
+    public ToogleSubscriptonAsyncTask(Context context, Channel channel, onSubscriptionFinishedListener delegate) {
+        mDelegate = delegate;
         mContext = context;
         mChannel = channel;
         mAppPreferences = new AppPreferences(context);
@@ -68,12 +74,7 @@ public class ToogleSubscriptonAsyncTask extends AsyncTask<Void, Void, String> {
                 DB db = new DB(mContext);
                 int isSubbed = mChannel.isSub;
                 db.toggleChannelSub(mChannel.channelTimestamp, isSubbed);
-                if (isSubbed == 0) {
-                    mChannel.isSub = 1;
-                } else if (isSubbed == 1) {
-                    mChannel.isSub = 0;
-                }
-                // TODO: add changes in view after subscribing
+                mDelegate.onSubscriptionFinished(isSubbed == 0 ? 1 : 0);
             } else {
                 Toast.makeText(mContext, R.string.channel_subscribing_error, Toast.LENGTH_LONG).show();
             }

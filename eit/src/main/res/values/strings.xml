@@ -27,5 +27,7 @@
     <string name="channel_server_error">Błąd połączenia /n Nie można połączyć się z serwerem</string>
     <string name="channel_subscribing_error">Nie można subskrybuować kanału. Spróbuj ponownie.</string>
     <string name="message_input_hint">Co się dzieje?</string>
+    <string name="subscribe_info">Subskrybując ten kanał będziesz otrzymyał powiadomienia o nowych wiadomościach.</string>
+    <string name="unsubscribe_info">Nie będziesz już dłużej informowany o nowych wiadomościach tego kanału.</string>
 
 </resources>

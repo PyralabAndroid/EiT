@@ -1,9 +1,13 @@
 package pl.eit.androideit.eit.channel;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.text.AndroidCharacter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,6 +40,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import pl.eit.androideit.eit.AlertDialogManager;
 import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.async_task.ToogleSubscriptonAsyncTask;
 import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.service.DB;
 import pl.eit.androideit.eit.service.ServerConnection;
@@ -43,7 +48,7 @@ import pl.eit.androideit.eit.service.model.Channel;
 import pl.eit.androideit.eit.service.model.Message;
 import uk.co.ribot.easyadapter.EasyAdapter;
 
-public class ChannelFragment extends Fragment {
+public class ChannelFragment extends Fragment implements ToogleSubscriptonAsyncTask.onSubscriptionFinishedListener {
 
     @InjectView(R.id.channel_list_view)
     ListView mChannelListView;
@@ -58,6 +63,7 @@ public class ChannelFragment extends Fragment {
     private EasyAdapter<Message> mAdapter;
     private List<Message> mList;
     private long lastSync;
+    ProgressDialog pDialog;
 
     private Channel mChannel;
     private String mUserName;
@@ -78,6 +84,8 @@ public class ChannelFragment extends Fragment {
             case R.id.menu_refresh_messages :
                 refresh();
                 return true;
+            case R.id.menu_subscribe_channel :
+                subscribeChannel();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -332,5 +340,54 @@ public class ChannelFragment extends Fragment {
             }
 
         }.execute();
+    }
+
+    private void subscribeChannel(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        if(mChannel.isSub == 0){
+            builder.setMessage(getString(R.string.subscribe_info));
+        }
+        else{
+            builder.setMessage(getString(R.string.unsubscribe_info));
+        }
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                pDialog = new ProgressDialog(getActivity());
+                pDialog.setMessage("Trwa subskrybowanie kanału...");
+                pDialog.show();
+                new ToogleSubscriptonAsyncTask(getActivity(), mChannel, ChannelFragment.this).execute();
+            }
+        })
+        .setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        })
+        .show();
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem menuItem = menu.findItem(R.id.menu_subscribe_channel);
+        if(mChannel.isSub == 1){
+            menuItem.setIcon(getActivity().getResources().getDrawable(R.drawable.btn_radio_on_pressed));
+        }
+        else{
+            menuItem.setIcon(getActivity().getResources().getDrawable(R.drawable.btn_radio_off_pressed));
+        }
+
+    }
+
+    @Override
+    public void onSubscriptionFinished(int subscription) {
+        if(pDialog != null){
+            pDialog.dismiss();
+        }
+        mChannel.isSub = subscription;
+        ActivityCompat.invalidateOptionsMenu(getActivity());
     }
 }

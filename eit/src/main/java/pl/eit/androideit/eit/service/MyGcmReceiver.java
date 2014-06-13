@@ -12,22 +12,19 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.channel.ChannelActivity;
 import pl.eit.androideit.eit.channel.SingleChannelActivity;
 
 public class MyGcmReceiver extends BroadcastReceiver{
-	private static final String TAG = "MyGcmReceiver";
     public static final int NOTIFICATION_ID = 1;
     private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
     Context ctx;
-    String message, userName;
-    long messageDate;
-    String channel;
     GoogleCloudMessaging gcm;
 	
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("GCM", "ODEBRANO POWIADOMIENIE");
+        ctx = context;
     	gcm = GoogleCloudMessaging.getInstance(context);
         String action = intent.getAction();
         if (action.equals("com.google.android.c2dm.intent.RECEIVE")) {
@@ -61,13 +58,13 @@ public class MyGcmReceiver extends BroadcastReceiver{
 
         // Intencja z odebraną wiadomością, która po kliknięciu notyfikacji
         // zostanie wyświetlona w MainActivity.
-        Intent intent = new Intent(ctx, SingleChannelActivity.class);
+        Intent intent = new Intent(ctx, ChannelActivity.class);
         intent.putExtra("gcmNotification", msg);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ctx)
-			.setSmallIcon(R.drawable.ic_menu_add)
+			.setSmallIcon(R.drawable.et_menu)
 			.setContentTitle("Nowa wiadomość!")
 			.setStyle(new NotificationCompat.BigTextStyle())
 			.setContentText(msg)

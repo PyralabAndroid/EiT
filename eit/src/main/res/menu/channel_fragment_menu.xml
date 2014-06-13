@@ -7,4 +7,10 @@
         android:title="Refresh"
         android:icon="@android:drawable/ic_popup_sync">
         </item>
+
+    <item android:id="@+id/menu_subscribe_channel"
+        app:showAsAction="always"
+        android:title="Sub"
+        android:icon="@drawable/btn_radio_off_selected">
+    </item>
 </menu>
