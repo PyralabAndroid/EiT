@@ -76,15 +76,6 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void openPane() {
-        mPanes.openPane();
-        getSupportActionBar().setTitle(mTitle);
-    }
-
-    private void closePane() {
-        mPanes.closePane();
-        getSupportActionBar().setTitle(mCurrentTitle);
-    }
 
     public Channel getCurrentChannel() {
         return mCurrentChannel;
@@ -98,6 +89,7 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
 
     @Override
     public void onPanelOpened(View panel) {
+        getSupportActionBar().setTitle(getString(R.string.channels_title));
         getSupportFragmentManager()
                 .findFragmentById(R.id.channel_container)
                 .setHasOptionsMenu(false);
@@ -106,6 +98,7 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
     @Override
     public void onPanelClosed(View panel) {
         if(mCurrentChannel != null){
+            getSupportActionBar().setTitle(mCurrentTitle);
             getSupportFragmentManager()
                     .findFragmentById(R.id.channel_container)
                     .setHasOptionsMenu(true);
@@ -114,10 +107,10 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
 
     @Override
     public void onChannelSet(Channel channel) {
-        closePane();
-
         mCurrentChannel = channel;
         mCurrentTitle = mCurrentChannel.channelName;
+
+        mPanes.closePane();
 
         getSupportFragmentManager()
                 .beginTransaction()
