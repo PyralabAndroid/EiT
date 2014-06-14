@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -71,7 +72,7 @@ public class MyGcmReceiver extends BroadcastReceiver{
 			.setContentText(msg)
 			.setAutoCancel(true)
 			.setContentIntent(contentIntent)
-            .setDefaults(Notification.DEFAULT_SOUND)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setDefaults(Notification.DEFAULT_VIBRATE);
         
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

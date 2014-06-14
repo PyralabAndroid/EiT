@@ -47,7 +47,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:textColor="@color/font"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:textStyle="italic" />
 
                 <TextView
