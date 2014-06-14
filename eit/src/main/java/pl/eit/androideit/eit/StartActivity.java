@@ -33,6 +33,7 @@ public class StartActivity extends ActionBarActivity {
         }
     }
 
+    @OnClick(R.id.home)
     public void startApp() {
         startActivity(new Intent(this, MainActivity.class));
     }

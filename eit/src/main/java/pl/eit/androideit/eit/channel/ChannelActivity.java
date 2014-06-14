@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnItemClick;
 import pl.eit.androideit.eit.R;
+import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.helpers.ChannelsHelper;
 import pl.eit.androideit.eit.service.model.Channel;
 import uk.co.ribot.easyadapter.EasyAdapter;
@@ -29,6 +30,8 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
     List<Channel> mListItems;
     private CharSequence mTitle;
     private CharSequence mCurrentTitle;
+    private AppPreferences mAppPreferences;
+    private boolean isLoggedIn;
 
     @InjectView(R.id.sliding_pane)
     SlidingPaneLayout mPanes;
@@ -42,6 +45,9 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
         setContentView(R.layout.channel_sliding_panel);
         ButterKnife.inject(this);
         mTitle = mCurrentTitle = getTitle();
+
+        mAppPreferences = new AppPreferences(this);
+        isLoggedIn =  mAppPreferences.isLoggedIn();
 
         mPanes.setParallaxDistance(PARALLAX_SIZE);
         mPanes.setShadowResource(R.drawable.sliding_pane_shadow);
@@ -99,9 +105,17 @@ public class ChannelActivity extends ActionBarActivity implements SlidingPaneLay
     public void onPanelClosed(View panel) {
         if(mCurrentChannel != null){
             getSupportActionBar().setTitle(mCurrentTitle);
-            getSupportFragmentManager()
-                    .findFragmentById(R.id.channel_container)
-                    .setHasOptionsMenu(true);
+            if(isLoggedIn){
+                getSupportFragmentManager()
+                        .findFragmentById(R.id.channel_container)
+                        .setHasOptionsMenu(true);
+            }
+            else{
+                getSupportFragmentManager()
+                        .findFragmentById(R.id.channel_container)
+                        .setHasOptionsMenu(false);
+            }
+
         }
     }
 

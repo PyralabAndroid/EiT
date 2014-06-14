@@ -135,6 +135,13 @@ public class ChannelFragment extends Fragment implements ToogleSubscriptonAsyncT
 
     @OnClick(R.id.message_send_button)
     public void sendMessage() {
+        if(!mAppPrefrences.isLoggedIn()){
+            Toast.makeText(getActivity(),
+                    "Musisz być zalogowany, aby wysłać wiadomość",
+                    Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
         if(ServerConnection.isOnline(getActivity().getBaseContext())){
             final String message = mMessageEditText.getText().toString();
             if (Strings.isNullOrEmpty(message)) {
