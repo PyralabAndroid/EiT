@@ -147,6 +147,41 @@ public class DB extends SQLiteOpenHelper {
 		return result;
 	}
 
+    public Message getLastMessage(){
+        openDb();
+        Message message = null;
+
+        String query = "SELECT * FROM " + TABLE_MESSAGES + " WHERE " +
+                MESSAGES_CHANNEL_TIMESTAMP + " IN( " +
+                "SELECT " + CHANNEL_TIMESTAMP + " FROM " + TABLE_CHANNELS + " WHERE " +
+                CHANNEL_IS_SUB + " >=1) " + " ORDER BY " +
+                MESSAGES_MESSAGE_TIMESTAMP + " DESC";
+        Cursor cursor = sqlDb.rawQuery(query, null);
+
+        if(cursor != null){
+            cursor.moveToFirst();
+            message = new Message(cursor.getString(cursor.getColumnIndex(MESSAGES_MESSAGE)),
+                    cursor.getLong(cursor.getColumnIndex(MESSAGES_CHANNEL_TIMESTAMP)),
+                    cursor.getLong(cursor.getColumnIndex(MESSAGES_MESSAGE_TIMESTAMP)),
+                    cursor.getString(cursor.getColumnIndex(MESSAGES_USER_NAME)));
+        }
+
+        /*if(cursor != null){
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                message = new Message(cursor.getString(cursor.getColumnIndex(MESSAGES_MESSAGE)),
+                        cursor.getLong(cursor.getColumnIndex(MESSAGES_CHANNEL_TIMESTAMP)),
+                        cursor.getLong(cursor.getColumnIndex(MESSAGES_MESSAGE_TIMESTAMP)),
+                        cursor.getString(cursor.getColumnIndex(MESSAGES_USER_NAME)));
+                Log.d("message", message.message + " user:" + message.userName + "  timestamp: " + message.messageTimestamp);
+            }
+        }*/
+
+        cursor.close();
+        sqlDb.close();
+
+        return message;
+    }
+
 
     /** Zapisywanie wiadomości z serwera oraz aktualizacja daty ostatniego pobierania dla kanału.
      * @param data JSON z wiadomościami pobranymi z serwera

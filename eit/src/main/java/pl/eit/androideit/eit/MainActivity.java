@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,13 +35,17 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import pl.eit.androideit.eit.channel.ChannelActivity;
+import pl.eit.androideit.eit.content.AppConst;
 import pl.eit.androideit.eit.content.AppPreferences;
 import pl.eit.androideit.eit.schedule_fragment.ScheduleItem;
+import pl.eit.androideit.eit.service.DB;
 import pl.eit.androideit.eit.service.GCMRegister;
 import pl.eit.androideit.eit.service.Parser;
 import pl.eit.androideit.eit.service.ScheduleFinder;
 import pl.eit.androideit.eit.service.ServerConnection;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
+import pl.eit.androideit.eit.service.model.Channel;
+import pl.eit.androideit.eit.service.model.Message;
 
 import static pl.eit.androideit.eit.service.GCMRegister.PROPERTY_APP_VERSION;
 
@@ -67,6 +72,12 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
     TextView mTextLesson;
     @InjectView(R.id.schedule_frame)
     LinearLayout mScheduleLayout;
+    @InjectView(R.id.main_autor_tv)
+    TextView author;
+    @InjectView(R.id.main_news_date_tv)
+    TextView newsDate;
+    @InjectView(R.id.main_hot_news_msg_tv)
+    TextView newsMessage;
 
     RelativeLayout mLogoutLayout;
     TextView mLogoutUser;
@@ -78,6 +89,9 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         ButterKnife.inject(this);
 
         pDialog = new ProgressDialog(MainActivity.this);
+        mPreferences = new AppPreferences(getBaseContext());
+
+        setHotNews();
 
         /** Jeśli jest net sprawdź aktualność reg_id GCM-a **/
         if(ServerConnection.isOnline(getBaseContext())){
@@ -143,8 +157,6 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
             }
         });
 
-
-        mPreferences = new AppPreferences(getBaseContext());
         if(mPreferences.isFirstRun()) {
             GroupDialog groupDialog = new GroupDialog(this);
             groupDialog.setOnDismissDialogListener(this);
@@ -163,6 +175,19 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
         else{
             mLogoutLayout.setVisibility(View.INVISIBLE);
             mMenuLogoutBt.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void setHotNews(){
+        if(mPreferences.isLoggedIn()){
+            DB db = new DB(this);
+            Message lastMessage = db.getLastMessage();
+            if(lastMessage != null){
+                author.setText(lastMessage.userName);
+                DateFormat formatter = new SimpleDateFormat(AppConst.MESSAGE_TIME_FORMAT2);
+                newsDate.setText(formatter.format(lastMessage.messageTimestamp));
+                newsMessage.setText(lastMessage.message);
+            }
         }
     }
 
