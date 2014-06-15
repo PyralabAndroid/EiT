@@ -1,11 +1,13 @@
 package pl.eit.androideit.eit.service;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -69,7 +71,9 @@ public class MyGcmReceiver extends BroadcastReceiver{
 			.setStyle(new NotificationCompat.BigTextStyle())
 			.setContentText(msg)
 			.setAutoCancel(true)
-			.setContentIntent(contentIntent);
+			.setContentIntent(contentIntent)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+            .setDefaults(Notification.DEFAULT_VIBRATE);
         
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }

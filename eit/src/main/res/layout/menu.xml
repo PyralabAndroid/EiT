@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Zalogowany jako "
-                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
                 android:textColor="@android:color/white"/>
 
@@ -66,12 +66,11 @@
                 android:id="@+id/menu_logout_user_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:text="User"
-                android:layout_alignBaseline="@id/menu_logout_tv"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/menu_logout_tv"
                 android:textSize="16sp"
-                android:textColor="@color/bck_menu"
-                android:layout_toRightOf="@+id/menu_logout_tv"/>
+                android:textColor="@color/bck_menu"/>
         </RelativeLayout>
 
         <Button

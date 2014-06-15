@@ -40,30 +40,31 @@
                     android:text="@string/main_author" />
 
                 <TextView
+                    android:id="@+id/main_autor_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:text="Paweł"
                     android:textColor="@color/font"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:textStyle="italic" />
 
                 <TextView
                     style="@style/MainMessage"
+                    android:id="@+id/main_news_date_tv"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="godz.15:30, 17.03.14"
                     android:textSize="12sp" />
             </TableRow>
 
             <TextView
                 style="@style/Base"
+                android:id="@+id/main_hot_news_msg_tv"
                 android:layout_margin="15dp"
                 android:background="@color/bck_message"
                 android:padding="10dp"
-                android:text="Ta apka jest zaje..... :)"
+                android:text="Brak ostatnich wiadomości"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
         </LinearLayout>

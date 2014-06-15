@@ -111,12 +111,12 @@ public class ChannelFragment extends Fragment implements ToogleSubscriptonAsyncT
 
             DB db = new DB(getActivity());
             mList = db.getMessagesForChannel(mChannel.channelTimestamp);
-            Collections.sort(mList, new Comparator<Message>() {
+/*            Collections.sort(mList, new Comparator<Message>() {
                 @Override
                 public int compare(Message lhs, Message rhs) {
                     return lhs.messageTimestamp < rhs.messageTimestamp ? 1 : -1;
                 }
-            });
+            });*/
 
 
             mAdapter = new EasyAdapter<Message>(getActivity().getBaseContext(),
