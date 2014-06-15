@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import pl.eit.androideit.eit.service.model.Channel;
 import pl.eit.androideit.eit.service.model.Message;
@@ -147,28 +149,28 @@ public class DB extends SQLiteOpenHelper {
 		return result;
 	}
 
-    public Message getLastMessage(){
+    public List<Message> getLastMessages(){
         openDb();
-        Message message = null;
-
         String query = "SELECT * FROM " + TABLE_MESSAGES + " WHERE " +
                 MESSAGES_CHANNEL_TIMESTAMP + " IN( " +
                 "SELECT " + CHANNEL_TIMESTAMP + " FROM " + TABLE_CHANNELS + " WHERE " +
                 CHANNEL_IS_SUB + " =?) " + " ORDER BY " +
                 MESSAGES_MESSAGE_TIMESTAMP + " DESC";
         Cursor cursor = sqlDb.rawQuery(query, new String[]{String.valueOf(1)});
-
+        List<Message> messageList = new ArrayList<Message>();
         if(cursor.moveToFirst()){
-                message = new Message(cursor.getString(cursor.getColumnIndex(MESSAGES_MESSAGE)),
+            do {
+                messageList.add(new Message(cursor.getString(cursor.getColumnIndex(MESSAGES_MESSAGE)),
                         cursor.getLong(cursor.getColumnIndex(MESSAGES_CHANNEL_TIMESTAMP)),
                         cursor.getLong(cursor.getColumnIndex(MESSAGES_MESSAGE_TIMESTAMP)),
-                        cursor.getString(cursor.getColumnIndex(MESSAGES_USER_NAME)));
+                        cursor.getString(cursor.getColumnIndex(MESSAGES_USER_NAME))));
+            } while (cursor.moveToNext() && messageList.size() < 10);
         }
 
         cursor.close();
         sqlDb.close();
 
-        return message;
+        return messageList;
     }
 
 
