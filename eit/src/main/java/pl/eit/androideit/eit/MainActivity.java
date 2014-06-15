@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import pl.eit.androideit.eit.channel.ChannelActivity;
 import pl.eit.androideit.eit.content.AppConst;
 import pl.eit.androideit.eit.content.AppPreferences;
@@ -44,7 +46,6 @@ import pl.eit.androideit.eit.service.Parser;
 import pl.eit.androideit.eit.service.ScheduleFinder;
 import pl.eit.androideit.eit.service.ServerConnection;
 import pl.eit.androideit.eit.service.model.BaseSchedule;
-import pl.eit.androideit.eit.service.model.Channel;
 import pl.eit.androideit.eit.service.model.Message;
 
 import static pl.eit.androideit.eit.service.GCMRegister.PROPERTY_APP_VERSION;
@@ -52,6 +53,8 @@ import static pl.eit.androideit.eit.service.GCMRegister.PROPERTY_APP_VERSION;
 public class MainActivity extends ActionBarActivity implements CustomDismissDialogListener {
 
     SlidingMenu slidingMenu;
+    @InjectView(R.id.next_message)
+    ImageButton mNextMessage;
 
     private Button mMenuSchedule, mMenuNews, mMenuChat, mMenuLogoutBt;
     private Parser mParser;
@@ -81,6 +84,8 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
 
     RelativeLayout mLogoutLayout;
     TextView mLogoutUser;
+    private List<Message> mLastMessages;
+    private int mLastMessagePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,8 +181,24 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
     private void setHotNews(){
         if(mPreferences.isLoggedIn()){
             DB db = new DB(this);
-            Message lastMessage = db.getLastMessage();
-            if(lastMessage != null){
+            if (mLastMessages == null ) {
+                mLastMessages = db.getLastMessages();
+                mLastMessagePosition = -1;
+            }
+            showNextMessage();
+            mNextMessage.setVisibility(View.VISIBLE);
+        } else {
+            mNextMessage.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.next_message)
+    public void showNextMessage() {
+        final int maxMessages = mLastMessages.size() > 10 ? 10 : mLastMessages.size();
+        final int newPosition = ++mLastMessagePosition % maxMessages;
+        if (mLastMessages.size() > newPosition) {
+            final Message lastMessage = mLastMessages.get(newPosition);
+            if (lastMessage != null) {
                 author.setText(lastMessage.userName);
                 DateFormat formatter = new SimpleDateFormat(AppConst.MESSAGE_TIME_FORMAT2);
                 newsDate.setText(formatter.format(lastMessage.messageTimestamp));
