@@ -50,9 +50,6 @@ public class BaseScheduleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
         mList = mScheduleFinder.getScheduleList();
-        if (mList == null) {
-            mList = new ArrayList<ScheduleItem>();
-        }
         mAdapter = new EasyAdapter<ScheduleItem>(getActivity().getBaseContext(),
                 ScheduleViewHolder.class, mList);
         mListView.setAdapter(mAdapter);
@@ -74,6 +71,7 @@ public class BaseScheduleFragment extends Fragment {
             if (baseSchedule != null) {
                 mScheduleFinder.updateBaseSchedule(baseSchedule);
                 mList = mScheduleFinder.getScheduleList();
+                mAdapter.setItems(mList);
                 mAdapter.notifyDataSetChanged();
             }
         }

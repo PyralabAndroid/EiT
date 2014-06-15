@@ -22,7 +22,7 @@
         android:orientation="horizontal"
         android:id="@+id/start_button_container"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/button_menu"
+        android:background="@drawable/button_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp">

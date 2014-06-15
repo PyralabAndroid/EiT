@@ -123,7 +123,6 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
                  changeGroup();
                 return true;
             case R.id.action_change_week:
-                changeWeek();
                 return true;
             case android.R.id.home:
                 finish();
@@ -133,14 +132,10 @@ public class ScheduleActivity extends FragmentActivity implements ActionBar.TabL
         return super.onOptionsItemSelected(item);
     }
 
-    private void changeWeek() {
-        // TODO:
-    }
-
     private void changeGroup() {
-        GroupDialog groupDialog = new GroupDialog(this);
+        GroupDialog groupDialog = GroupDialog.newInstance();
         groupDialog.setOnDismissDialogListener(this);
-        groupDialog.showDialog();
+        groupDialog.show(getFragmentManager(), null);
     }
 
     @Override

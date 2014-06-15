@@ -143,14 +143,7 @@ public class MainActivity extends ActionBarActivity implements CustomDismissDial
             }
         });
 
-
         mPreferences = new AppPreferences(getBaseContext());
-        if(mPreferences.isFirstRun()) {
-            GroupDialog groupDialog = new GroupDialog(this);
-            groupDialog.setOnDismissDialogListener(this);
-            groupDialog.showDialog();
-            mPreferences.edit().setFirstRun(false).commit();
-        }
 
         setLessonPanel();
 

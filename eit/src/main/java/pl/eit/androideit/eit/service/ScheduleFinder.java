@@ -43,7 +43,7 @@ public class ScheduleFinder {
     public List<ScheduleItem> getScheduleList() {
         final ScheduleDay[] scheduleDay = getScheduleForSpecifDay();
         if (scheduleDay == null) {
-            return null;
+            return new ArrayList<ScheduleItem>();
         }
         return makeScheduleList(scheduleDay);
     }
